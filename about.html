@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <head lang="en">
   <title>The About Page for our BCIT Project</title>
   <meta name="comp1800 template" content="My 1800 App" />
@@ -21,77 +21,27 @@
     crossorigin="anonymous"
   ></script>
 
-  <!-- Other libraries go here -->
+  <!-- Firebase 8 Library related CSS, JS, JQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
+  <link
+    type="text/css"
+    rel="stylesheet"
+    href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css"
+  />
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
 
-  <!-- Link to styles of your own -->
-  <!-- <link rel="stylesheet" href="./styles/style.css"> -->
+  <!-- Other libraries and styles -->
+  <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
+  <link rel="stylesheet" href="./styles/style.css" />
 </head>
 
 <body>
-  <nav class="navbar bg-body-tertiary">
-    <div class="container-fluid d-flex align-items-center">
-      <!-- Hamburger menu button on the left -->
-      <button
-        class="btn btn-outline-secondary me-2"
-        type="button"
-        data-bs-toggle="offcanvas"
-        data-bs-target="#offcanvasMenu"
-        aria-controls="offcanvasMenu"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <!-- Responsive, centered search bar next to the hamburger icon -->
-      <form
-        class="d-flex mx-auto"
-        role="search"
-        style="max-width: 400px; min-width: 200px; flex: 1"
-      >
-        <input
-          class="form-control me-2"
-          type="search"
-          placeholder="Search"
-          aria-label="Search"
-        />
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
-    </div>
-  </nav>
-
-  <div
-    class="offcanvas offcanvas-start"
-    tabindex="-1"
-    id="offcanvasMenu"
-    aria-labelledby="offcanvasMenuLabel"
-  >
-    <div class="offcanvas-header">
-      <h5 class="offcanvas-title" id="offcanvasMenuLabel">Menu</h5>
-      <button
-        type="button"
-        class="btn-close"
-        data-bs-dismiss="offcanvas"
-        aria-label="Close"
-      ></button>
-    </div>
-    <div class="offcanvas-body">
-      <ul class="nav flex-column">
-        <li class="nav-item">
-          <a href="#" class="nav-link">Home</a>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link">Features</a>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link">Pricing</a>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link">FAQs</a>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link">About</a>
-        </li>
-      </ul>
-    </div>
-  </div>
+  <!-- Navbar -->
+  <div class="navbarTemplate"></div>
 
   <!-- Hero -->
   <div class="px-4 py-5 my-4 text-center">
@@ -113,27 +63,9 @@
     </div>
   </div>
 
-  <!--Footer -->
-  <div class="container">
-    <footer class="py-3 my-4">
-      <ul class="nav justify-content-center border-bottom pb-3 mb-3">
-        <li class="nav-item">
-          <a href="#" class="nav-link px-2 text-body-secondary">Home</a>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link px-2 text-body-secondary">Features</a>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link px-2 text-body-secondary">Pricing</a>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link px-2 text-body-secondary">FAQs</a>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link px-2 text-body-secondary">About</a>
-        </li>
-      </ul>
-      <p class="text-center text-body-secondary">&copy; 2024 Company, Inc</p>
-    </footer>
-  </div>
+  <!-- Footer -->
+  <div class="footerTemplate"></div>
+
+  <script src="./scripts/api_bby22.js"></script>
+  <script src="./scripts/skeleton.js"></script>
 </body>
