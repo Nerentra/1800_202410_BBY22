@@ -1,5 +1,4 @@
 #features {
-  margin-top: 2em;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
@@ -10,8 +9,6 @@
 #features > div {
   width: 100%;
   border: 4px solid #dedede;
-
-  border-radius: 2em;
   text-align: left;
   padding: 2em;
 }
@@ -23,6 +20,12 @@
 
 .featureDetails {
   margin-top: 1em;
+}
+
+@media screen and (min-width: 601px) {
+  #features > div {
+    border-radius: 2em;
+  }
 }
 
 @media screen and (min-width: 601px) and (max-width: 1080px) {
