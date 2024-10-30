@@ -1,0 +1,40 @@
+#questions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  width: 100%;
+}
+
+#questions > div {
+  width: 100%;
+  border: 4px solid #dedede;
+
+  border-radius: 2em;
+  text-align: left;
+  padding: 2em;
+}
+
+.questionTitle {
+  font-size: 2em;
+  text-align: center;
+}
+
+.questionMetadata {
+  margin-top: 1em;
+  display: grid;
+  grid-template-columns: max-content 1fr max-content;
+  color: #616161;
+}
+
+@media screen and (min-width: 601px) and (max-width: 1080px) {
+  #questions > div {
+    width: 48%;
+  }
+}
+
+@media screen and (min-width: 1081px) {
+  #questions > div {
+    width: 30%;
+  }
+}
+
