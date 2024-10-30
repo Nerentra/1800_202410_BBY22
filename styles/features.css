@@ -1,4 +1,5 @@
-#questions {
+#features {
+  margin-top: 2em;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
@@ -6,7 +7,7 @@
   row-gap: 1em;
 }
 
-#questions > div {
+#features > div {
   width: 100%;
   border: 4px solid #dedede;
 
@@ -15,26 +16,24 @@
   padding: 2em;
 }
 
-.questionTitle {
+.featureTitle {
   font-size: 2em;
   text-align: center;
 }
 
-.questionMetadata {
+.featureDetails {
   margin-top: 1em;
-  display: grid;
-  grid-template-columns: max-content 1fr max-content;
-  color: #616161;
 }
 
 @media screen and (min-width: 601px) and (max-width: 1080px) {
-  #questions > div {
+  #features > div {
     width: 48%;
   }
 }
 
 @media screen and (min-width: 1081px) {
-  #questions > div {
+  #features > div {
     width: 30%;
   }
 }
+
