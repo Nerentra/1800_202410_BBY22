@@ -3,13 +3,29 @@ var ui = new firebaseui.auth.AuthUI(firebase.auth());
 
 var uiConfig = {
   callbacks: {
-    signInSuccessWithAuthResult: function (authResult, redirectUrl) {
-      // User successfully signed in.
-      // Return type determines whether we continue the redirect automatically
-      // or whether we leave that to developer to handle.
-      return true;
+    signInSuccessWithAuthResult: (authResult) => {
+      // Return value determines whether we continue the redirect automatically
+
+      var user = authResult.user; // Firebase auth user
+      if (authResult.additionalUserInfo.isNewUser) {
+        db.collection("users")
+          .doc(user.uid)
+          .set({
+            name: user.displayName,
+            email: user.email,
+          })
+          .then(() => {
+            window.location.href = "/main.html";
+          })
+          .catch((error) => {
+            console.log("Error adding new user", error);
+          });
+      } else {
+        return true;
+      }
+      return false;
     },
-    uiShown: function () {
+    uiShown: () => {
       // The widget is rendered.
       // Hide the loader.
       document.getElementById("loader").style.display = "none";
