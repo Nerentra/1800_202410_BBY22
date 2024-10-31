@@ -1,11 +1,14 @@
-function getNameFromAuth() {
+function insertNameFromFirestore() {
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
-      let userName = user.displayName;
-      document.querySelector("#name-goes-here").innerText = userName;
+      let userData = db.collection("users").doc(user.uid);
+      userData.get().then((userDoc) => {
+        let userName = userDoc.data().name;
+        document.querySelector("#name-goes-here").innerText = userName;
+      });
     } else {
       window.location.assign("/");
     }
   });
 }
-getNameFromAuth();
+insertNameFromFirestore();
