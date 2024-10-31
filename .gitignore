@@ -3,3 +3,5 @@
 node_modules/
 .vscode/
 api_bby22.js
+package-lock.json
+package.json
