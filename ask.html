@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8" />
     <title>Ask a question!</title>
@@ -8,18 +9,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <!-- Bootstrap Library CSS CDN -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-      crossorigin="anonymous"
-    />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
     <!-- Boostrap Library JS CDN -->
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-      crossorigin="anonymous"
-    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
 
     <!-- Firebase 8 Library related CSS, JS, JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -27,16 +22,13 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
-    <link
-      type="text/css"
-      rel="stylesheet"
-      href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css"
-    />
+    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css" />
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
 
     <!-- Other libraries and styles -->
     <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
     <link rel="stylesheet" href="./styles/style.css" />
+    <link rel="stylesheet" href="./styles/ask.css" />
 
     <script src="./scripts/api_bby22.js"></script>
     <script src="./scripts/firebase.js"></script>
@@ -46,27 +38,22 @@
     <script src="./templates/navbar.js"></script>
     <script src="./scripts/addTemplates.js"></script>
 </head>
+
 <body>
-        <!-- Navbar -->
-        <div class="navbarTemplate"></div>
-        
-<!-- Copied from navbar.js -->
-<!-- Responsive, centered search bar next to the hamburger icon -->
-<form
-class="d-flex mx-auto"
-role="search"
-style="max-width: 400px; min-width: 200px; flex: 1"
-action=" "
->
-<input
-  class="form-control me-2"
-  type="search"
-  placeholder="Ask Mi anything!"
-  aria-label="ask"
-  name="ask"
-/>
-<button class="btn btn-outline-success" type="submit">Submit</button>
-</form>
-    
+    <!-- Navbar -->
+    <div class="navbarTemplate"></div>
+
+    <!-- Responsive, centered search bar next to the hamburger icon -->
+    <div class="ask-box">
+        <form action="/submit.html" class="" role="search">
+
+            <textarea name="ask" placeholder="Ask Mi anything!"></textarea>
+
+            <button class="submit-button" type="submit">Submit Question</button>
+
+        </form>
+    </div>
+
 </body>
+
 </html>
