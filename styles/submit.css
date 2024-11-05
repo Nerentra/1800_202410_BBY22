@@ -1,4 +1,4 @@
-.ask-box {
+.submit-box {
     border: 3px;
     top: 50%;
     left: 50%;
@@ -7,11 +7,11 @@
     width: 700px;
 }
 
-.ask-box button {
+.submit-box button {
     width: 100%;
 }
 
-.ask-box textarea {
+.submit-box textarea {
     width: 100%;
     min-height: 300px;
 }
