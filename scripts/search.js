@@ -52,30 +52,85 @@ function addQuestionToDOM(questionData, authorData) {
 }
 
 /**
- * Gets all questions from the database and puts them in the page.
- * @param {String} query The search query. Currently does nothing.
+ * Queries firestore for questions that contain all of the tags
+ * @param {String[]} tags The tags to use
+ * @returns {String[]} The IDs of the questions
  */
-function search(query) {
-  db.collection("questions")
-    .get()
-    .then((questions) => {
-      questions.forEach((question) => {
-        let questionData = question.data();
-        questionData.author
+async function getQuestionsFromTags(tags) {
+  let tagCount = tags.length;
+  let questionCounts = {};
+  let promises = [];
+  tags.forEach((tag) => {
+    let promise = db
+      .collection("tags")
+      .doc(tag)
+      .get()
+      .then((ref) => {
+        let data = ref.data();
+        if (data) {
+          let questionIDs = data.questions;
+          questionIDs.forEach((id) => {
+            if (questionCounts[id]) {
+              questionCounts[id]++;
+            } else {
+              questionCounts[id] = 1;
+            }
+          });
+        } else {
+          // Tag doesn't exist, ignore it
+          tagCount--;
+        }
+      })
+      .catch(() => {
+        throw Error(`Error getting questions for tag ${tag}.`);
+      });
+    promises.push(promise);
+  });
+
+  await Promise.all(promises);
+
+  let finalQuestions = [];
+  for (let id in questionCounts) {
+    if (questionCounts[id] >= tagCount) {
+      finalQuestions.push(id);
+    }
+  }
+
+  return finalQuestions;
+}
+
+/**
+ * Gets all questions from the database and puts them in the page.
+ * @param {String} tags The search tags.
+ */
+async function search(tags) {
+  getQuestionsFromTags(tags)
+    .then((questionIDs) => {
+      questionIDs.forEach((questionID) => {
+        db.collection("questions")
+          .doc(questionID)
           .get()
-          .then((author) => {
-            addQuestionToDOM(questionData, author.data());
+          .then((question) => {
+            let questionData = question.data();
+            questionData.author
+              .get()
+              .then((author) => {
+                addQuestionToDOM(questionData, author.data());
+              })
+              .catch((error) => {
+                console.error("Error getting question author", error);
+              });
           })
           .catch((error) => {
-            console.error("Error getting question author", error);
+            console.error("Error getting question", error);
           });
       });
     })
     .catch((error) => {
-      console.error("Error getting questions", error);
+      console.error("Error getting question IDs from tags", error);
     });
 }
 
 let params = new URL(window.location.href);
-let query = params.searchParams.get("query");
-search(query);
+let tags = params.searchParams.get("tags").split(",");
+search(tags);
