@@ -3,6 +3,9 @@ const tagsDropdown = document.getElementById("tagsDropdown");
 let selectedTags = [];
 let allTags = [];
 
+/**
+ * Load all tags from firestore database and store them in an array.
+ */
 function loadTags() {
   db.collection("tags")
     .get()
@@ -31,6 +34,11 @@ tagsDropdown.addEventListener("change", function () {
   }
 });
 
+/**
+ * This function will update the tags display area,
+ * meaning that every clicked tag will be displayed
+ *  and every removed tag will not be shown.
+ */
 function updateSelectedTagsDisplay() {
   selectedTagsContainer.innerHTML = "";
   selectedTags.forEach((tag) => {
@@ -47,6 +55,12 @@ function updateSelectedTagsDisplay() {
   });
 }
 
+/**
+ * Removes a selected tag from the selected tags list,
+ * reinserts it into the dropdown menu, and resets the
+ * dropdown menu to its placeholder option.
+ * @param {String} tag The Firestore id for the tag.
+ */
 function removeTag(tag) {
   selectedTags = selectedTags.filter((t) => t !== tag);
 
@@ -76,14 +90,15 @@ document
     event.preventDefault();
 
     const questionTitle = document.getElementById("titleInput").value;
-    const questionText = document.getElementById("questionInput").value;
+    const questionDescription =
+      document.getElementById("descriptionInput").value;
     const user = firebase.auth().currentUser;
 
-    if (user && questionTitle.trim() && questionText.trim()) {
+    if (user && questionTitle.trim() && questionDescription.trim()) {
       db.collection("questions")
         .add({
           title: questionTitle,
-          description: questionText,
+          description: questionDescription,
           author: db.collection("users").doc(user.uid),
           timestamp: firebase.firestore.FieldValue.serverTimestamp(),
           tags: selectedTags,
