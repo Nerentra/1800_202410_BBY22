@@ -7,8 +7,27 @@ h1 {
 
 
 #ask-question-button {
-  display: block;
+  display: inline-block;
   margin: 2em auto;
   padding: 1em 2em;
-  font-size: 1.5em;
+  font-size: 1.2em;
+  background-color: #28a745;
+  color: #ffffff;
+  border-radius: 0.5em;
+  text-decoration: none;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+#ask-question-button:hover {
+  background-color: #ffffff;
+  color: #28a745;
+  border: 2px solid #28a745;
+  text-decoration: none;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
