@@ -21,22 +21,22 @@ function displayQuestion() {
 }
 displayQuestion();
 
-function getQuestionTitle(id) {
-    db.collection("questions")
-      .doc(id)
-      .get()
-      .then((thisQuestion) => {
-        var questionTitle = thisQuestion.data().name;
-        document.getElementById("questionTitle").innerHTML = questionTitle;
-          });
-}
+// function getQuestionTitle(id) {
+//     db.collection("questions")
+//       .doc(id)
+//       .get()
+//       .then((thisQuestion) => {
+//         var questionTitle = thisQuestion.data().name;
+//         document.getElementById("questionTitle").innerHTML = questionTitle;
+//           });
+// }
 
-function getQuestionDescription(id) {
-    db.collection("questions")
-        .doc(id)
-        .get()
-        .then((thisQuestion) => {
-            var questionDesc = thisQuestion.data();
-            document.getElementById("question-description").innerHTML = questionDesc;
-        });
-}
+// function getQuestionDescription(id) {
+//     db.collection("questions")
+//         .doc(id)
+//         .get()
+//         .then((thisQuestion) => {
+//             var questionDesc = thisQuestion.data();
+//             document.getElementById("question-description").innerHTML = questionDesc;
+//         });
+// }
