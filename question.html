@@ -1,20 +1,23 @@
-<!DOCTYPE html>
-
-<head lang="en">
-    <title>The About Page for our BCIT Project</title>
-    <meta name="comp1800 template" content="My 1800 App" />
-
-    <!-- Required meta tags -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Askmi</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <!-- Bootstrap Library CSS CDN go here -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
-    <!-- Boostrap Library JS CDN  go here -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous"></script>
+    <!-- Bootstrap Library CSS CDN -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <!-- Boostrap Library JS CDN -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
 
     <!-- Firebase 8 Library related CSS, JS, JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -22,7 +25,11 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
-    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css" />
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css"
+    />
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
 
     <!-- Other libraries and styles -->
@@ -37,50 +44,50 @@
     <script src="./templates/navbar.js"></script>
     <script src="./scripts/addTemplates.js"></script>
     <script src="./scripts/question.js"></script>
+  </head>
 
-</head>
-
-<body>
+  <body>
     <!-- Navbar -->
     <div class="navbarTemplate"></div>
 
     <!-- Copied from about.html -->
     <!-- Hero -->
     <div class="px-4 py-5 my-4 text-center">
-        <!-- <img
+      <!-- <img
       class="d-block mx-auto mb-4"
       src="./images/AM01.jpg"
       alt=""
       width="150"
     /> -->
 
-        <div>
-            <p>Posted <span id="questionTimestamp">timestamp</span> ago by
-            <span id="questionAuthor">author</span></p>
+      <div>
+        <p>
+          Posted <span id="questionTimestamp">timestamp</span> ago by
+          <span id="questionAuthor">author</span>
+        </p>
+      </div>
+
+      <h1 class="display-5 fw-bold">
+        <span id="questionTitle">question title</span>
+      </h1>
+
+      <div class="col-lg-6 mx-auto">
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+          <p id="question-description">question content</p>
         </div>
-
-        <h1 class="display-5 fw-bold"><span id="questionTitle">question title</span></h1>
-
-        <div class="col-lg-6 mx-auto">
-            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-                <p id="question-description">
-                    question content
-                </p>
-            </div>
-
-        </div>
+      </div>
     </div>
 
     <!-- A container for the questions replies -->
     <div class="reply-container">
-        <div class="reply-card">
-            <p class="reply-content">reply content</p>
-            <img class="user-pfp">
-            <p class="username"></p>
-
-        </div>
+      <div class="reply-card">
+        <p class="reply-content">reply content</p>
+        <img class="user-pfp" />
+        <p class="username"></p>
+      </div>
     </div>
 
     <!-- Footer -->
     <div class="footerTemplate"></div>
-</body>
+  </body>
+</html>
