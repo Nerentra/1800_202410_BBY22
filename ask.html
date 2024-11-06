@@ -46,7 +46,6 @@
     <script src="./templates/footer.js"></script>
     <script src="./templates/navbar.js"></script>
     <script src="./scripts/addTemplates.js"></script>
-    <script src="./scripts/ask.js"></script>
   </head>
 
   <body>
@@ -57,6 +56,19 @@
       <h2 class="text-center mb-4">Need some info? Ask a question!</h2>
       <form id="question-form">
         <div class="form-group mb-3">
+          <label for="titleInput" class="form-label"
+            >Question Title (max 40 characters)</label
+          >
+          <input
+            type="text"
+            id="titleInput"
+            class="form-control"
+            maxlength="40"
+            placeholder="Enter a brief title for your question"
+            required
+          />
+        </div>
+        <div class="form-group mb-3">
           <label for="questionInput" class="form-label">Your Question</label>
           <textarea
             id="questionInput"
@@ -66,6 +78,7 @@
             required
           ></textarea>
         </div>
+
         <div class="text-center">
           <button type="submit" class="btn btn-success btn-lg">
             Submit Question
@@ -76,5 +89,7 @@
 
     <!-- Footer -->
     <div class="footerTemplate"></div>
+
+    <script src="./scripts/ask.js"></script>
   </body>
 </html>

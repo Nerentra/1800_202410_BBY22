@@ -1,17 +1,24 @@
-.submit-box {
-    border: 3px;
-    top: 50%;
-    left: 50%;
-    position: absolute;
-    transform: translate(-50%, -50%);
-    width: 700px;
+#selected-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5em;
 }
 
-.submit-box button {
-    width: 100%;
+.tag-item {
+    background-color: #28a745;
+    color: #ffffff;
+    padding: 0.5em 1em;
+    border-radius: 0.5em;
+    font-size: 0.9em;
+    display: inline-flex;
+    align-items: center;
 }
 
-.submit-box textarea {
-    width: 100%;
-    min-height: 300px;
+.tag-item button {
+    background: none;
+    border: none;
+    color: #ffffff;
+    margin-left: 0.5em;
+    font-size: 1em;
+    cursor: pointer;
 }

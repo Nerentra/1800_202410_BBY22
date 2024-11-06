@@ -1,23 +1,22 @@
-// Reference to Firestore
-const db = firebase.firestore();
-
 // Handle form submission
 document
   .getElementById("question-form")
   .addEventListener("submit", function (event) {
-    event.preventDefault(); // Prevent page reload on form submission
+    event.preventDefault();
 
+    const questionTitle = document.getElementById("titleInput").value;
     const questionText = document.getElementById("questionInput").value;
     const user = firebase.auth().currentUser;
 
-    if (user && questionText.trim()) {
+    if (user && questionTitle.trim() && questionText.trim()) {
       // Add question to Firestore
       db.collection("questions")
         .add({
-          title: questionText.slice(0, 50), // Create a short title from the question
+          title: questionTitle,
           description: questionText,
           author: db.collection("users").doc(user.uid),
           timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+          tags: [],
         })
         .then(() => {
           alert("Question submitted successfully!");
