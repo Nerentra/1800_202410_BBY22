@@ -177,6 +177,9 @@ templates.navbarPrelogin = {
   <div class="offcanvas-body">
     <ul class="nav flex-column">
       <li class="nav-item">
+        <a href="/index.html" class="nav-link">Home</a>
+      </li>
+      <li class="nav-item">
         <a href="/features.html" class="nav-link">Features</a>
       </li>
       <li class="nav-item">
