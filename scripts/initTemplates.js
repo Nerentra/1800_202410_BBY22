@@ -2,9 +2,13 @@ const templates = [];
 const bodyLoadQueue = [];
 
 window.addEventListener("DOMContentLoaded", () => {
-  bodyLoadQueue.forEach((template) => {
-    const elem = document.querySelector("." + template.className);
+    bodyLoadQueue.forEach(({ className, template }) => {
+    const elem = document.querySelector("." + className);
     elem.innerHTML = template.html;
+
+    if (template.onload) {
+      template.onload();
+    }
   });
 });
 
@@ -15,12 +19,16 @@ window.addEventListener("DOMContentLoaded", () => {
  * @param {string} templateName The filename of the script in /templates.
  */
 function addTemplate(className, templateName) {
-  const html = templates[templateName];
+  const template = templates[templateName];
+  const html = template.html;
   if (document.readyState === "complete") {
     const elem = document.querySelector("." + className);
     elem.innerHTML = html;
+
+    if (template.onload) {
+      template.onload();
+    }
   } else {
-    bodyLoadQueue.push({ className, html });
+    bodyLoadQueue.push({ className, template: template });
   }
 }
-

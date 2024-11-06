@@ -4,3 +4,45 @@ h1 {
   text-align: center;
   font-weight: bold;
 }
+
+#navDropdown {
+  width: 20em;
+  position: fixed;
+  background-color: rgb(248, 249, 250);
+  border-radius: 0 0 0.375rem 0.375rem;
+}
+
+#navDropdown > div {
+  width: 100%;
+  overflow: hidden;
+  padding: 0.375rem 0.75rem;
+  cursor: pointer;
+}
+
+#navSearchbar:focus {
+  border-radius: 0.375rem 0.375rem 0 0;
+  box-shadow: none;
+  border: #86b7fe solid 2px;
+}
+
+#navDropdown > div:not(:last-child) {
+  border-bottom: #ddd solid 2px;
+  border-left: #86b7fe solid 2px;
+  border-right: #86b7fe solid 2px;
+}
+
+#navDropdown > div:last-child {
+  border-radius: 0 0 0.375rem 0.375rem;
+  border-left: #86b7fe solid 2px;
+  border-right: #86b7fe solid 2px;
+  border-bottom: #86b7fe solid 2px;
+}
+
+#navSearchbarContainer {
+  margin-right: 1em;
+}
+
+#navSearchbar {
+  width: 20em;
+  transition: border-radius 500ms, border 100ms;
+}

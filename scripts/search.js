@@ -104,6 +104,10 @@ async function getQuestionsFromTags(tags) {
  * @param {String} tags The search tags.
  */
 async function search(tags) {
+  tags = tags.filter((tag) => {
+    // Remove all whitespace only strings
+    return tag.trim() != "";
+  });
   getQuestionsFromTags(tags)
     .then((questionIDs) => {
       questionIDs.forEach((questionID) => {
@@ -131,6 +135,6 @@ async function search(tags) {
     });
 }
 
-let params = new URL(window.location.href);
-let tags = params.searchParams.get("tags").split(",");
+let params = new URL(window.location.href).searchParams;
+let tags = params.get("tags").split(" ");
 search(tags);
