@@ -4,12 +4,9 @@
  * @param {Object} authorData The firestore data for the author.
  */
 function addQuestionToDOM(questionID, questionData, authorData) {
-  let container = document.createElement("div");
-
   let anchor = document.createElement("a");
   anchor.href = `/question.html?docID=${questionID}`;
   anchor.classList.add("hideLink");
-    container.appendChild(anchor)
 
   let titleDiv = document.createElement("div");
   titleDiv.innerText = questionData.title;
@@ -23,9 +20,7 @@ function addQuestionToDOM(questionID, questionData, authorData) {
   let authorSpan = document.createElement("span");
   authorSpan.innerText = authorData.name;
   let timeSpan = document.createElement("span");
-  timeSpan.innerText = formatDuration(
-    Date.now() - questionData.timestamp,
-  );
+  timeSpan.innerText = formatDuration(Date.now() - questionData.timestamp);
 
   metadataContainer.appendChild(authorSpan);
   metadataContainer.appendChild(document.createElement("span"));
@@ -35,7 +30,7 @@ function addQuestionToDOM(questionID, questionData, authorData) {
   anchor.appendChild(descriptionDiv);
   anchor.appendChild(metadataContainer);
 
-  document.querySelector("#questions").appendChild(container);
+  document.querySelector("#questions").appendChild(anchor);
 }
 
 /**
