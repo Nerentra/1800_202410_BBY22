@@ -40,6 +40,15 @@ function addQuestionToDOM(questionID, questionData, authorData) {
  */
 async function getQuestionsFromTags(tags) {
   let tagCount = tags.length;
+  // If no tags then return don't filter anything out
+  if (tagCount == 0) {
+    let questionSnapshots = (await db.collection("questions").get()).docs;
+    let questionIDs = questionSnapshots.map((snapshot) => {
+      return snapshot.id;
+    });
+
+    return questionIDs;
+  }
   let questionCounts = {};
   let promises = [];
   tags.forEach((tag) => {
