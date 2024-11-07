@@ -47,35 +47,6 @@ h1 {
   transition: border-radius 500ms, border 100ms;
 }
 
-#ask-question-button {
-  display: inline-block;
-  margin: 1em auto;
-  padding: 1em 2em;
-  font-size: 1.2em;
-  background-color: #28a745;
-  color: #ffffff;
-  border-radius: 0.5em;
-  text-decoration: none;
-  transition: background-color 0.3s, color 0.3s;
-}
-
-#ask-question-button:hover {
-  background-color: #ffffff;
-  color: #28a745;
-  border: 2px solid #28a745;
-  text-decoration: none;
-}
-
-
-.button-container {
-  margin: 1em auto;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-
 .hideLink {
   text-decoration: inherit;
   color: inherit;
