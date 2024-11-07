@@ -21,8 +21,13 @@ function makeDurationReadable(duration) {
  * @param {Object} questionData The firestore data for the question.
  * @param {Object} authorData The firestore data for the author.
  */
-function addQuestionToDOM(questionData, authorData) {
+function addQuestionToDOM(questionID, questionData, authorData) {
   let container = document.createElement("div");
+
+  let anchor = document.createElement("a");
+  anchor.href = `/question.html?docID=${questionID}`;
+  anchor.classList.add("hideLink");
+    container.appendChild(anchor)
 
   let titleDiv = document.createElement("div");
   titleDiv.innerText = questionData.title;
@@ -44,9 +49,9 @@ function addQuestionToDOM(questionData, authorData) {
   metadataContainer.appendChild(document.createElement("span"));
   metadataContainer.appendChild(timeSpan);
 
-  container.appendChild(titleDiv);
-  container.appendChild(descriptionDiv);
-  container.appendChild(metadataContainer);
+  anchor.appendChild(titleDiv);
+  anchor.appendChild(descriptionDiv);
+  anchor.appendChild(metadataContainer);
 
   document.querySelector("#questions").appendChild(container);
 }
@@ -119,7 +124,7 @@ async function search(tags) {
             questionData.author
               .get()
               .then((author) => {
-                addQuestionToDOM(questionData, author.data());
+                addQuestionToDOM(questionID, questionData, author.data());
               })
               .catch((error) => {
                 console.error("Error getting question author", error);
