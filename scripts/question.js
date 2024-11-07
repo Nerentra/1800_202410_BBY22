@@ -1,13 +1,13 @@
+let params = new URL(window.location.href); // Get URL of search bar
+let questionId = params.searchParams.get("docID"); // Get value for key "id"
+
 /**
  * Get data from firebase and display it on the page
  */
 function displayQuestion() {
-  let params = new URL(window.location.href); // Get URL of search bar
-  let ID = params.searchParams.get("docID"); // Get value for key "id"
-
   // Getting info from the firebase collection
   db.collection("questions")
-    .doc(ID)
+    .doc(questionId)
     .get()
     .then((doc) => {
       let docData = doc.data();
@@ -64,6 +64,63 @@ function makeDurationReadable(duration) {
 }
 
 /**
+ * Adds and answer to the DOM
+ * @param answerData {Object} The firestore data for the answer
+ * @param authorData {Object} The firestore data for the author
+ */
+function addAnswerToDOM(answerData, authorData) {
+  let replies = document.querySelector("#replies");
+
+  let replyContainer = document.createElement("div");
+  let card = document.createElement("div");
+  card.classList.add("reply-card");
+  replyContainer.appendChild(card);
+
+  let replyContent = document.createElement("p");
+  replyContent.classList.add("reply-content");
+  replyContent.innerText = answerData.content;
+  replyContainer.appendChild(replyContent);
+
+  let userPfp = document.createElement("img");
+  userPfp.classList.add("user-pfp");
+  replyContainer.appendChild(userPfp);
+
+  let username = document.createElement("p");
+  username.classList.add("username");
+  username.innerText = authorData.name;
+  replyContainer.appendChild(username);
+
+  replies.appendChild(replyContainer);
+}
+
+/**
+ * Displays the answers of the current question
+ * @param id {String} The id of the question
+ */
+function displayAnswers(id) {
+  db.collection("questions")
+    .doc(id)
+    .collection("answers")
+    .get()
+    .then(async (answerRefs) => {
+      const answers = [];
+      for await (const [i, answerRef] of answerRefs.docs.entries()) {
+        let answer = await answerRef.data();
+        let author = (await answer.author.get()).data();
+        answers[i] = {
+          answer,
+          author,
+        };
+      }
+
+      answers.forEach((answer) => {
+        addAnswerToDOM(answer.answer, answer.author);
+      });
+    });
+}
+displayAnswers(questionId);
+
+/**
  * some function i created to get the firebase data and insert it into the webpage
  * displayQuestion works just fine though
  * keeping this here in case i want to use it later
@@ -87,4 +144,3 @@ function makeDurationReadable(duration) {
 //             document.getElementById("question-description").innerHTML = questionDesc;
 //         });
 // }
-
