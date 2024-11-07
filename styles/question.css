@@ -1,0 +1,19 @@
+#question {
+  display: inline-block;
+  border: 4px solid #dedede;
+  border-radius: 2em;
+  padding: 2em;
+}
+
+#replies {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.answer {
+  display: inline-block;
+  border: 4px solid #dedede;
+  border-radius: 2em;
+  padding: 2em;
+}

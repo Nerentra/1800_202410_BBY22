@@ -80,3 +80,8 @@ h1 {
   text-decoration: inherit;
   color: inherit;
 }
+
+.containerRow {
+  display: flex;
+  justify-content: center;
+}

@@ -71,26 +71,25 @@ function makeDurationReadable(duration) {
 function addAnswerToDOM(answerData, authorData) {
   let replies = document.querySelector("#replies");
 
-  let replyContainer = document.createElement("div");
   let card = document.createElement("div");
   card.classList.add("answer");
-  replyContainer.appendChild(card);
-
-  let replyContent = document.createElement("p");
-  replyContent.classList.add("answerContent");
-  replyContent.innerText = answerData.content;
-  replyContainer.appendChild(replyContent);
-
-  let userPfp = document.createElement("img");
-  userPfp.classList.add("answerPfp");
-  replyContainer.appendChild(userPfp);
 
   let username = document.createElement("p");
   username.classList.add("answerName");
   username.innerText = authorData.name;
-  replyContainer.appendChild(username);
+  card.appendChild(username);
 
-  replies.appendChild(replyContainer);
+  let replyContent = document.createElement("p");
+  replyContent.classList.add("answerContent");
+  replyContent.innerText = answerData.content;
+  card.appendChild(replyContent);
+
+  let userPfp = document.createElement("img");
+  userPfp.classList.add("answerPfp");
+  card.appendChild(userPfp);
+
+
+  replies.appendChild(card);
 }
 
 /**

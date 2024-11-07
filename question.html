@@ -35,6 +35,7 @@
     <!-- Other libraries and styles -->
     <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
     <link rel="stylesheet" href="./styles/style.css" />
+    <link rel="stylesheet" href="./styles/question.css" />
 
     <script src="./scripts/api_bby22.js"></script>
     <script src="./scripts/firebase.js"></script>
@@ -52,34 +53,38 @@
 
     <!-- Copied from about.html -->
     <!-- Hero -->
-    <div class="px-4 py-5 my-4 text-center">
-      <!-- <img
-      class="d-block mx-auto mb-4"
-      src="./images/AM01.jpg"
-      alt=""
-      width="150"
-    /> -->
+    <div class="containerRow">
+      <div id="question" class="px-4 py-5 my-4 text-center">
+        <!-- <img
+        class="d-block mx-auto mb-4"
+        src="./images/AM01.jpg"
+        alt=""
+        width="150"
+      /> -->
 
-      <div>
-        <p>
-          Posted <span id="questionTimestamp">timestamp</span> ago by
-          <span id="questionAuthor">author</span>
-        </p>
-      </div>
+        <div>
+          <p>
+            Posted <span id="questionTimestamp"></span> ago by
+            <span id="questionAuthor"></span>
+          </p>
+        </div>
 
-      <h1 class="display-5 fw-bold">
-        <span id="questionTitle">question title</span>
-      </h1>
+        <h1 class="display-5 fw-bold">
+          <span id="questionTitle"></span>
+        </h1>
 
-      <div class="col-lg-6 mx-auto">
-        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-          <p id="question-description">question content</p>
+        <div class="col-lg-6 mx-auto">
+          <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+            <p id="question-description"></p>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- A container for the questions replies -->
-    <div id="replies"></div>
+    <div class="containerRow">
+      <div id="replies"></div>
+    </div>
 
     <!-- Footer -->
     <div class="footerTemplate"></div>
