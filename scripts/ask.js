@@ -107,11 +107,8 @@ document.addEventListener("DOMContentLoaded", async () => {
             timestamp: Date.now(),
             tags: selectedTags,
           })
-          .then(() => {
-            alert("Question submitted successfully!");
-            document.getElementById("question-form").reset();
-            selectedTags = [];
-            updateSelectedTagsDisplay();
+          .then((newQuestion) => {
+            window.location.href = `/question.html?docID=${newQuestion.id}`;
           })
           .catch((error) => {
             console.error("Error submitting question: ", error);
