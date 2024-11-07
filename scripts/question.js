@@ -73,20 +73,20 @@ function addAnswerToDOM(answerData, authorData) {
 
   let replyContainer = document.createElement("div");
   let card = document.createElement("div");
-  card.classList.add("reply-card");
+  card.classList.add("answer");
   replyContainer.appendChild(card);
 
   let replyContent = document.createElement("p");
-  replyContent.classList.add("reply-content");
+  replyContent.classList.add("answerContent");
   replyContent.innerText = answerData.content;
   replyContainer.appendChild(replyContent);
 
   let userPfp = document.createElement("img");
-  userPfp.classList.add("user-pfp");
+  userPfp.classList.add("answerPfp");
   replyContainer.appendChild(userPfp);
 
   let username = document.createElement("p");
-  username.classList.add("username");
+  username.classList.add("answerName");
   username.innerText = authorData.name;
   replyContainer.appendChild(username);
 
