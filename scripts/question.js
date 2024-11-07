@@ -18,7 +18,7 @@ function displayQuestion() {
       let timestamp = docData.timestamp;
 
       let timeElapsed = Date.now() - timestamp;
-      let readableTime = makeDurationReadable(timeElapsed);
+      let readableTime = formatDuration(timeElapsed);
 
       // Only populate title, and image
       document.getElementById("questionTitle").innerText = title;
@@ -67,7 +67,6 @@ function addAnswerToDOM(answerData, authorData) {
   let userPfp = document.createElement("img");
   userPfp.classList.add("answerPfp");
   card.appendChild(userPfp);
-
 
   replies.appendChild(card);
 }
