@@ -54,19 +54,31 @@ function addAnswerToDOM(answerData, authorData) {
   let card = document.createElement("div");
   card.classList.add("answer");
 
-  let username = document.createElement("p");
+  let metadataContainer = document.createElement("div");
+  metadataContainer.classList.add("cf");
+  metadataContainer.classList.add("answerMetadata");
+
+  let username = document.createElement("span");
   username.classList.add("answerName");
   username.innerText = authorData.name;
-  card.appendChild(username);
+  metadataContainer.appendChild(username);
 
-  let replyContent = document.createElement("p");
+  let postTime = document.createElement("span");
+  postTime.classList.add("answerTime");
+  let durationSincePost = Date.now() - answerData.timestamp;
+  postTime.innerText = formatDuration(durationSincePost);
+  metadataContainer.appendChild(postTime);
+
+  card.appendChild(metadataContainer);
+
+  let replyContent = document.createElement("div");
   replyContent.classList.add("answerContent");
   replyContent.innerText = answerData.content;
   card.appendChild(replyContent);
 
-  let userPfp = document.createElement("img");
-  userPfp.classList.add("answerPfp");
-  card.appendChild(userPfp);
+  //let userPfp = document.createElement("img");
+  //userPfp.classList.add("answerPfp");
+  //card.appendChild(userPfp);
 
   replies.appendChild(card);
 }
@@ -97,3 +109,4 @@ function displayAnswers(id) {
     });
 }
 displayAnswers(questionId);
+

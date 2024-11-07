@@ -17,3 +17,33 @@
   border-radius: 2em;
   padding: 2em;
 }
+
+.answerName {
+  float: left;
+  clear: left;
+}
+
+.answerTime {
+  color: #888;
+  float: right;
+  clear: right;
+}
+
+.answerMetadata {
+  margin-bottom: 1em;
+}
+
+/*
+ * Micro clearfix hack
+ * https://nicolasgallagher.com/micro-clearfix-hack/
+ */
+.cf:before,
+.cf:after {
+  content: " ";
+  display: table;
+}
+
+.cf:after {
+  clear: both;
+}
+
