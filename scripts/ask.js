@@ -104,7 +104,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             title: questionTitle,
             description: questionDescription,
             author: db.collection("users").doc(user.uid),
-            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+            timestamp: Date.now(),
             tags: selectedTags,
           })
           .then(() => {
