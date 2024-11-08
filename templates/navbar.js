@@ -101,6 +101,21 @@ function searchbarLoaded() {
       );
     });
 
+  let searchButton = document.getElementById("searchButton");
+  searchbar.addEventListener("focus", () => {
+    searchButton.innerText = "Search";
+  });
+  searchbar.addEventListener("blur", () => {
+    // This timeout is a hack to not instantly change it
+    // if the user is clicking an option in the dropdown
+    setTimeout(() => {
+      if (searchbar.value.trim() === "") {
+        searchButton.innerText = "Browse";
+      } else {
+        searchButton.innerText = "Search";
+      }
+    }, 250);
+  });
   ["input", "focus"].forEach((eventName) => {
     searchbar.addEventListener(eventName, (event) => {
       let cursorIndex = event.target.selectionStart;
@@ -155,7 +170,7 @@ templates.navbarPrelogin = {
         />
         <div id="navDropdown"></div>
       </div>
-      <button class="btn btn-outline-success" type="submit">Search</button>
+      <button id="searchButton" class="btn btn-outline-success" type="submit">Browse</button>
     </form>
   </div>
 </nav>
@@ -227,7 +242,7 @@ templates.navbarPostlogin = {
         />
         <div id="navDropdown"></div>
       </div>
-      <button class="btn btn-outline-success" type="submit">Search</button>
+      <button id="searchButton" class="btn btn-outline-success" type="submit">Browse</button>
     </form>
   </div>
 </nav>
