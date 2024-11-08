@@ -110,3 +110,81 @@ function displayAnswers(id) {
 }
 displayAnswers(questionId);
 
+document.addEventListener("DOMContentLoaded", () => {
+  let isFormOpen = false;
+  let giveAnswerContainer = document.getElementById("giveAnswerContainer");
+  let answerButtonContainer = document.getElementById(
+    "giveAnswerButtonContainer",
+  );
+  let formContainer = document.getElementById("giveAnswerFormContainer");
+  let giveAnswerContainerResizeObserver = new ResizeObserver(() => {
+    if (isFormOpen) {
+      giveAnswerContainer.style.height = `${formContainer.offsetHeight}px`;
+    } else {
+      giveAnswerContainer.style.height = `${answerButtonContainer.offsetHeight}px`;
+    }
+  });
+  giveAnswerContainerResizeObserver.observe(answerButtonContainer);
+
+  function showAnswerForm(formOpen) {
+    isFormOpen = formOpen;
+
+    // Make them visible for the transition
+    answerButtonContainer.hidden = false;
+    formContainer.hidden = false;
+
+    // Make them unclickable while transitioning
+    answerButtonContainer.style.pointerEvents = "none";
+    formContainer.style.pointerEvents = "none";
+
+    giveAnswerContainer.style.transition = "height 300ms ease-in-out";
+
+    formContainer.addEventListener("animationend", () => {
+      formContainer.style.opacity = formOpen ? 1 : 0;
+      formContainer.style.pointerEvents = formOpen ? "auto" : "none";
+      giveAnswerContainer.style.transition = "";
+    });
+
+    answerButtonContainer.addEventListener("animationend", () => {
+      answerButtonContainer.style.opacity = formOpen ? 0 : 1;
+      answerButtonContainer.style.pointerEvents = formOpen ? "none" : "auto";
+      giveAnswerContainer.style.transition = "";
+    });
+
+    if (formOpen) {
+      answerButtonContainer.style.animationName = "hide";
+      formContainer.style.animationName = "show";
+    } else {
+      answerButtonContainer.style.animationName = "show";
+      formContainer.style.animationName = "hide";
+    }
+
+    // Kinda hacky solution because the children don't take any actual space
+    // due to being position: absolute;
+    // Ends up working well for the css height transition anyways
+    if (formOpen) {
+      giveAnswerContainer.style.height = `${formContainer.offsetHeight}px`;
+      giveAnswerContainerResizeObserver.observe(formContainer);
+      giveAnswerContainerResizeObserver.unobserve(answerButtonContainer);
+    } else {
+      giveAnswerContainer.style.height = `${answerButtonContainer.offsetHeight}px`;
+      giveAnswerContainerResizeObserver.observe(answerButtonContainer);
+      giveAnswerContainerResizeObserver.unobserve(formContainer);
+    }
+  }
+
+  document.getElementById("giveAnswerContainer").style.height =
+    `${document.getElementById("giveAnswerButtonContainer").offsetHeight}px`;
+
+  document
+    .getElementById("giveAnswerButton")
+    .addEventListener("click", (event) => {
+      event.preventDefault();
+      showAnswerForm(true);
+    });
+
+  document.getElementById("cancelButton").addEventListener("click", (event) => {
+    event.preventDefault();
+    showAnswerForm(false);
+  });
+});
