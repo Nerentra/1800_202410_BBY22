@@ -11,10 +11,8 @@ function displayQuestion() {
     .get()
     .then((doc) => {
       let docData = doc.data();
-      let question = docData;
       let title = docData.title;
       let description = docData.description;
-      let author = docData.author;
       let timestamp = docData.timestamp;
 
       let timeElapsed = Date.now() - timestamp;
@@ -23,12 +21,11 @@ function displayQuestion() {
       // Only populate title, and image
       document.getElementById("questionTitle").innerText = title;
       document.getElementById("questionDescription").innerText = description;
-      document.getElementById("questionAuthor").innerText = author;
       document.getElementById("questionTimestamp").innerText = readableTime;
       // let imgEvent = document.querySelector( ".hike-img" );
       // imgEvent.src = "../images/" + hikeCode + ".jpg";
 
-      question.author
+      docData.author
         .get()
         .then((authorDoc) => {
           let authorName = authorDoc.data().name || "Unknown Author";
@@ -37,7 +34,7 @@ function displayQuestion() {
         .catch((error) => {
           console.error("Error fetching author:", error);
           document.getElementById("questionAuthor").innerText =
-            "Author not found";
+            "Unknown Author";
         });
     });
 }
