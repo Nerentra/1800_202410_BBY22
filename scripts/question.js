@@ -22,7 +22,7 @@ function displayQuestion() {
 
       // Only populate title, and image
       document.getElementById("questionTitle").innerText = title;
-      document.getElementById("question-description").innerText = description;
+      document.getElementById("questionDescription").innerText = description;
       document.getElementById("questionAuthor").innerText = author;
       document.getElementById("questionTimestamp").innerText = readableTime;
       // let imgEvent = document.querySelector( ".hike-img" );
@@ -186,5 +186,35 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("cancelButton").addEventListener("click", (event) => {
     event.preventDefault();
     showAnswerForm(false);
+  });
+
+  document.getElementById("submitButton").addEventListener("click", (event) => {
+    event.preventDefault();
+    const answerContent = document.getElementById("answerContent").value;
+    const user = firebase.auth().currentUser;
+
+    if (user) {
+      if (answerContent.trim() !== "") {
+        db.collection("questions")
+          .doc(questionId)
+          .collection("answers")
+          .add({
+            content: answerContent,
+            author: db.collection("users").doc(user.uid),
+            timestamp: Date.now(),
+          })
+          .then(() => {
+            window.location.reload();
+          })
+          .catch((error) => {
+            console.error("Error submitting question: ", error);
+            alert("Error submitting question. Please try again.");
+          });
+      } else {
+        alert("Please input something for your answer.");
+      }
+    } else if (user) {
+      alert("You must be logged in to submit a question.");
+    }
   });
 });

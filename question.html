@@ -76,7 +76,7 @@
 
         <div class="col-lg-6 mx-auto">
           <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-            <p id="question-description"></p>
+            <p class="text-left" id="questionDescription"></p>
           </div>
         </div>
       </div>
@@ -89,18 +89,17 @@
 
     <div id="giveAnswerContainer">
       <div id="giveAnswerButtonContainer" class="containerRow">
-        <button id="giveAnswerButton" type="button">Give an answer</button>
+        <button id="giveAnswerButton" type="button">Give a reply</button>
       </div>
 
       <div id="giveAnswerFormContainer" class="containerRow" hidden>
         <form id="giveAnswerForm">
           <div class="form-group mb-3">
-            <label for="descriptionInput" class="form-label"></label>
+            <label for="answerContent" class="form-label">Your Reply</label>
             <textarea
-              id="descriptionInput"
+              id="answerContent"
               class="form-control"
               rows="8"
-              placeholder="Your answer..."
               required
             ></textarea>
           </div>
@@ -110,7 +109,7 @@
               id="submitButton"
               class="btn btn-success btn-lg"
             >
-              Submit Question
+              Submit Reply
             </button>
             <button type="submit" id="cancelButton" class="redButton">
               Cancel
