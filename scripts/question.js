@@ -97,11 +97,13 @@ function displayAnswers(id) {
       for await (const [i, answerRef] of answerRefs.docs.entries()) {
         let answer = await answerRef.data();
         let author = (await answer.author.get()).data();
-        answers[i] = {
+        answers.push({
           answer,
           author,
-        };
+        });
       }
+
+      answers.sort((a, b) => a.answer.timestamp - b.answer.timestamp);
 
       answers.forEach((answer) => {
         addAnswerToDOM(answer.answer, answer.author);
