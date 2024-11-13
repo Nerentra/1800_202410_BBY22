@@ -11,12 +11,18 @@ function getTags() {
 }
 
 let selectedTags = [];
-let allTags = getTags();
+let allTags = [];
 
 document.addEventListener("DOMContentLoaded", async () => {
   const selectedTagsContainer = document.getElementById("selected-tags");
   const tagsDropdown = document.getElementById("tagsDropdown");
 
+  try {
+    const snapshot = await getTags();
+    allTags = snapshot.docs;
+  } catch (error) {
+    console.error("Error fetching tags: ", error);
+  }
   let tags = await allTags;
   tags.forEach((tag) => {
     const option = document.createElement("option");
@@ -31,12 +37,41 @@ document.addEventListener("DOMContentLoaded", async () => {
       selectedTags.push(selectedTag);
       updateSelectedTagsDisplay();
       const option = tagsDropdown.querySelector(
-        `option[value="${selectedTag}"]`,
+        `option[value="${selectedTag}"]`
       );
       if (option) option.remove();
       tagsDropdown.selectedIndex = 0;
     }
   });
+
+  /**
+   * Removes a selected tag from the selected tags list,
+   * reinserts it into the dropdown menu, and resets the
+   * dropdown menu to its placeholder option.
+   * @param {String} tag The Firestore id for the tag.
+   */
+  function removeTag(tag) {
+    selectedTags = selectedTags.filter((t) => t !== tag);
+
+    const existingOption = tagsDropdown.querySelector(`option[value="${tag}"]`);
+    if (existingOption) existingOption.remove();
+
+    const option = document.createElement("option");
+    option.value = tag;
+    option.textContent = tag;
+
+    const originalIndex = allTags.findIndex((doc) => doc.id === tag);
+    if (originalIndex >= 0) {
+      const referenceNode = tagsDropdown.options[originalIndex + 1];
+      tagsDropdown.insertBefore(option, referenceNode);
+    } else {
+      tagsDropdown.appendChild(option);
+    }
+
+    tagsDropdown.selectedIndex = 0;
+
+    updateSelectedTagsDisplay();
+  }
 
   /**
    * This function will update the tags display area,
@@ -52,40 +87,14 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       const removeButton = document.createElement("button");
       removeButton.textContent = "×";
-      removeButton.onclick = () => removeTag(tag);
+      removeButton.type = "button";
+      removeButton.addEventListener("click", () => {
+        removeTag(tag);
+      });
 
       tagElement.appendChild(removeButton);
       selectedTagsContainer.appendChild(tagElement);
     });
-  }
-
-  /**
-   * Removes a selected tag from the selected tags list,
-   * reinserts it into the dropdown menu, and resets the
-   * dropdown menu to its placeholder option.
-   * @param {String} tag The Firestore id for the tag.
-   */
-  function removeTag(tag) {
-    selectedTags = selectedTags.filter((t) => t !== tag);
-
-    const existingOption = tagsDropdown.querySelector(`option[value="${tag}"]`);
-    if (existingOption) existingOption.remove();
-
-    const originalIndex = allTags.indexOf(tag);
-    const option = document.createElement("option");
-    option.value = tag;
-    option.textContent = tag;
-
-    if (originalIndex >= 0) {
-      const referenceNode = tagsDropdown.options[originalIndex + 1];
-      tagsDropdown.insertBefore(option, referenceNode);
-    } else {
-      tagsDropdown.appendChild(option);
-    }
-
-    tagsDropdown.selectedIndex = 0;
-
-    updateSelectedTagsDisplay();
   }
 
   document
@@ -108,7 +117,21 @@ document.addEventListener("DOMContentLoaded", async () => {
             tags: selectedTags,
           })
           .then((newQuestion) => {
-            window.location.href = `/question.html?docID=${newQuestion.id}`;
+            const questionId = newQuestion.id;
+
+            const tagUpdatePromises = selectedTags.map((tag) =>
+              db
+                .collection("tags")
+                .doc(tag)
+                .update({
+                  questions:
+                    firebase.firestore.FieldValue.arrayUnion(questionId),
+                })
+            );
+
+            return Promise.all(tagUpdatePromises).then(() => {
+              window.location.href = `/question.html?docID=${newQuestion.id}`;
+            });
           })
           .catch((error) => {
             console.error("Error submitting question: ", error);
