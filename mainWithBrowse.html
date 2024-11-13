@@ -69,24 +69,27 @@
 
   <!-- Template -->
   <template id="questionCardTemplate">
-    <div class="col-md-4 my-3">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title" id="questionTitle">Question Title</h5>
-                <p class="card-text" id="questionDescription">Question description...</p>
-                <p class="card-text"><small class="text-muted" id="questionAuthor">Author</small></p>
-                <p class="card-text"><small class="text-muted" id="questionTimestamp">Timestamp</small></p>
-                <a href="#" class="btn btn-primary" id="questionLink">View Details</a>
+    <div class="col-12 my-3">
+        <a href="#" class="card-link" id="questionLink">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title" id="questionTitle">Question Title</h5>
+                    <p class="card-text" id="questionDescription">Question description...</p>
+                    <p class="card-text"><small class="text-muted" id="questionAuthor">Author</small></p>
+                    <p class="card-text"><small class="text-muted" id="questionTimestamp">Timestamp</small></p>
+                </div>
             </div>
-        </div>
+        </a>
     </div>
 </template>
+
 
   <!-- Footer -->
   <div class="footerTemplate"></div>
 
   <script src="./scripts/main.js"></script>
   <script src="./scripts/browseQuestions.js"></script>
+  <script src="./scripts/formatDuration.js"></script>
 
 </body>
 
