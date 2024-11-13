@@ -1,8 +1,9 @@
 let params = new URL(window.location.href); // Get URL of search bar
 let questionId = params.searchParams.get("docID"); // Get value for key "id"
+let userFavorites = [];
 
 /**
- * Get data from firebase and display it on the page
+ * Get data from Firestore and display it on the page
  */
 function displayQuestion() {
   // Getting info from the firebase collection
@@ -10,35 +11,127 @@ function displayQuestion() {
     .doc(questionId)
     .get()
     .then((doc) => {
-      let docData = doc.data();
-      let title = docData.title;
-      let description = docData.description;
-      let timestamp = docData.timestamp;
+      if (doc.exists) {
+        const docData = doc.data();
+        const title = docData.title;
+        const description = docData.description;
+        const timestamp = docData.timestamp;
 
-      let timeElapsed = Date.now() - timestamp;
-      let readableTime = formatDuration(timeElapsed);
+        const timeElapsed = Date.now() - timestamp;
+        const readableTime = formatDuration(timeElapsed);
 
-      // Only populate title, and image
-      document.getElementById("questionTitle").innerText = title;
-      document.getElementById("questionDescription").innerText = description;
-      document.getElementById("questionTimestamp").innerText = readableTime;
-      // let imgEvent = document.querySelector( ".hike-img" );
-      // imgEvent.src = "../images/" + hikeCode + ".jpg";
+        // Only populate title, and image
+        document.getElementById("questionTitle").innerText = title;
+        document.getElementById("questionDescription").innerText = description;
+        document.getElementById("questionTimestamp").innerText = readableTime;
 
-      docData.author
-        .get()
-        .then((authorDoc) => {
-          let authorName = authorDoc.data().name || "Unknown Author";
-          document.getElementById("questionAuthor").innerText = authorName;
-        })
-        .catch((error) => {
-          console.error("Error fetching author:", error);
-          document.getElementById("questionAuthor").innerText =
-            "Unknown Author";
-        });
+        docData.author
+          .get()
+          .then((authorDoc) => {
+            const authorName = authorDoc.data().name || "Unknown Author";
+            document.getElementById("questionAuthor").innerText = authorName;
+          })
+          .catch((error) => {
+            console.error("Error fetching author:", error);
+            document.getElementById("questionAuthor").innerText =
+              "Unknown Author";
+          });
+
+        // Display and initialize the favorite icon
+        initializeFavoriteIcon();
+      }
+    })
+    .catch((error) => {
+      console.error("Error fetching question data:", error);
     });
 }
 displayQuestion();
+
+/**
+ * Initializes and handles the favorite icon functionality
+ */
+function initializeFavoriteIcon() {
+  firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+      const userDocRef = db.collection("users").doc(user.uid);
+
+      const questionHeader = document.getElementById("question-header");
+      const favoriteIcon = document.createElement("img");
+      favoriteIcon.alt = "favorite icon";
+      favoriteIcon.id = "star-icon";
+      questionHeader.appendChild(favoriteIcon);
+
+      // Get user favorites and set initial icon state
+      userDocRef
+        .get()
+        .then((userDoc) => {
+          if (userDoc.exists) {
+            userFavorites = userDoc.data().favorites;
+            favoriteIcon.src = userFavorites.includes(questionId)
+              ? "../images/star-solid.svg"
+              : "../images/star-frame.svg";
+
+            // Add click event to toggle favorite status
+            favoriteIcon.addEventListener("click", () =>
+              toggleFavorite(favoriteIcon, userDocRef)
+            );
+          } else {
+            console.log("No user document found.");
+          }
+        })
+        .catch((error) => {
+          console.error("Error retrieving user favorites:", error);
+        });
+    } else {
+      console.log("User not logged in. Redirecting...");
+      window.location.assign("/");
+    }
+  });
+}
+
+/**
+ * Updates the favorite status of a question
+ * @param {HTMLElement} favoriteIcon - The favorite icon element
+ * @param {firebase.firestore.DocumentReference} userDocRef - Reference to the user's document
+ */
+function toggleFavorite(favoriteIcon, userDocRef) {
+  if (!userFavorites) {
+    console.error("User favorites not loaded yet.");
+    return;
+  }
+
+  const isFavorite = userFavorites.includes(questionId);
+
+  if (isFavorite) {
+    // Remove from favorites
+    userDocRef
+      .update({
+        favorites: firebase.firestore.FieldValue.arrayRemove(questionId),
+      })
+      .then((userDoc) => {
+        favoriteIcon.src = "../images/star-frame.svg"; // Update icon to unfilled
+
+        userFavorites = userFavorites.filter((id) => id !== questionId);
+      })
+      .catch((error) => {
+        console.error("Error removing from favorites:", error);
+      });
+  } else {
+    // Add to favorites
+    userDocRef
+      .update({
+        favorites: firebase.firestore.FieldValue.arrayUnion(questionId),
+      })
+      .then(() => {
+        favoriteIcon.src = "../images/star-solid.svg"; // Update icon to filled
+
+        userFavorites.push(questionId);
+      })
+      .catch((error) => {
+        console.error("Error adding to favorites:", error);
+      });
+  }
+}
 
 /**
  * Adds and answer to the DOM
@@ -113,7 +206,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let isFormOpen = false;
   let giveAnswerContainer = document.getElementById("giveAnswerContainer");
   let answerButtonContainer = document.getElementById(
-    "giveAnswerButtonContainer",
+    "giveAnswerButtonContainer"
   );
   let formContainer = document.getElementById("giveAnswerFormContainer");
   let giveAnswerContainerResizeObserver = new ResizeObserver(() => {
@@ -172,8 +265,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  document.getElementById("giveAnswerContainer").style.height =
-    `${document.getElementById("giveAnswerButtonContainer").offsetHeight}px`;
+  document.getElementById("giveAnswerContainer").style.height = `${
+    document.getElementById("giveAnswerButtonContainer").offsetHeight
+  }px`;
 
   document
     .getElementById("giveAnswerButton")

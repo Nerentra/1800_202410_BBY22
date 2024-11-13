@@ -13,6 +13,7 @@ var uiConfig = {
           .set({
             name: user.displayName,
             email: user.email,
+            favorites: [],
           })
           .then(() => {
             window.location.href = "/main.html";

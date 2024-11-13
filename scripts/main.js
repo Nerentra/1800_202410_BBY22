@@ -12,3 +12,17 @@ function insertNameFromFirestore() {
   });
 }
 insertNameFromFirestore();
+
+function displayFavorites() {
+  firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+      let userData = db.collection("users").doc(user.uid);
+      userData.get().then((userDoc) => {
+        let userFavorites = userDoc.data().favorites;
+      });
+    } else {
+      window.location.assign("/");
+    }
+  });
+}
+displayFavorites();
