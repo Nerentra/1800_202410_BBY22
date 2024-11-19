@@ -1,3 +1,15 @@
+/**
+ * Gets the start and end index of the word at the
+ * current index in the given text. Words are delimited
+ * using spaces.
+ *
+ * E.g. With text = "Hello to my world." and index = 9,
+ * this function would return "my"
+ *
+ * @param {String} text The text to search within
+ * @param {Number} index The index where the word is 
+ * @returns {[Number, Number]} The starting and ending indices of the word
+ */
 function getIndicesOfWord(text, index) {
   const delimiter = " ";
 
@@ -20,6 +32,14 @@ function getIndicesOfWord(text, index) {
   return [startIndex, endIndex];
 }
 
+/**
+ * Returns the tags that can be autofilled for a given word.
+ * 
+ * @param {String} word The current word the user is typing
+ * @param {[String]} tags A list of tags that can be autofilled
+ * @param {[String]} invalidTags A list of tags that are disallowed from autofilling
+ * @returns {[String]} A list of tags that can be autofilled
+ */
 function getRecommendationsForWord(word, tags, invalidTags) {
   word = word.toLowerCase();
   const validTags = [];
@@ -36,10 +56,25 @@ function getRecommendationsForWord(word, tags, invalidTags) {
   return validTags;
 }
 
+/**
+ * Replaces a word at some indices in some text with a new word.
+ * 
+ * @param {String} text The text to modify
+ * @param {[Number, Number]} indices The starting and ending indices of the word to replace
+ * @param {String} newWord The word to replace the original word with
+ * @returns {String} The newly modified text
+ */
 function replaceTextAtIndices(text, indices, newWord) {
   return text.substring(0, indices[0]) + newWord + text.substring(indices[1]);
 }
 
+/**
+ * Adds a dropdown containing the autofill recommendations.
+ * 
+ * @param {[String]} recommendations A list of tags that can be selected to be autofilled
+ * @param {[Number, Number]} wordIndices The starting and ending indices of the word the user is editing
+ * @param {[String]} tags All tags that can be autofilled
+ */
 function addRecommendationsToPage(recommendations, wordIndices, tags) {
   let dropdown = document.getElementById("navDropdown");
   dropdown.innerHTML = "";
@@ -68,6 +103,13 @@ function addRecommendationsToPage(recommendations, wordIndices, tags) {
   });
 }
 
+/**
+ * Updates the autofill recommendations dropdown using the current
+ * text in the search bar.
+ * 
+ * @param {Number} cursorIndex The index of the cursor in the text
+ * @param {[String]} tags The tags that can be autofilled
+ */
 function updateDropdown(cursorIndex, tags) {
   if (tags == undefined) {
     return;
@@ -81,6 +123,10 @@ function updateDropdown(cursorIndex, tags) {
   addRecommendationsToPage(recommendations, wordIndices, tags);
 }
 
+/**
+ * Function that is called when the searchbar is loaded in the page.
+ * Initializes the interactivity for the autofill dropdown.
+ */
 function searchbarLoaded() {
   let searchbar = document.getElementById("navSearchbar");
   searchbar.value = new URL(window.location.href).searchParams.get("tags");
