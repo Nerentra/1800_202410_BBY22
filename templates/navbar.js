@@ -59,7 +59,7 @@ function addRecommendationsToPage(recommendations, wordIndices, tags) {
       searchbar.value = replaceTextAtIndices(
         searchbar.value,
         wordIndices,
-        newWord,
+        newWord
       );
       searchbar.focus();
       updateDropdown(searchbar.value.length, tags);
@@ -97,7 +97,7 @@ function searchbarLoaded() {
     .catch((error) => {
       console.error(
         "Error loading tags. Search recommendations will not work.",
-        error,
+        error
       );
     });
 
@@ -140,7 +140,7 @@ function searchbarLoaded() {
 templates.navbarPrelogin = {
   html: `
 <nav id="navbar" class="navbar bg-body-tertiary">
-  <div class="container-fluid d-flex align-items-center">
+  <div id="navItemsContainer" class="container-fluid d-flex align-items-center">
     <!-- Hamburger menu button on the left -->
     <button
       class="btn btn-outline-secondary me-2"
@@ -155,7 +155,7 @@ templates.navbarPrelogin = {
     <form
       class="d-flex mx-auto justify-content-center"
       role="search"
-      style="max-width: 400px; min-width: 200px; flex: 1"
+      id="search-form"
       autocomplete="off"
       action="/search.html"
     >
@@ -212,7 +212,7 @@ templates.navbarPrelogin = {
 templates.navbarPostlogin = {
   html: `
 <nav class="navbar bg-body-tertiary">
-  <div class="container-fluid d-flex align-items-center">
+  <div id="navItemsContainer" class="container-fluid d-flex align-items-center">
     <!-- Hamburger menu button on the left -->
     <button
       class="btn btn-outline-secondary me-2"
@@ -227,7 +227,7 @@ templates.navbarPostlogin = {
     <form
       class="d-flex mx-auto justify-content-center"
       role="search"
-      style="max-width: 400px; min-width: 200px; flex: 1"
+      id="search-form"
       autocomplete="off"
       action="/search.html"
     >

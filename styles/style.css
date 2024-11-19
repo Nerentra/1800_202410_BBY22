@@ -38,13 +38,28 @@ h1 {
   border-bottom: #86b7fe solid 2px;
 }
 
+#navBarTemplate {
+  margin: 0 1em;
+}
+
+#navItemsContainer {
+  flex-wrap: nowrap;
+}
+
 #navSearchbarContainer {
+  width: 100%;
   margin-right: 1em;
 }
 
 #navSearchbar {
-  width: 20em;
   transition: border-radius 500ms, border 100ms;
+}
+
+#search-form {
+  min-width: 17rem;
+  max-width: 50rem;
+  width: 60%;
+  margin: 0 1em;
 }
 
 .hideLink {

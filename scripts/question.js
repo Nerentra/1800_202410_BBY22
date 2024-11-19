@@ -1,6 +1,6 @@
 let params = new URL(window.location.href); // Get URL of search bar
 let questionId = params.searchParams.get("docID"); // Get value for key "id"
-let userFavorites = [];
+let userFavorites = []; // Initialize global array to store and update user favorites
 
 /**
  * Get data from Firestore and display it on the page

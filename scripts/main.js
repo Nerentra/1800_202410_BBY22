@@ -13,6 +13,7 @@ function insertNameFromFirestore() {
 }
 insertNameFromFirestore();
 
+// To be implemented
 function displayFavorites() {
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
