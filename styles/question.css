@@ -135,33 +135,6 @@
   justify-content: space-around;
 }
 
-.redButton,
-.greenButton {
-  padding: 0.5em 1em;
-  font-size: 1.25em;
-  border-radius: 0.5em;
-  border: none;
-}
-
-.redButton {
-  background-color: #d22;
-  color: white;
-  transition: background-color 0.15s ease-in-out;
-}
-
-.redButton:hover {
-  background-color: #b11;
-}
-
-.greenButton {
-  background-color: #198754;
-  color: white;
-}
-
-.greenButton:hover {
-  background-color: #13653f;
-}
-
 .markSolutionButton {
   text-align: right;
   margin-top: 1em;

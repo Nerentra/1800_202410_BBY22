@@ -19,22 +19,41 @@ function authOnce() {
 
 async function getProfileUserRef() {
   if (paramsId && paramsId.trim() !== "") {
-    return db.collection("users").doc(paramsId);
+    return {
+      userRef: db.collection("users").doc(paramsId),
+      isCurUser: false,
+    };
   } else {
     let user = await authOnce();
     if (user) {
-      return user;
+      return {
+        userRef: user,
+        isCurUser: true,
+      };
     } else {
       window.location.replace("/");
     }
   }
 }
 
-const userRef = getProfileUserRef();
-
-async function loadUserData() {
-  let userSnapshot = await (await userRef).get();
-  let userData = userSnapshot.data();
+getProfileUserRef().then(async ({userRef, isCurUser}) => {
+  const userSnapshot = await userRef.get();
+  const userData = userSnapshot.data();
   document.getElementById("userName").innerText = userData.name;
-}
-loadUserData();
+
+  if (isCurUser) {
+    const editButtonContainer = document.getElementById("editButtonContainer");
+
+    const editAnchor = document.createElement("a")
+    editAnchor.classList.add("hideLink")
+    editAnchor.href = "/editProfile.html"
+
+    const editButton = document.createElement("button")
+    editButton.innerText = "Edit Profile"
+    editButton.classList.add("button")
+
+    editAnchor.appendChild(editButton)
+
+    editButtonContainer.appendChild(editAnchor);
+  }
+})

@@ -71,3 +71,39 @@ h1 {
   display: flex;
   justify-content: center;
 }
+
+.button,
+.redButton,
+.greenButton {
+  padding: 0.5em 1em;
+  font-size: 1.25em;
+  border-radius: 0.5em;
+  transition: background-color 0.15s ease-in-out;
+  border: none;
+}
+
+.button {
+  background-color: rgb(210, 210, 210);
+}
+
+.button:hover {
+  background-color: rgb(138, 138, 138);
+}
+
+.redButton {
+  background-color: #d22;
+  color: white;
+}
+
+.redButton:hover {
+  background-color: #b11;
+}
+
+.greenButton {
+  background-color: #198754;
+  color: white;
+}
+
+.greenButton:hover {
+  background-color: #13653f;
+}
