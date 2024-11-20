@@ -137,8 +137,15 @@ function toggleFavorite(favoriteIcon, userDocRef) {
  * Adds and answer to the DOM
  * @param answerData {Object} The firestore data for the answer
  * @param authorData {Object} The firestore data for the author
+ * @param isQuestionAuthor {boolean} Whether the current user is the author of the question
+ * @param isAnswerAuthor {boolean} Whether the current user is the author of the answer
  */
-function addAnswerToDOM(answerData, authorData) {
+function addAnswerToDOM(
+  answerData,
+  authorData,
+  isQuestionAuthor,
+  isAnswerAuthor
+) {
   let replies = document.querySelector("#replies");
 
   let card = document.createElement("div");
@@ -170,6 +177,17 @@ function addAnswerToDOM(answerData, authorData) {
   //userPfp.classList.add("answerPfp");
   //card.appendChild(userPfp);
 
+  if (isQuestionAuthor) {
+    let markSolutionButton = document.createElement("button");
+    markSolutionButton.classList.add("markSolutionButton");
+    markSolutionButton.classList.add("greenButton");
+    markSolutionButton.innerText = "Mark as solution";
+    markSolutionButton.addEventListener("click", () => {
+      // implement this
+    });
+    card.appendChild(markSolutionButton);
+  }
+
   replies.appendChild(card);
 }
 
@@ -177,28 +195,41 @@ function addAnswerToDOM(answerData, authorData) {
  * Displays the answers of the current question
  * @param id {String} The id of the question
  */
-function displayAnswers(id) {
-  db.collection("questions")
+async function displayAnswers(id) {
+  let questionDoc = db.collection("questions").doc(id).get();
+
+  let answerRefs = await db
+    .collection("questions")
     .doc(id)
     .collection("answers")
-    .get()
-    .then(async (answerRefs) => {
-      const answers = [];
-      for await (const [i, answerRef] of answerRefs.docs.entries()) {
-        let answer = await answerRef.data();
-        let author = (await answer.author.get()).data();
-        answers.push({
-          answer,
-          author,
-        });
-      }
-
-      answers.sort((a, b) => a.answer.timestamp - b.answer.timestamp);
-
-      answers.forEach((answer) => {
-        addAnswerToDOM(answer.answer, answer.author);
-      });
+    .get();
+  const answers = [];
+  for await (const [_, answerRef] of answerRefs.docs.entries()) {
+    let answer = await answerRef.data();
+    let author = await answer.author.get();
+    answers.push({
+      answerData: answer,
+      authorId: author.id,
+      authorData: author.data(),
     });
+  }
+
+  answers.sort((a, b) => a.answerData.timestamp - b.answerData.timestamp);
+
+  questionDoc = await questionDoc;
+
+  // There is somewhat of a race condition here with whether the user is authenticated yet
+  let curUser = firebase.auth().currentUser;
+  let isQuestionAuthor = questionDoc.data().author.id == curUser.uid;
+  answers.forEach((answer) => {
+    let isAnswerAuthor = answer.authorId == curUser.uid;
+    addAnswerToDOM(
+      answer.answerData,
+      answer.authorData,
+      isQuestionAuthor,
+      isAnswerAuthor
+    );
+  });
 }
 displayAnswers(questionId);
 

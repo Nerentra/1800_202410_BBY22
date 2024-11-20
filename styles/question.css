@@ -13,7 +13,7 @@
   align-items: center;
 }
 
-#question-header>p {
+#question-header > p {
   color: rgba(0, 0, 0, 0.445);
   font-style: italic;
   font-size: 10pt;
@@ -159,6 +159,12 @@
 
 .greenButton:hover {
   background-color: #13653f;
+}
+
+.markSolutionButton {
+  text-align: right;
+  margin-top: 1em;
+  font-size: 0.9em;
 }
 
 /*
