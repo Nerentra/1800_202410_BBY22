@@ -137,7 +137,7 @@ function toggleFavorite(favoriteIcon, userDocRef) {
 }
 
 /**
- * Adds and answer to the DOM
+ * Adds an answer to the DOM
  * @param answerData {Object} The firestore data for the answer
  * @param authorData {Object} The firestore data for the author
  * @param authorId {String} The id of the answer author

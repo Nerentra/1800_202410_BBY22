@@ -36,8 +36,10 @@
     <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
     <link rel="stylesheet" href="./styles/style.css" />
     <link rel="stylesheet" href="./styles/profile.css" />
+    <link rel="stylesheet" href="./styles/search.css" />
 
     <script src="./scripts/api_bby22.js"></script>
+    <script src="./scripts/formatDuration.js"></script>
     <script src="./scripts/firebase.js"></script>
 
     <script src="./scripts/initTemplates.js"></script>
@@ -50,8 +52,10 @@
     <div class="navbarTemplate"></div>
 
     <div class="container">
-      <div id="editButtonContainer" class="containerRow"></div>
+      <div id="editButtonContainer" class="containerRow" hidden></div>
       <h1 id="userName"></h1>
+      <h2>Questions</h2>
+      <div id="questions"></div>
     </div>
 
     <!-- Footer -->

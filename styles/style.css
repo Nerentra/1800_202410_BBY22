@@ -1,7 +1,10 @@
-h1 {
+h1, h2, h3, h4{
   margin-top: 1em;
   margin-bottom: 1em;
   text-align: center;
+}
+
+h1 {
   font-weight: bold;
 }
 
