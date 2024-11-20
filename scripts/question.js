@@ -139,12 +139,18 @@ function toggleFavorite(favoriteIcon, userDocRef) {
  * @param authorData {Object} The firestore data for the author
  * @param isQuestionAuthor {boolean} Whether the current user is the author of the question
  * @param isAnswerAuthor {boolean} Whether the current user is the author of the answer
+ * @param answerId {String} The id of the answer
+ * @param questionId {String} The id of the question
+ * @param solution {String} The id of the solution for the question
  */
 function addAnswerToDOM(
   answerData,
   authorData,
   isQuestionAuthor,
-  isAnswerAuthor
+  isAnswerAuthor,
+  answerId,
+  questionId,
+  solution
 ) {
   let replies = document.querySelector("#replies");
 
@@ -178,14 +184,43 @@ function addAnswerToDOM(
   //card.appendChild(userPfp);
 
   if (isQuestionAuthor) {
-    let markSolutionButton = document.createElement("button");
-    markSolutionButton.classList.add("markSolutionButton");
-    markSolutionButton.classList.add("greenButton");
-    markSolutionButton.innerText = "Mark as solution";
-    markSolutionButton.addEventListener("click", () => {
-      // implement this
-    });
-    card.appendChild(markSolutionButton);
+    let existingSolution = solution && solution.length !== 0;
+    if (existingSolution) {
+      let answerIsSolution = solution === answerId;
+      if (answerIsSolution) {
+        let unmarkSolutionButton = document.createElement("button");
+        unmarkSolutionButton.classList.add("markSolutionButton");
+        unmarkSolutionButton.classList.add("redButton");
+        unmarkSolutionButton.innerText = "Unmark as solution";
+        unmarkSolutionButton.addEventListener("click", () => {
+          db.collection("questions")
+            .doc(questionId)
+            .update({
+              solution: "",
+            })
+            .then(() => {
+              window.location.reload();
+            });
+        });
+        card.appendChild(unmarkSolutionButton);
+      }
+    } else {
+      let markSolutionButton = document.createElement("button");
+      markSolutionButton.classList.add("markSolutionButton");
+      markSolutionButton.classList.add("greenButton");
+      markSolutionButton.innerText = "Mark as solution";
+      markSolutionButton.addEventListener("click", () => {
+        db.collection("questions")
+          .doc(questionId)
+          .update({
+            solution: answerId,
+          })
+          .then(() => {
+            window.location.reload();
+          });
+      });
+      card.appendChild(markSolutionButton);
+    }
   }
 
   replies.appendChild(card);
@@ -193,24 +228,25 @@ function addAnswerToDOM(
 
 /**
  * Displays the answers of the current question
- * @param id {String} The id of the question
+ * @param questionId {String} The id of the question
  */
-async function displayAnswers(id) {
-  let questionDoc = db.collection("questions").doc(id).get();
-
+async function displayAnswers(questionId) {
+  let questionDoc = db.collection("questions").doc(questionId).get();
   let answerRefs = await db
     .collection("questions")
-    .doc(id)
+    .doc(questionId)
     .collection("answers")
     .get();
+
   const answers = [];
   for await (const [_, answerRef] of answerRefs.docs.entries()) {
     let answer = await answerRef.data();
     let author = await answer.author.get();
     answers.push({
       answerData: answer,
-      authorId: author.id,
       authorData: author.data(),
+      authorId: author.id,
+      answerId: answerRef.id,
     });
   }
 
@@ -227,7 +263,10 @@ async function displayAnswers(id) {
       answer.answerData,
       answer.authorData,
       isQuestionAuthor,
-      isAnswerAuthor
+      isAnswerAuthor,
+      answer.answerId,
+      questionId,
+      questionDoc.data().solution
     );
   });
 }
