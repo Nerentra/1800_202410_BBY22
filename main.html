@@ -38,6 +38,7 @@
     <link rel="stylesheet" href="./styles/main.css" />
 
     <script src="./scripts/api_bby22.js"></script>
+    <script src="./scripts/formatDuration.js"></script>
     <script src="./scripts/firebase.js"></script>
 
     <script src="./scripts/initTemplates.js"></script>
@@ -50,23 +51,37 @@
     <div class="navbarTemplate"></div>
 
     <!-- Content -->
-    <div class="container-fluid bg-light text-dark p-5">
-      <div class="container bg-light p-5">
-        <h1 class="display-4">
-          Good evening, <span id="name-goes-here"></span>
-        </h1>
+    <div id="content-container">
+      <div>
+        <h1>Hey, <span id="name-goes-here"></span></h1>
         <hr />
         <p>
-          Quote of the day: If you want to go fast, go alone. If you want to go
-          far, go together.
+          Having trouble finding information about one of your courses? Ask a
+          question!
         </p>
+        <p>
+          Feel like helping others so that you can be helped when you need?
+          Answer a question!
+        </p>
+        <div class="button-container">
+          <a href="ask.html" id="ask-question-button" class="main-page-btn">
+            Ask a question!
+          </a>
+          <a
+            href="search.html?tags="
+            id="answer-question-button"
+            class="main-page-btn"
+          >
+            Answer a question!
+          </a>
+        </div>
+        <hr/>
+      <div id="favorites-container">
+        <h2 class="header">Your newest favorites</h2>
+        <div id="questions" class="px-4 my-4 text-center"></div>
+        <p>To see all of your favorites, <a href="favorites.html">click here.</a></p>
+        
       </div>
-      <div class="button-container">
-        <a href="ask.html" id="ask-question-button">
-          Need some info? Ask a question!
-        </a>
-      </div>
-      <div id="favorites-container"></div>
     </div>
 
     <!-- Footer -->
