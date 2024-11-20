@@ -49,13 +49,14 @@
 
 .answerName {
   float: left;
-  clear: left;
+  line-height: 1.25em;
 }
 
 .answerTime {
   color: #888;
   float: right;
   clear: right;
+  line-height: 1.25em;
 }
 
 .answerMetadata {
@@ -165,6 +166,18 @@
   text-align: right;
   margin-top: 1em;
   font-size: 0.9em;
+}
+
+.solutionMarker {
+  padding-right: 1ch;
+  float: left;
+  height: 1.25em;
+  line-height: 1.25em;
+}
+
+.solutionMarker > img {
+  height: 115%;
+  vertical-align: top;
 }
 
 /*

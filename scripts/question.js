@@ -161,6 +161,18 @@ function addAnswerToDOM(
   metadataContainer.classList.add("cf");
   metadataContainer.classList.add("answerMetadata");
 
+  let existingSolution = solution && solution.length !== 0;
+  let answerIsSolution = solution === answerId;
+  if (existingSolution && answerIsSolution) {
+    let solutionMarker = document.createElement("div");
+    solutionMarker.classList.add("solutionMarker");
+    solutionMarker.title = "Solution";
+    let svg = document.createElement("img");
+    svg.src = "/svgs/checkmark.svg";
+    solutionMarker.appendChild(svg);
+    metadataContainer.appendChild(solutionMarker);
+  }
+
   let username = document.createElement("span");
   username.classList.add("answerName");
   username.innerText = authorData.name;
@@ -184,26 +196,22 @@ function addAnswerToDOM(
   //card.appendChild(userPfp);
 
   if (isQuestionAuthor) {
-    let existingSolution = solution && solution.length !== 0;
-    if (existingSolution) {
-      let answerIsSolution = solution === answerId;
-      if (answerIsSolution) {
-        let unmarkSolutionButton = document.createElement("button");
-        unmarkSolutionButton.classList.add("markSolutionButton");
-        unmarkSolutionButton.classList.add("redButton");
-        unmarkSolutionButton.innerText = "Unmark as solution";
-        unmarkSolutionButton.addEventListener("click", () => {
-          db.collection("questions")
-            .doc(questionId)
-            .update({
-              solution: "",
-            })
-            .then(() => {
-              window.location.reload();
-            });
-        });
-        card.appendChild(unmarkSolutionButton);
-      }
+    if (existingSolution && answerIsSolution) {
+      let unmarkSolutionButton = document.createElement("button");
+      unmarkSolutionButton.classList.add("markSolutionButton");
+      unmarkSolutionButton.classList.add("redButton");
+      unmarkSolutionButton.innerText = "Unmark as solution";
+      unmarkSolutionButton.addEventListener("click", () => {
+        db.collection("questions")
+          .doc(questionId)
+          .update({
+            solution: "",
+          })
+          .then(() => {
+            window.location.reload();
+          });
+      });
+      card.appendChild(unmarkSolutionButton);
     } else {
       let markSolutionButton = document.createElement("button");
       markSolutionButton.classList.add("markSolutionButton");
