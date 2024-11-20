@@ -1,3 +1,7 @@
+/**
+ * Inserts the user's name into the page by fetching it from Firestore.
+ * If the user is not authenticated, redirects to the home page.
+ */
 function insertNameFromFirestore() {
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
@@ -13,6 +17,14 @@ function insertNameFromFirestore() {
 }
 insertNameFromFirestore();
 
+/**
+ * Adds a question card to the DOM in the specified container.
+ *
+ * @param {string} questionID - The ID of the question document.
+ * @param {Object} questionData - The Firestore data of the question.
+ * @param {Object} authorData - The Firestore data of the author.
+ * @param {string} [containerSelector="#questions"] - The CSS selector of the container to append the question to.
+ */
 function addQuestionToDOM(
   questionID,
   questionData,
@@ -27,6 +39,7 @@ function addQuestionToDOM(
   titleDiv.innerText = questionData.title;
   titleDiv.classList.add("questionTitle");
 
+  // Commented out to remove description from favorites, saving space
   // let descriptionDiv = document.createElement("div");
   // descriptionDiv.innerText = questionData.description;
   // descriptionDiv.classList.add("questionDescription");
@@ -45,12 +58,17 @@ function addQuestionToDOM(
   metadataContainer.appendChild(timeSpan);
 
   anchor.appendChild(titleDiv);
-  // anchor.appendChild(descriptionDiv);
+  // anchor.appendChild(descriptionDiv); // removed decription to save space
   anchor.appendChild(metadataContainer);
 
   document.querySelector(containerSelector).appendChild(anchor);
 }
 
+/**
+ * Displays the user's favorite questions on the page.
+ * Fetches the user's favorites from Firestore and adds them to the DOM.
+ * If the user has no favorites, displays a message indicating so.
+ */
 function displayFavorites() {
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
