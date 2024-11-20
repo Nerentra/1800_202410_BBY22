@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Askmi: Edit Profile</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Bootstrap Library CSS CDN -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <!-- Boostrap Library JS CDN -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Firebase 8 Library related CSS, JS, JQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css"
+    />
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+
+    <!-- Other libraries and styles -->
+    <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
+    <link rel="stylesheet" href="./styles/style.css" />
+    <link rel="stylesheet" href="./styles/editProfile.css" />
+
+    <script src="./scripts/api_bby22.js"></script>
+    <script src="./scripts/firebase.js"></script>
+
+    <script src="./scripts/initTemplates.js"></script>
+    <script src="./templates/footer.js"></script>
+    <script src="./templates/navbar.js"></script>
+    <script src="./scripts/addTemplates.js"></script>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <div class="navbarTemplate"></div>
+
+    <div class="container">
+      <h1>User Profile</h1>
+      <form>
+        <fieldset class="mb-3" id="personalInfoFields" disabled>
+          <div class="form-group">
+            <label>Name</label>
+            <input
+              type="text"
+              id="nameInput"
+              class="form-control"
+              placeholder="Enter your name"
+            />
+          </div>
+        </fieldset>
+        <div class="d-flex justify-content-end mt-5">
+          <button
+            id="editButton"
+            type="button"
+            class="btn btn-secondary"
+          >
+            Edit
+          </button>
+          <span style="width: 10px"></span>
+          <button id="saveButton" type="button" class="btn btn-info">
+            Save
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Footer -->
+    <div class="footerTemplate"></div>
+
+    <script src="./scripts/editProfile.js"></script>
+  </body>
+</html>
