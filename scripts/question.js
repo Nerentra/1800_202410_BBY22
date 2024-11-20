@@ -29,7 +29,10 @@ function displayQuestion() {
           .get()
           .then((authorDoc) => {
             const authorName = authorDoc.data().name || "Unknown Author";
-            document.getElementById("questionAuthor").innerText = authorName;
+            const questionAuthorElem =
+              document.getElementById("questionAuthor");
+            questionAuthorElem.innerText = authorName;
+            questionAuthorElem.href = "/profile.html?id=" + authorDoc.id;
           })
           .catch((error) => {
             console.error("Error fetching author:", error);
@@ -137,6 +140,7 @@ function toggleFavorite(favoriteIcon, userDocRef) {
  * Adds and answer to the DOM
  * @param answerData {Object} The firestore data for the answer
  * @param authorData {Object} The firestore data for the author
+ * @param authorId {String} The id of the answer author
  * @param isQuestionAuthor {boolean} Whether the current user is the author of the question
  * @param isAnswerAuthor {boolean} Whether the current user is the author of the answer
  * @param answerId {String} The id of the answer
@@ -146,6 +150,7 @@ function toggleFavorite(favoriteIcon, userDocRef) {
 function addAnswerToDOM(
   answerData,
   authorData,
+  authorId,
   isQuestionAuthor,
   isAnswerAuthor,
   answerId,
@@ -173,8 +178,10 @@ function addAnswerToDOM(
     metadataContainer.appendChild(solutionMarker);
   }
 
-  let username = document.createElement("span");
+  let username = document.createElement("a");
+  username.href = "/profile.html?id=" + authorId;
   username.classList.add("answerName");
+  username.classList.add("hideLink");
   username.innerText = authorData.name;
   metadataContainer.appendChild(username);
 
@@ -270,6 +277,7 @@ async function displayAnswers(questionId) {
     addAnswerToDOM(
       answer.answerData,
       answer.authorData,
+      answer.authorId,
       isQuestionAuthor,
       isAnswerAuthor,
       answer.answerId,

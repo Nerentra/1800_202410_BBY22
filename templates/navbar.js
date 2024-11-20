@@ -313,7 +313,7 @@ templates.navbarPostlogin = {
         <a href="/main.html" class="nav-link">Home</a>
       </li>
       <li class="nav-item">
-        <a href="/editProfile.html" class="nav-link">Edit Profile</a>
+        <a href="/profile.html" class="nav-link">Profile</a>
       </li>
       <li class="nav-item">
         <a href="/features.html" class="nav-link">Features</a>

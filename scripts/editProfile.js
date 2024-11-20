@@ -1,6 +1,6 @@
 let userRef = undefined;
 
-firebase.auth().onAuthStateChanged(async (user) => {
+firebase.auth().onAuthStateChanged((user) => {
   if (user) {
     userRef = db.collection("users").doc(user.uid);
     populateUserInfo(userRef);

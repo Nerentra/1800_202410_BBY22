@@ -1,9 +1,11 @@
 /**
  * Takes in the data for a question and adds it to the DOM.
+ * @param {String} questionId The firestore id of the question.
+ * @param {String} authorId The firestore id for the question author.
  * @param {Object} questionData The firestore data for the question.
  * @param {Object} authorData The firestore data for the author.
  */
-function addQuestionToDOM(questionID, questionData, authorData) {
+function addQuestionToDOM(questionID, authorId, questionData, authorData) {
   let anchor = document.createElement("a");
   anchor.href = `/question.html?docID=${questionID}`;
   anchor.classList.add("hideLink");
@@ -17,12 +19,14 @@ function addQuestionToDOM(questionID, questionData, authorData) {
 
   let metadataContainer = document.createElement("div");
   metadataContainer.classList.add("questionMetadata");
-  let authorSpan = document.createElement("span");
-  authorSpan.innerText = authorData.name;
+  let authorAnchor = document.createElement("a");
+  authorAnchor.innerText = authorData.name;
+  authorAnchor.classList.add("hideLink")
+  authorAnchor.href = "/profile.html?id=" + authorId;
   let timeSpan = document.createElement("span");
   timeSpan.innerText = formatDuration(Date.now() - questionData.timestamp);
 
-  metadataContainer.appendChild(authorSpan);
+  metadataContainer.appendChild(authorAnchor);
   metadataContainer.appendChild(document.createElement("span"));
   metadataContainer.appendChild(timeSpan);
 
@@ -110,7 +114,7 @@ async function search(tags) {
             questionData.author
               .get()
               .then((author) => {
-                addQuestionToDOM(questionID, questionData, author.data());
+                addQuestionToDOM(questionID, author.id, questionData, author.data());
               })
               .catch((error) => {
                 console.error("Error getting question author", error);

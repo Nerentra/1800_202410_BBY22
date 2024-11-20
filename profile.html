@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Askmi</title>
+    <title>Askmi: Profile</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -35,84 +35,27 @@
     <!-- Other libraries and styles -->
     <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
     <link rel="stylesheet" href="./styles/style.css" />
-    <link rel="stylesheet" href="./styles/question.css" />
+    <link rel="stylesheet" href="./styles/profile.css" />
 
     <script src="./scripts/api_bby22.js"></script>
-    <script src="./scripts/formatDuration.js"></script>
     <script src="./scripts/firebase.js"></script>
 
     <script src="./scripts/initTemplates.js"></script>
     <script src="./templates/footer.js"></script>
     <script src="./templates/navbar.js"></script>
     <script src="./scripts/addTemplates.js"></script>
-    <script src="./scripts/question.js"></script>
   </head>
-
   <body>
     <!-- Navbar -->
     <div class="navbarTemplate"></div>
 
-    <!-- Copied from about.html -->
-    <!-- Hero -->
-    <div class="containerRow">
-      <div id="question" class="px-4 my-4 text-center">
-        <div id="question-header">
-          <p>
-            Posted <span id="questionTimestamp"></span> ago by
-            <a id="questionAuthor" class="hideLink"></a>
-          </p>
-        </div>
-
-        <h1 class="display-5 fw-bold">
-          <span id="questionTitle"></span>
-        </h1>
-
-        <div class="col-lg-6 mx-auto">
-          <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-            <p class="text-left" id="questionDescription"></p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- A container for the questions replies -->
-    <div class="containerRow">
-      <div id="replies"></div>
-    </div>
-
-    <div id="giveAnswerContainer">
-      <div id="giveAnswerButtonContainer" class="containerRow">
-        <button id="giveAnswerButton" type="button">Give a reply</button>
-      </div>
-
-      <div id="giveAnswerFormContainer" class="containerRow" hidden>
-        <form id="giveAnswerForm">
-          <div class="form-group mb-3">
-            <label for="answerContent" class="form-label">Your Reply</label>
-            <textarea
-              id="answerContent"
-              class="form-control"
-              rows="8"
-              required
-            ></textarea>
-          </div>
-          <div id="formButtons">
-            <button
-              type="submit"
-              id="submitButton"
-              class="btn btn-success btn-lg"
-            >
-              Submit Reply
-            </button>
-            <button type="submit" id="cancelButton" class="redButton">
-              Cancel
-            </button>
-          </div>
-        </form>
-      </div>
+    <div class="container">
+      <h1 id="userName"></h1>
     </div>
 
     <!-- Footer -->
     <div class="footerTemplate"></div>
+
+    <script src="./scripts/profile.js"></script>
   </body>
 </html>
