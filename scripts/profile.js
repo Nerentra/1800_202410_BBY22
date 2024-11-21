@@ -16,7 +16,11 @@ function addQuestionToDOM(questionSnapshot) {
   titleDiv.innerText = questionData.title;
   titleDiv.classList.add("questionTitle");
   const descriptionDiv = document.createElement("div");
-  descriptionDiv.innerText = questionData.description;
+  let description = questionData.description;
+  if (description.length > 120) {
+    description = description.slice(0, 120) + "...";
+  }
+  descriptionDiv.innerText = description;
   descriptionDiv.classList.add("questionDescription");
 
   const metadataContainer = document.createElement("div");
@@ -98,7 +102,7 @@ getProfileUserRef().then(async ({ userRef, isCurUser }) => {
     .where("author", "==", userRef)
     .get();
 
-  const questionSnapshots = questionCollectionSnapshot.docs
+  const questionSnapshots = questionCollectionSnapshot.docs;
 
   questionSnapshots.sort((a, b) => b.data().timestamp - a.data().timestamp);
 

@@ -15,7 +15,11 @@ function addQuestionToDOM(questionSnapshot, authorSnapshot) {
   titleDiv.innerText = questionData.title;
   titleDiv.classList.add("questionTitle");
   const descriptionDiv = document.createElement("div");
-  descriptionDiv.innerText = questionData.description;
+  let description = questionData.description;
+  if (description.length > 120) {
+    description = description.slice(0, 120) + "...";
+  }
+  descriptionDiv.innerText = description;
   descriptionDiv.classList.add("questionDescription");
 
   const metadataContainer = document.createElement("div");
@@ -84,7 +88,7 @@ async function getQuestionsFromTags(tags) {
     }
   }
 
-  console.log(finalQuestions)
+  console.log(finalQuestions);
   return finalQuestions;
 }
 
@@ -113,8 +117,8 @@ async function search(tags) {
   questions.forEach(({ questionSnapshot, authorSnapshot }) => {
     addQuestionToDOM(questionSnapshot, authorSnapshot);
   });
-  document.getElementById("questions").hidden = false
-  document.getElementById("questionsPlaceholders").hidden = true
+  document.getElementById("questions").hidden = false;
+  document.getElementById("questionsPlaceholders").hidden = true;
 }
 
 const params = new URL(window.location.href).searchParams;
