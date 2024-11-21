@@ -11,11 +11,11 @@
     }
 }
 
-#fade-in {
+.fade-in {
     animation: fade-down 0.5s;
 }
 
-#favorites-container {
+.fade-in2 {
     opacity: 0;
     animation: fade-down 0.5s;
     animation-delay: 0.2s;

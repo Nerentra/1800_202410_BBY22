@@ -1,13 +1,24 @@
 /**
  * Function to load questions from Firestore and display them
  */
-async function loadQuestions() {
+let lastVisibleQuestion = null; // Tracks the last visible question for pagination
+const QUESTIONS_PER_PAGE = 20;
+
+async function loadQuestions(initialLoad = true) {
     let questionsContainer = document.getElementById("questions-list");
     let questionTemplate = document.getElementById("questionCardTemplate").content;
 
-    // Get all questions from Firestore collection "questions"
     try {
-        let querySnapshot = await db.collection("questions").orderBy("timestamp", "desc").get();
+        let query = db.collection("questions")
+            .orderBy("timestamp", "desc")
+            .limit(QUESTIONS_PER_PAGE);
+
+        if (!initialLoad && lastVisibleQuestion) {
+            query = query.startAfter(lastVisibleQuestion);
+        }
+
+        let querySnapshot = await query.get();
+        lastVisibleQuestion = querySnapshot.docs[querySnapshot.docs.length - 1];
 
         // Process questions in order
         let questionCards = await Promise.all(
@@ -40,16 +51,38 @@ async function loadQuestions() {
                     });
                 questionCard.querySelector("#questionAuthor").innerText = "Posted by: " + authorName;
 
+                // Add tags to the question card
+                if (Array.isArray(questionData.tags) && questionData.tags.length > 0) {
+                    let tagsContainer = questionCard.querySelector("#questionTags");
+                    questionData.tags.forEach((tag) => {
+                        let tagElement = document.createElement("span");
+                        tagElement.classList.add("tag");
+                        tagElement.innerText = tag;
+                        tagsContainer.appendChild(tagElement);
+                    });
+                }
+
                 return questionCard;
             })
         );
 
         // Append all question cards to the container in order
         questionCards.forEach((card) => questionsContainer.appendChild(card));
+
+        // Show the "Load More" button if there are more questions
+        const loadMoreButton = document.getElementById("load-more");
+        if (querySnapshot.docs.length < QUESTIONS_PER_PAGE) {
+            loadMoreButton.style.display = "none";
+        } else {
+            loadMoreButton.style.display = "block";
+        }
     } catch (error) {
         console.error("Error fetching questions: ", error);
     }
 }
 
 // Load questions when the page loads
-document.addEventListener("DOMContentLoaded", loadQuestions);
+document.addEventListener("DOMContentLoaded", () => loadQuestions());
+
+// Add event listener for "Load More" button
+document.getElementById("load-more").addEventListener("click", () => loadQuestions(false));

@@ -110,3 +110,14 @@ h1 {
 .greenButton:hover {
   background-color: #13653f;
 }
+
+.tag {
+  display: inline-block;
+  margin: 2px;
+  padding: 4px 8px;
+  background-color: #f0f0f0;
+  border-radius: 4px;
+  font-size: 12px;
+  color: #333;
+}
+

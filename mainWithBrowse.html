@@ -27,6 +27,7 @@
   <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
   <link rel="stylesheet" href="./styles/style.css" />
   <link rel="stylesheet" href="./styles/main.css" />
+  <link rel="stylesheet" href="./styles/animations.css" />
 
   <script src="./scripts/api_bby22.js"></script>
   <script src="./scripts/firebase.js"></script>
@@ -42,46 +43,58 @@
   <div class="navbarTemplate"></div>
 
   <!-- Content -->
-  <div class="container-fluid bg-light text-dark p-5">
-    <div class="container bg-light p-5">
-      <h1 class="display-4">
-        Good evening, <span id="name-goes-here"></span>
-      </h1>
-      <hr />
-      <p>
-        Quote of the day: If you want to go fast, go alone. If you want to go
-        far, go together.
-      </p>
-    </div>
-    <div class="button-container">
-      <a href="ask.html" id="ask-question-button">
-        Need some info? Ask a question!
-      </a>
-    </div>
-    <!-- Browse section -->
-    <div class="container my-5">
-      <h1>Browse Questions</h1>
-      <div id="questions-list" class="row">
-        <!-- Questions will be injected here by JavaScript -->
+  <div id="content-container">
+    <div>
+      <h1>&nbsp;<span id="name-goes-here"></span></h1>
+      <div class="fade-in">
+        <hr />
+        <p>
+          Having trouble finding information about one of your courses? Ask a
+          question!
+        </p>
+        <p>
+          Feel like helping others so that you can be helped when you need?
+          Answer a question!
+        </p>
+        <div class="button-container">
+          <a href="ask.html" id="ask-question-button" class="main-page-btn">
+            Ask a question!
+          </a>
+          <a href="search.html?tags=" id="answer-question-button" class="main-page-btn">
+            Answer a question!
+          </a>
+        </div>
+        <hr />
       </div>
     </div>
   </div>
+  <!-- Browse section -->
+  <div class="container my-5 fade-in2">
+    <h1>Browse Questions</h1>
+    <div id="questions-list" class="row">
+      <!-- Questions will be injected here by JavaScript -->
+    </div>
+  </div>
+
+  <button class="main-page-btn" id="load-more" style="display: none;">Load More Questions</button>
+
 
   <!-- Template for question card-->
   <template id="questionCardTemplate">
     <div class="col-12 my-3">
-        <a href="#" class="card-link" id="questionLink">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title" id="questionTitle">Question Title</h5>
-                    <p class="card-text" id="questionDescription">Question description...</p>
-                    <p class="card-text"><small class="text-muted" id="questionAuthor">Author</small></p>
-                    <p class="card-text"><small class="text-muted" id="questionTimestamp">Timestamp</small></p>
-                </div>
-            </div>
-        </a>
+      <a href="#" class="card-link" id="questionLink">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title" id="questionTitle">Question Title</h5>
+            <p class="card-text" id="questionDescription">Question description...</p>
+            <p class="card-text"><small class="text-muted" id="questionAuthor">Author</small></p>
+            <p class="card-text"><small class="text-muted" id="questionTimestamp">Timestamp</small></p>
+            <p class="card-text"><small class="text-muted" id="questionTags"></small></p>
+          </div>
+        </div>
+      </a>
     </div>
-</template>
+  </template>
 
 
   <!-- Footer -->
