@@ -40,7 +40,9 @@ function displayQuestion() {
               "Unknown Author";
           });
 
-        // Display and initialize the bookmark icon
+        document.getElementById("question").hidden = false;
+        document.getElementById("questionPlaceholder").hidden = true;
+        // Display and initialize the favorite icon
         initializeBookmarkIcon();
       }
     })
@@ -58,10 +60,10 @@ function initializeBookmarkIcon() {
     if (user) {
       const userDocRef = db.collection("users").doc(user.uid);
 
-      const questionHeader = document.getElementById("question-header");
+      const questionHeader = document.getElementById("questionHeader");
       const bookmarkIcon = document.createElement("img");
-      bookmarkIcon.alt = "bookmark icon";
-      bookmarkIcon.id = "bookmark-icon";
+      bookmarkIcon.alt = "Bookmark icon";
+      bookmarkIcon.id = "bookmarkIcon";
       questionHeader.appendChild(bookmarkIcon);
 
       // Get user bookmark and set initial icon state
@@ -285,6 +287,8 @@ async function displayAnswers(questionId) {
       questionDoc.data().solution
     );
   });
+  document.getElementById("replies").hidden = false;
+  document.getElementById("repliesPlaceholder").hidden = true;
 }
 displayAnswers(questionId);
 

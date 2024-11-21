@@ -1,4 +1,4 @@
-#question {
+#question, #questionPlaceholder {
   display: inline-block;
   border: 4px solid #dedede;
   border-radius: 2em;
@@ -7,31 +7,31 @@
   width: 80%;
 }
 
-#question-header {
+#questionHeader, #questionHeaderPlaceholder {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-#question-header>p {
+#questionHeader > p, #questionHeaderPlaceholder > p {
   color: rgba(0, 0, 0, 0.445);
   font-style: italic;
   font-size: 10pt;
   margin: 0;
 }
 
-#bookmark-icon {
+#bookmarkIcon {
   height: 10%;
   width: 10%;
   max-height: 40px;
   max-width: 48px;
 }
 
-#question h1 {
+#question h1, #questionPlaceholder h1 {
   margin: 0.5em 0.3em;
 }
 
-#replies {
+#replies, #repliesPlaceholder {
   display: flex;
   flex-direction: column;
   justify-content: space-around;

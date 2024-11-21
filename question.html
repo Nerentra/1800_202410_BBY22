@@ -55,8 +55,8 @@
     <!-- Copied from about.html -->
     <!-- Hero -->
     <div class="containerRow">
-      <div id="question" class="px-4 my-4 text-center">
-        <div id="question-header">
+      <div id="question" class="px-4 my-4 text-center" hidden="true">
+        <div id="questionHeader">
           <p>
             Posted <span id="questionTimestamp"></span> ago by
             <a id="questionAuthor" class="hideLink"></a>
@@ -73,11 +73,53 @@
           </div>
         </div>
       </div>
+      <div
+        id="questionPlaceholder"
+        class="px-4 my-4 text-center placeholder-glow"
+        aria-hidden="true"
+      >
+        <div id="questionHeaderPlaceholder">
+          <p class="placeholder col-3"></p>
+        </div>
+
+        <h1 class="display-5 fw-bold">
+          <span id="questionTitlePlaceholder" class="placeholder col-6"></span>
+        </h1>
+
+        <div class="col-lg-6 mx-auto">
+          <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+            <p
+              class="text-left placeholder col-6"
+              id="questionDescriptionPlaceholder"
+            ></p>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- A container for the questions replies -->
     <div class="containerRow">
-      <div id="replies"></div>
+      <div id="replies" hidden="true"></div>
+      <div id="repliesPlaceholder" aria-hidden="true">
+        <div class="answer">
+          <div class="cf answerMetadata">
+            <span class="placeholder col-2"></span>
+          </div>
+          <div class="answerContent placeholder col-6"></div>
+        </div>
+        <div class="answer">
+          <div class="cf answerMetadata">
+            <span class="placeholder col-2"></span>
+          </div>
+          <div class="answerContent placeholder col-6"></div>
+        </div>
+        <div class="answer">
+          <div class="cf answerMetadata">
+            <span class="placeholder col-2"></span>
+          </div>
+          <div class="answerContent placeholder col-6"></div>
+        </div>
+      </div>
     </div>
 
     <div id="giveAnswerContainer">
