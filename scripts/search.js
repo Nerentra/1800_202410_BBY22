@@ -107,7 +107,7 @@ async function search(tags) {
 
   questions.sort(
     (a, b) =>
-      a.questionSnapshot.data().timestamp - b.questionSnapshot.data().timestamp
+      b.questionSnapshot.data().timestamp - a.questionSnapshot.data().timestamp
   );
 
   questions.forEach(({ questionSnapshot, authorSnapshot }) => {
