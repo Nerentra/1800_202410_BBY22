@@ -8,7 +8,7 @@ function insertNameFromFirestore() {
       let userData = db.collection("users").doc(user.uid);
       userData.get().then((userDoc) => {
         let userName = userDoc.data().name;
-        document.querySelector("#name-goes-here").innerText = userName;
+        document.querySelector("#name-goes-here").innerText = "Hey, " + userName + "!";
       });
     } else {
       window.location.assign("/");

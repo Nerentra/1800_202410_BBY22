@@ -1,0 +1,23 @@
+/* animation for an element to fade down onto the page */
+@keyframes fade-down {
+    0% {
+        opacity: 0;
+        transform: translateY(-30px) scale(0.9);
+    }
+
+    100% {
+        opacity: 100;
+        transform: translateY(0px) scale(1);
+    }
+}
+
+#fade-in {
+    animation: fade-down 0.5s;
+}
+
+#favorites-container {
+    opacity: 0;
+    animation: fade-down 0.5s;
+    animation-delay: 0.2s;
+    animation-fill-mode: forwards;
+}

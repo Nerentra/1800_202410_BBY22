@@ -218,6 +218,7 @@ templates.navbarPrelogin = {
       </div>
       <button id="searchButton" class="btn btn-outline-success" type="submit">Browse</button>
     </form>
+    
   </div>
 </nav>
 <div
