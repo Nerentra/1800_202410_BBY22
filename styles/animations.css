@@ -21,3 +21,17 @@
     animation-delay: 0.2s;
     animation-fill-mode: forwards;
 }
+
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 100;
+    }
+}
+
+.fade-in3 {
+    animation: fade-in 0.5s;
+}

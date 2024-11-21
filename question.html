@@ -36,6 +36,7 @@
     <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
     <link rel="stylesheet" href="./styles/style.css" />
     <link rel="stylesheet" href="./styles/question.css" />
+    <link rel="stylesheet" href="./styles/animations.css" />
 
     <script src="./scripts/api_bby22.js"></script>
     <script src="./scripts/formatDuration.js"></script>
@@ -75,7 +76,7 @@
       </div>
       <div
         id="questionPlaceholder"
-        class="px-4 my-4 text-center placeholder-glow"
+        class="px-4 my-4 text-center placeholder-glow fade-in3"
         aria-hidden="true"
       >
         <div id="questionHeaderPlaceholder">
@@ -100,7 +101,7 @@
     <!-- A container for the questions replies -->
     <div class="containerRow">
       <div id="replies" hidden="true"></div>
-      <div id="repliesPlaceholder" aria-hidden="true">
+      <div id="repliesPlaceholder" aria-hidden="true" class="placeholder-glow fade-in3">
         <div class="answer">
           <div class="cf answerMetadata">
             <span class="placeholder col-2"></span>
