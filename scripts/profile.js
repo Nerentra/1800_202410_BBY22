@@ -73,6 +73,8 @@ getProfileUserRef().then(async ({ userRef, isCurUser }) => {
   const userSnapshot = await userRef.get();
   const userData = userSnapshot.data();
   document.getElementById("userName").innerText = userData.name;
+  document.getElementById("userName").hidden = false;
+  document.getElementById("userNamePlaceholder").hidden = true;
 
   if (isCurUser) {
     const editButtonContainer = document.getElementById("editButtonContainer");
@@ -103,4 +105,7 @@ getProfileUserRef().then(async ({ userRef, isCurUser }) => {
   questionSnapshots.forEach(async (questionSnapshot) => {
     addQuestionToDOM(questionSnapshot, userSnapshot);
   });
+
+  document.getElementById("questions").hidden = false;
+  document.getElementById("questionsPlaceholders").hidden = true;
 });
