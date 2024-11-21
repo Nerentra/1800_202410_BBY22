@@ -1,0 +1,19 @@
+.main-page {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.main-page > div {
+    float: left;
+    padding: 40px 20px;
+    margin: 0 20px;
+}
+
+.main-page > .section-2 {
+    width: 50%;
+}
+
+.main-page .section-1,.section-3 {
+    width: 25%;
+}

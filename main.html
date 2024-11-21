@@ -27,10 +27,10 @@
   <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
   <link rel="stylesheet" href="./styles/style.css" />
   <link rel="stylesheet" href="./styles/main.css" />
+  <link rel="stylesheet" href="./styles/mainWithBrowse.css" />
   <link rel="stylesheet" href="./styles/animations.css" />
 
   <script src="./scripts/api_bby22.js"></script>
-  <script src="./scripts/formatDuration.js"></script>
   <script src="./scripts/firebase.js"></script>
 
   <script src="./scripts/initTemplates.js"></script>
@@ -44,39 +44,84 @@
   <div class="navbarTemplate"></div>
 
   <!-- Content -->
-  <div id="content-container">
-    <div>
-      <h1>&nbsp;<span id="name-goes-here"></span></h1>
-      <div class="fade-in">
-        <hr />
-        <p>
-          Having trouble finding information about one of your courses? Ask a
-          question!
-        </p>
-        <p>
-          Feel like helping others so that you can be helped when you need?
-          Answer a question!
-        </p>
-        <div class="button-container">
-          <a href="ask.html" id="ask-question-button" class="main-page-btn">
-            Ask a question!
-          </a>
-          <a href="search.html?tags=" id="answer-question-button" class="main-page-btn">
-            Answer a question!
-          </a>
-        </div>
-        <hr />
-      </div>
-      <div class="fade-in2" id="favorites-container">
-        <h2 class="header">Your newest favorites</h2>
-        <div id="questions" class="px-4 my-4 text-center"></div>
-      </div>
+  <div class="main-page">
+    <div class="section-1">
+      <p><small>
+        we're going to put something here. maybe subjects(tags) for easy access
+        or reccomended questions.
+        </small></p>
+
     </div>
 
-    <!-- Footer -->
-    <div class="footerTemplate"></div>
+    <div class="section-2" id="content-container">
+      <div>
+        <h1>&nbsp;<span id="name-goes-here"></span></h1>
+        <div class="fade-in">
+          <hr />
+          <p>
+            Having trouble finding information about one of your courses? Ask a
+            question!
+          </p>
+          <p>
+            Feel like helping others so that you can be helped when you need?
+            Answer a question!
+          </p>
+          <div class="button-container">
+            <a href="ask.html" id="ask-question-button" class="main-page-btn">
+              Ask a question!
+            </a>
+            <a href="search.html?tags=" id="answer-question-button" class="main-page-btn">
+              Answer a question!
+            </a>
+          </div>
+          <hr />
+        </div>
+      </div>
 
-    <script src="./scripts/main.js"></script>
+      <!-- Browse section -->
+      <div class="container my-5 fade-in2">
+        <h1>Browse Questions</h1>
+        <div id="questions-list" class="row">
+          <!-- Questions will be injected here by JavaScript -->
+        </div>
+      </div>
+      <button class="main-page-btn" id="load-more" style="display: none;">Load More Questions</button>
+    </div>
+
+    <div class="section-3">
+      <div class="fade-in2" class="">
+        <h2 class="header">Your Favorites</h2>
+        <div id="questions" class="text-center"></div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Template for question card-->
+  <template id="questionCardTemplate">
+    <div class="col-12 my-3">
+      <a href="#" class="card-link" id="questionLink">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title" id="questionTitle">Question Title</h5>
+            <p class="card-text" id="questionDescription">Question description...</p>
+            <p class="card-text"><small class="text-muted" id="questionAuthor">Author</small></p>
+            <p class="card-text"><small class="text-muted" id="questionTimestamp">Timestamp</small></p>
+            <p class="card-text"><small class="text-muted" id="questionTags"></small></p>
+          </div>
+        </div>
+      </a>
+    </div>
+  </template>
+
+
+  <!-- Footer -->
+  <div class="footerTemplate"></div>
+
+  <script src="./scripts/main.js"></script>
+  <script src="./scripts/browseQuestions.js"></script>
+  <script src="./scripts/formatDuration.js"></script>
+
 </body>
 
 </html>

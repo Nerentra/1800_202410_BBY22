@@ -30,6 +30,7 @@
   <link rel="stylesheet" href="./styles/animations.css" />
 
   <script src="./scripts/api_bby22.js"></script>
+  <script src="./scripts/formatDuration.js"></script>
   <script src="./scripts/firebase.js"></script>
 
   <script src="./scripts/initTemplates.js"></script>
@@ -66,44 +67,16 @@
         </div>
         <hr />
       </div>
+      <div class="fade-in2" id="favorites-container">
+        <h2 class="header">Your newest favorites</h2>
+        <div id="questions" class="px-4 my-4 text-center"></div>
+      </div>
     </div>
-  </div>
-  <!-- Browse section -->
-  <div class="container my-5 fade-in2">
-    <h1>Browse Questions</h1>
-    <div id="questions-list" class="row">
-      <!-- Questions will be injected here by JavaScript -->
-    </div>
-  </div>
 
-  <button class="main-page-btn" id="load-more" style="display: none;">Load More Questions</button>
+    <!-- Footer -->
+    <div class="footerTemplate"></div>
 
-
-  <!-- Template for question card-->
-  <template id="questionCardTemplate">
-    <div class="col-12 my-3">
-      <a href="#" class="card-link" id="questionLink">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title" id="questionTitle">Question Title</h5>
-            <p class="card-text" id="questionDescription">Question description...</p>
-            <p class="card-text"><small class="text-muted" id="questionAuthor">Author</small></p>
-            <p class="card-text"><small class="text-muted" id="questionTimestamp">Timestamp</small></p>
-            <p class="card-text"><small class="text-muted" id="questionTags"></small></p>
-          </div>
-        </div>
-      </a>
-    </div>
-  </template>
-
-
-  <!-- Footer -->
-  <div class="footerTemplate"></div>
-
-  <script src="./scripts/main.js"></script>
-  <script src="./scripts/browseQuestions.js"></script>
-  <script src="./scripts/formatDuration.js"></script>
-
+    <script src="./scripts/main.js"></script>
 </body>
 
 </html>
