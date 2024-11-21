@@ -69,7 +69,7 @@ function initializeFavoriteIcon() {
         .get()
         .then((userDoc) => {
           if (userDoc.exists) {
-            userFavorites = userDoc.data().favorites;
+            userFavorites = userDoc.data().favorites || [];
             favoriteIcon.src = userFavorites.includes(questionId)
               ? "../images/star-solid.svg"
               : "../images/star-frame.svg";
@@ -138,14 +138,14 @@ function toggleFavorite(favoriteIcon, userDocRef) {
 
 /**
  * Adds an answer to the DOM
- * @param answerData {Object} The firestore data for the answer
- * @param authorData {Object} The firestore data for the author
- * @param authorId {String} The id of the answer author
- * @param isQuestionAuthor {boolean} Whether the current user is the author of the question
- * @param isAnswerAuthor {boolean} Whether the current user is the author of the answer
- * @param answerId {String} The id of the answer
- * @param questionId {String} The id of the question
- * @param solution {String} The id of the solution for the question
+ * @param {Object} answerData The firestore data for the answer
+ * @param {Object} authorData The firestore data for the author
+ * @param {String} authorId The id of the answer author
+ * @param {boolean} isQuestionAuthor Whether the current user is the author of the question
+ * @param {boolean} isAnswerAuthor Whether the current user is the author of the answer
+ * @param {String} answerId The id of the answer
+ * @param {String} questionId The id of the question
+ * @param {String} solution The id of the solution for the question
  */
 function addAnswerToDOM(
   answerData,
@@ -243,7 +243,7 @@ function addAnswerToDOM(
 
 /**
  * Displays the answers of the current question
- * @param questionId {String} The id of the question
+ * @param {String} questionId The id of the question
  */
 async function displayAnswers(questionId) {
   let questionDoc = db.collection("questions").doc(questionId).get();
