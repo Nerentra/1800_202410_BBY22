@@ -17,3 +17,16 @@
 .main-page .section-1,.section-3 {
     width: 25%;
 }
+
+.card {
+    text-align: left; /* Ensure all text inside the card is left-aligned */
+  }
+  
+  .card-body {
+    text-align: left; /* Specifically ensure the card body content is left-aligned */
+  }
+  
+  .card-title,
+  .card-text {
+    text-align: left; /* Ensure titles and other text elements are also left-aligned */
+  }
