@@ -319,15 +319,6 @@ templates.navbarPostlogin = {
         <a href="/profile.html" class="nav-link">Profile</a>
       </li>
       <li class="nav-item">
-        <a href="/features.html" class="nav-link">Features</a>
-      </li>
-      <li class="nav-item">
-        <a href="/faq.html" class="nav-link">FAQs</a>
-      </li>
-      <li class="nav-item">
-        <a href="/about.html" class="nav-link">About</a>
-      </li>
-      <li class="nav-item">
         <a href="#" class="nav-link" onclick="logout()">Logout</a>
       </li>
     </ul>
