@@ -1,29 +1,30 @@
 /**
  * Takes in the data for a question and adds it to the DOM.
- * @param {String} questionId The firestore id of the question.
- * @param {String} authorId The firestore id for the question author.
- * @param {Object} questionData The firestore data for the question.
- * @param {Object} authorData The firestore data for the author.
+ * @param {Object} questionSnapshot A firestore snapshot of the question.
+ * @param {Object} authorSnapshot A firestore snapshot of the question author.
  */
-function addQuestionToDOM(questionID, authorId, questionData, authorData) {
-  let anchor = document.createElement("a");
-  anchor.href = `/question.html?docID=${questionID}`;
+function addQuestionToDOM(questionSnapshot, authorSnapshot) {
+  const questionData = questionSnapshot.data();
+  const authorData = authorSnapshot.data();
+
+  const anchor = document.createElement("a");
+  anchor.href = "/question.html?docID=" + questionSnapshot.id;
   anchor.classList.add("hideLink");
 
-  let titleDiv = document.createElement("div");
+  const titleDiv = document.createElement("div");
   titleDiv.innerText = questionData.title;
   titleDiv.classList.add("questionTitle");
-  let descriptionDiv = document.createElement("div");
+  const descriptionDiv = document.createElement("div");
   descriptionDiv.innerText = questionData.description;
   descriptionDiv.classList.add("questionDescription");
 
-  let metadataContainer = document.createElement("div");
+  const metadataContainer = document.createElement("div");
   metadataContainer.classList.add("questionMetadata");
-  let authorAnchor = document.createElement("a");
+  const authorAnchor = document.createElement("a");
   authorAnchor.innerText = authorData.name;
-  authorAnchor.classList.add("hideLink")
-  authorAnchor.href = "/profile.html?id=" + authorId;
-  let timeSpan = document.createElement("span");
+  authorAnchor.classList.add("hideLink");
+  authorAnchor.href = "/profile.html?id=" + authorSnapshot.id;
+  const timeSpan = document.createElement("span");
   timeSpan.innerText = formatDuration(Date.now() - questionData.timestamp);
 
   metadataContainer.appendChild(authorAnchor);
@@ -43,54 +44,47 @@ function addQuestionToDOM(questionID, authorId, questionData, authorData) {
  * @returns {String[]} The IDs of the questions
  */
 async function getQuestionsFromTags(tags) {
-  let tagCount = tags.length;
-  // If no tags then return don't filter anything out
-  if (tagCount == 0) {
-    let questionSnapshots = (await db.collection("questions").get()).docs;
-    let questionIDs = questionSnapshots.map((snapshot) => {
+  // If there are no tags then don't filter anything out
+  if (tags.length == 0) {
+    const questionSnapshots = (await db.collection("questions").get()).docs;
+    const questionIDs = questionSnapshots.map((snapshot) => {
       return snapshot.id;
     });
 
     return questionIDs;
   }
-  let questionCounts = {};
-  let promises = [];
-  tags.forEach((tag) => {
-    let promise = db
-      .collection("tags")
-      .doc(tag)
-      .get()
-      .then((ref) => {
-        let data = ref.data();
-        if (data) {
-          let questionIDs = data.questions;
-          questionIDs.forEach((id) => {
-            if (questionCounts[id]) {
-              questionCounts[id]++;
-            } else {
-              questionCounts[id] = 1;
-            }
-          });
-        } else {
-          // Tag doesn't exist, ignore it
-          tagCount--;
-        }
-      })
-      .catch(() => {
-        throw Error(`Error getting questions for tag ${tag}.`);
-      });
-    promises.push(promise);
-  });
 
-  await Promise.all(promises);
+  let validTagCount = 0;
+  const questionCounts = {};
+  await Promise.all(
+    tags.map(async (tag) => {
+      const tagSnapshot = await db.collection("tags").doc(tag).get();
+      if (tagSnapshot.exists) {
+        // Tag exists
+        validTagCount++;
 
-  let finalQuestions = [];
-  for (let id in questionCounts) {
-    if (questionCounts[id] >= tagCount) {
+        const tagData = tagSnapshot.data();
+        const questionIDs = tagData.questions;
+        questionIDs.forEach((id) => {
+          if (questionCounts[id]) {
+            questionCounts[id]++;
+          } else {
+            questionCounts[id] = 1;
+          }
+        });
+      }
+    })
+  );
+
+  const finalQuestions = [];
+  for (const id in questionCounts) {
+    if (questionCounts[id] >= validTagCount) {
+      // Question is in all tags
       finalQuestions.push(id);
     }
   }
 
+  console.log(finalQuestions)
   return finalQuestions;
 }
 
@@ -99,37 +93,34 @@ async function getQuestionsFromTags(tags) {
  * @param {String} tags The search tags.
  */
 async function search(tags) {
-  tags = tags.filter((tag) => {
-    // Remove all whitespace only strings
-    return tag.trim() != "";
-  });
-  getQuestionsFromTags(tags)
-    .then((questionIDs) => {
-      questionIDs.forEach((questionID) => {
-        db.collection("questions")
-          .doc(questionID)
-          .get()
-          .then((question) => {
-            let questionData = question.data();
-            questionData.author
-              .get()
-              .then((author) => {
-                addQuestionToDOM(questionID, author.id, questionData, author.data());
-              })
-              .catch((error) => {
-                console.error("Error getting question author", error);
-              });
-          })
-          .catch((error) => {
-            console.error("Error getting question", error);
-          });
-      });
+  const questionIDs = await getQuestionsFromTags(tags);
+  const questionsCollection = db.collection("questions");
+
+  const questions = [];
+  await Promise.all(
+    questionIDs.map(async (questionID) => {
+      const questionSnapshot = await questionsCollection.doc(questionID).get();
+      const authorSnapshot = await questionSnapshot.data().author.get();
+      questions.push({ questionSnapshot, authorSnapshot });
     })
-    .catch((error) => {
-      console.error("Error getting question IDs from tags", error);
-    });
+  );
+
+  questions.sort(
+    (a, b) =>
+      a.questionSnapshot.data().timestamp - b.questionSnapshot.data().timestamp
+  );
+
+  questions.forEach(({ questionSnapshot, authorSnapshot }) => {
+    addQuestionToDOM(questionSnapshot, authorSnapshot);
+  });
 }
 
-let params = new URL(window.location.href).searchParams;
-let tags = params.get("tags").split(" ");
+const params = new URL(window.location.href).searchParams;
+const tags = params
+  .get("tags")
+  .split(" ")
+  .filter((tag) => {
+    // Filter out all whitespace-only strings
+    return tag.trim() != "";
+  });
 search(tags);
