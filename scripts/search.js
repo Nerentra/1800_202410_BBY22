@@ -113,6 +113,8 @@ async function search(tags) {
   questions.forEach(({ questionSnapshot, authorSnapshot }) => {
     addQuestionToDOM(questionSnapshot, authorSnapshot);
   });
+  document.getElementById("questions").hidden = false
+  document.getElementById("questionsPlaceholders").hidden = true
 }
 
 const params = new URL(window.location.href).searchParams;
