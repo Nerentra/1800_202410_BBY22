@@ -122,11 +122,10 @@ async function search(tags) {
 }
 
 const params = new URL(window.location.href).searchParams;
-const tags = params
-  .get("tags")
-  .split(" ")
-  .filter((tag) => {
-    // Filter out all whitespace-only strings
-    return tag.trim() != "";
-  });
+const tagsText = params.get("tags") || "";
+const tags = tagsText.split(" ").filter((tag) => {
+  // Filter out all whitespace-only strings
+  return tag.trim() != "";
+});
+
 search(tags);
