@@ -1,36 +1,11 @@
 /**
- * Inserts the user's name into the page by fetching it from Firestore.
- * If the user is not authenticated, redirects to the home page.
+ * Takes in the data for a question and adds it to the DOM.
+ * @param {String} questionId The Firestore ID of the question.
+ * @param {String} authorId The Firestore ID for the question author.
+ * @param {Object} questionData The Firestore data for the question.
+ * @param {Object} authorData The Firestore data for the author.
  */
-function insertNameFromFirestore() {
-  firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
-      let userData = db.collection("users").doc(user.uid);
-      userData.get().then((userDoc) => {
-        let userName = userDoc.data().name;
-        document.querySelector("#name-goes-here").innerText = userName;
-      });
-    } else {
-      window.location.assign("/");
-    }
-  });
-}
-insertNameFromFirestore();
-
-/**
- * Adds a question card to the DOM in the specified container.
- *
- * @param {string} questionID - The ID of the question document.
- * @param {Object} questionData - The Firestore data of the question.
- * @param {Object} authorData - The Firestore data of the author.
- * @param {string} [containerSelector="#questions"] - The CSS selector of the container to append the question to.
- */
-function addQuestionToDOM(
-  questionID,
-  questionData,
-  authorData,
-  containerSelector = "#questions"
-) {
+function addQuestionToDOM(questionID, authorId, questionData, authorData) {
   let anchor = document.createElement("a");
   anchor.href = `/question.html?docID=${questionID}`;
   anchor.classList.add("hideLink");
@@ -38,46 +13,33 @@ function addQuestionToDOM(
   let titleDiv = document.createElement("div");
   titleDiv.innerText = questionData.title;
   titleDiv.classList.add("questionTitle");
-
-  // Commented out to remove description from favorites, saving space
-  // let descriptionDiv = document.createElement("div");
-  // descriptionDiv.innerText = questionData.description;
-  // descriptionDiv.classList.add("questionDescription");
+  let descriptionDiv = document.createElement("div");
+  descriptionDiv.innerText = questionData.description;
+  descriptionDiv.classList.add("questionDescription");
 
   let metadataContainer = document.createElement("div");
   metadataContainer.classList.add("questionMetadata");
-
-  let authorSpan = document.createElement("span");
-  authorSpan.innerText = authorData.name;
-
+  let authorAnchor = document.createElement("a");
+  authorAnchor.innerText = authorData.name;
+  authorAnchor.classList.add("hideLink");
+  authorAnchor.href = "/profile.html?id=" + authorId;
   let timeSpan = document.createElement("span");
   timeSpan.innerText = formatDuration(Date.now() - questionData.timestamp);
 
-  let seeAllFavorites = document.createElement("p");
-  seeAllFavorites.innerText = "To see all favorites, ";
-  let favoritesRedirect = document.createElement("a");
-  favoritesRedirect.href = "favorites.html";
-  favoritesRedirect.innerText = "click here.";
-  seeAllFavorites.appendChild(favoritesRedirect);
-
-  metadataContainer.appendChild(authorSpan);
+  metadataContainer.appendChild(authorAnchor);
   metadataContainer.appendChild(document.createElement("span"));
   metadataContainer.appendChild(timeSpan);
 
   anchor.appendChild(titleDiv);
-  // anchor.appendChild(descriptionDiv); // removed decription to save space
+  anchor.appendChild(descriptionDiv);
   anchor.appendChild(metadataContainer);
 
-  document.querySelector(containerSelector).appendChild(anchor);
-  document
-    .querySelector(containerSelector)
-    .insertAdjacentElement("afterend", seeAllFavorites);
+  document.querySelector("#questions").appendChild(anchor);
 }
 
 /**
- * Displays the user's favorite questions on the page.
- * Fetches the user's favorites from Firestore and adds them to the DOM.
- * If the user has no favorites, displays a message indicating so.
+ * Fetches and displays the user's favorite questions.
+ * If the user has no favorites, displays a message and a button to access all questions.
  */
 function displayFavorites() {
   firebase.auth().onAuthStateChanged((user) => {
@@ -88,24 +50,23 @@ function displayFavorites() {
         .then((userDoc) => {
           let userFavorites = userDoc.data().favorites || [];
           if (userFavorites.length > 0) {
-            // Show newest favorites first
-            let favoritesToDisplay = userFavorites.slice(-3).reverse();
-            favoritesToDisplay.forEach((questionID) => {
-              // Get question data
+            userFavorites.forEach((questionID) => {
               db.collection("questions")
                 .doc(questionID)
                 .get()
                 .then((questionDoc) => {
                   if (questionDoc.exists) {
                     let questionData = questionDoc.data();
+
                     questionData.author
                       .get()
                       .then((authorDoc) => {
                         if (authorDoc.exists) {
                           let authorData = authorDoc.data();
-                          // Display the question card
+
                           addQuestionToDOM(
                             questionID,
+                            authorDoc.id,
                             questionData,
                             authorData
                           );
@@ -117,7 +78,9 @@ function displayFavorites() {
                         console.error("Error getting author data:", error);
                       });
                   } else {
-                    console.error("Question document does not exist");
+                    console.error(
+                      `Question with ID ${questionID} does not exist`
+                    );
                   }
                 })
                 .catch((error) => {
@@ -126,9 +89,18 @@ function displayFavorites() {
             });
           } else {
             let messageDiv = document.createElement("div");
-            messageDiv.innerText =
+            let pMessage = document.createElement("p");
+            messageDiv.appendChild(pMessage);
+            pMessage.innerText =
               "You have no favorites yet. Browse questions to select some!";
             messageDiv.classList.add("noFavoritesMessage");
+
+            let browseButton = document.createElement("a");
+            browseButton.href = "/search.html?tags=";
+            browseButton.classList.add("main-page-btn");
+            browseButton.innerText = "Browse All Questions";
+
+            messageDiv.appendChild(browseButton);
             document.querySelector("#questions").appendChild(messageDiv);
           }
         })
@@ -136,7 +108,7 @@ function displayFavorites() {
           console.error("Error getting user data:", error);
         });
     } else {
-      window.location.assign("/");
+      window.location.assign("/login.html");
     }
   });
 }

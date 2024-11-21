@@ -135,6 +135,10 @@ hr {
   color: #616161;
 }
 
+.noFavoritesMessage {
+  font-size: calc(0.9rem + 1.0vw);
+}
+
 @media screen and (min-width: 651px) and (max-width: 1080px) {
   #questions>a {
     width: 48%;

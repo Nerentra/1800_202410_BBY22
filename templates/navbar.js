@@ -7,7 +7,7 @@
  * this function would return "my"
  *
  * @param {String} text The text to search within
- * @param {Number} index The index where the word is 
+ * @param {Number} index The index where the word is
  * @returns {[Number, Number]} The starting and ending indices of the word
  */
 function getIndicesOfWord(text, index) {
@@ -34,7 +34,7 @@ function getIndicesOfWord(text, index) {
 
 /**
  * Returns the tags that can be autofilled for a given word.
- * 
+ *
  * @param {String} word The current word the user is typing
  * @param {[String]} tags A list of tags that can be autofilled
  * @param {[String]} invalidTags A list of tags that are disallowed from autofilling
@@ -58,7 +58,7 @@ function getRecommendationsForWord(word, tags, invalidTags) {
 
 /**
  * Replaces a word at some indices in some text with a new word.
- * 
+ *
  * @param {String} text The text to modify
  * @param {[Number, Number]} indices The starting and ending indices of the word to replace
  * @param {String} newWord The word to replace the original word with
@@ -70,7 +70,7 @@ function replaceTextAtIndices(text, indices, newWord) {
 
 /**
  * Adds a dropdown containing the autofill recommendations.
- * 
+ *
  * @param {[String]} recommendations A list of tags that can be selected to be autofilled
  * @param {[Number, Number]} wordIndices The starting and ending indices of the word the user is editing
  * @param {[String]} tags All tags that can be autofilled
@@ -106,7 +106,7 @@ function addRecommendationsToPage(recommendations, wordIndices, tags) {
 /**
  * Updates the autofill recommendations dropdown using the current
  * text in the search bar.
- * 
+ *
  * @param {Number} cursorIndex The index of the cursor in the text
  * @param {[String]} tags The tags that can be autofilled
  */
@@ -311,6 +311,9 @@ templates.navbarPostlogin = {
     <ul class="nav flex-column">
       <li class="nav-item">
         <a href="/main.html" class="nav-link">Home</a>
+      </li>
+      <li class="nav-item">
+        <a href="/favorites.html" class="nav-link">Favorites</a>
       </li>
       <li class="nav-item">
         <a href="/profile.html" class="nav-link">Profile</a>
