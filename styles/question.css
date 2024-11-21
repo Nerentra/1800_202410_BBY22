@@ -13,14 +13,14 @@
   align-items: center;
 }
 
-#question-header > p {
+#question-header>p {
   color: rgba(0, 0, 0, 0.445);
   font-style: italic;
   font-size: 10pt;
   margin: 0;
 }
 
-#star-icon {
+#bookmark-icon {
   height: 10%;
   width: 10%;
   max-height: 40px;
@@ -148,7 +148,7 @@
   line-height: 1.25em;
 }
 
-.solutionMarker > img {
+.solutionMarker>img {
   height: 115%;
   vertical-align: top;
 }

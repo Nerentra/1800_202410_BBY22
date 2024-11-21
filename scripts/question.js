@@ -1,6 +1,6 @@
 let params = new URL(window.location.href); // Get URL of search bar
 let questionId = params.searchParams.get("docID"); // Get value for key "id"
-let userFavorites = []; // Initialize global array to store and update user favorites
+let userBookmarks = []; // Initialize global array to store and update user bookmarks
 
 /**
  * Get data from Firestore and display it on the page
@@ -40,8 +40,8 @@ function displayQuestion() {
               "Unknown Author";
           });
 
-        // Display and initialize the favorite icon
-        initializeFavoriteIcon();
+        // Display and initialize the bookmark icon
+        initializeBookmarkIcon();
       }
     })
     .catch((error) => {
@@ -51,39 +51,39 @@ function displayQuestion() {
 displayQuestion();
 
 /**
- * Initializes and handles the favorite icon functionality
+ * Initializes and handles the bookmark icon functionality
  */
-function initializeFavoriteIcon() {
+function initializeBookmarkIcon() {
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
       const userDocRef = db.collection("users").doc(user.uid);
 
       const questionHeader = document.getElementById("question-header");
-      const favoriteIcon = document.createElement("img");
-      favoriteIcon.alt = "favorite icon";
-      favoriteIcon.id = "star-icon";
-      questionHeader.appendChild(favoriteIcon);
+      const bookmarkIcon = document.createElement("img");
+      bookmarkIcon.alt = "bookmark icon";
+      bookmarkIcon.id = "bookmark-icon";
+      questionHeader.appendChild(bookmarkIcon);
 
-      // Get user favorites and set initial icon state
+      // Get user bookmark and set initial icon state
       userDocRef
         .get()
         .then((userDoc) => {
           if (userDoc.exists) {
-            userFavorites = userDoc.data().favorites || [];
-            favoriteIcon.src = userFavorites.includes(questionId)
-              ? "../images/star-solid.svg"
-              : "../images/star-frame.svg";
+            userBookmarks = userDoc.data().bookmarks || [];
+            bookmarkIcon.src = userBookmarks.includes(questionId)
+              ? "../images/bookmark-solid.svg"
+              : "../images/bookmark-frame.svg";
 
-            // Add click event to toggle favorite status
-            favoriteIcon.addEventListener("click", () =>
-              toggleFavorite(favoriteIcon, userDocRef)
+            // Add click event to toggle bookmark status
+            bookmarkIcon.addEventListener("click", () =>
+              toggleBookmark(bookmarkIcon, userDocRef)
             );
           } else {
             console.log("No user document found.");
           }
         })
         .catch((error) => {
-          console.error("Error retrieving user favorites:", error);
+          console.error("Error retrieving user bookmarks:", error);
         });
     } else {
       console.log("User not logged in. Redirecting...");
@@ -93,45 +93,45 @@ function initializeFavoriteIcon() {
 }
 
 /**
- * Updates the favorite status of a question
- * @param {HTMLElement} favoriteIcon - The favorite icon element
+ * Updates the bookmark status of a question
+ * @param {HTMLElement} bookmarkIcon - The bookmark icon element
  * @param {firebase.firestore.DocumentReference} userDocRef - Reference to the user's document
  */
-function toggleFavorite(favoriteIcon, userDocRef) {
-  if (!userFavorites) {
-    console.error("User favorites not loaded yet.");
+function toggleBookmark(bookmarkIcon, userDocRef) {
+  if (!userBookmarks) {
+    console.error("User bookmarks not loaded yet.");
     return;
   }
 
-  const isFavorite = userFavorites.includes(questionId);
+  const isBookmark = userBookmarks.includes(questionId);
 
-  if (isFavorite) {
-    // Remove from favorites
+  if (isBookmark) {
+    // Remove from bookmarks
     userDocRef
       .update({
-        favorites: firebase.firestore.FieldValue.arrayRemove(questionId),
+        bookmarks: firebase.firestore.FieldValue.arrayRemove(questionId),
       })
       .then((userDoc) => {
-        favoriteIcon.src = "../images/star-frame.svg"; // Update icon to unfilled
+        bookmarkIcon.src = "../images/bookmark-frame.svg"; // Update icon to unfilled
 
-        userFavorites = userFavorites.filter((id) => id !== questionId);
+        userBookmarks = userBookmarks.filter((id) => id !== questionId);
       })
       .catch((error) => {
-        console.error("Error removing from favorites:", error);
+        console.error("Error removing from bookmarks:", error);
       });
   } else {
-    // Add to favorites
+    // Add to bookmarks
     userDocRef
       .update({
-        favorites: firebase.firestore.FieldValue.arrayUnion(questionId),
+        bookmarks: firebase.firestore.FieldValue.arrayUnion(questionId),
       })
       .then(() => {
-        favoriteIcon.src = "../images/star-solid.svg"; // Update icon to filled
+        bookmarkIcon.src = "../images/bookmark-solid.svg"; // Update icon to filled
 
-        userFavorites.push(questionId);
+        userBookmarks.push(questionId);
       })
       .catch((error) => {
-        console.error("Error adding to favorites:", error);
+        console.error("Error adding to bookmarks:", error);
       });
   }
 }
