@@ -25,6 +25,12 @@
   width: 10%;
   max-height: 40px;
   max-width: 48px;
+  cursor: pointer;
+  transition: all 0.2 ease;
+}
+
+#bookmarkIcon:active {
+  transform: scale(0.9);
 }
 
 #question h1, #questionPlaceholder h1 {

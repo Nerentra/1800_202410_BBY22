@@ -29,13 +29,17 @@ async function loadQuestions(initialLoad = true) {
                 let timestamp = questionData.timestamp;
                 let timeElapsed = Date.now() - timestamp;
                 let readableTime = formatDuration(timeElapsed);
+                let description = questionData.description;
+                if (description.length > 180) {
+                  description = description.slice(0, 120) + "...";
+                }
 
                 // Clone the template
                 const questionCard = questionTemplate.cloneNode(true);
 
                 // Fill in the question details
                 questionCard.querySelector("#questionTitle").innerText = questionData.title;
-                questionCard.querySelector("#questionDescription").innerText = questionData.description;
+                questionCard.querySelector("#questionDescription").innerText = description;
                 questionCard.querySelector("#questionTimestamp").innerText = readableTime + " ago";
                 questionCard.querySelector("#questionLink").href = `/question.html?docID=${questionID}`;
 
