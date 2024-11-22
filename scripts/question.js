@@ -3,17 +3,6 @@ let questionId = params.searchParams.get("docID"); // Get value for key "id"
 let userBookmarks = []; // Initialize global array to store and update user bookmarks
 
 /**
- * click animation for the bookmark icon
- */
-function bookmarkClick() {
-  var button = document.getElementById("bookmarkIcon");
-  button.classList.add("animate");
-  setTimeout(() => {
-    button.classList.remove("animate");
-    }, 600);
-}
-
-/**
  * Get data from Firestore and display it on the page
  */
 function displayQuestion() {
@@ -91,7 +80,6 @@ function initializeBookmarkIcon() {
             // Add click event to toggle bookmark status
             bookmarkIcon.addEventListener("click", () =>
               toggleBookmark(bookmarkIcon, userDocRef),
-              bookmarkClick(),
             );
           } else {
             console.log("No user document found.");

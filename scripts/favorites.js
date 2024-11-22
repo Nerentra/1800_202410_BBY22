@@ -39,18 +39,18 @@ function addQuestionToDOM(questionID, authorId, questionData, authorData) {
 
 /**
  * Fetches and displays the user's favorite questions.
- * If the user has no favorites, displays a message and a button to access all questions.
+ * If the user has no Bookmarks, displays a message and a button to access all questions.
  */
-function displayFavorites() {
+function displayBookmarks() {
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
       let userData = db.collection("users").doc(user.uid);
       userData
         .get()
         .then((userDoc) => {
-          let userFavorites = userDoc.data().favorites || [];
-          if (userFavorites.length > 0) {
-            userFavorites.forEach((questionID) => {
+          let userBookmarks = userDoc.data().bookmarks || [];
+          if (userBookmarks.length > 0) {
+            userBookmarks.forEach((questionID) => {
               db.collection("questions")
                 .doc(questionID)
                 .get()
@@ -92,8 +92,8 @@ function displayFavorites() {
             let pMessage = document.createElement("p");
             messageDiv.appendChild(pMessage);
             pMessage.innerText =
-              "You have no favorites yet. Browse questions to select some!";
-            messageDiv.classList.add("noFavoritesMessage");
+              "You have no Bookmarks yet. Browse questions to select some!";
+            messageDiv.classList.add("noBookmarksMessage");
 
             let browseButton = document.createElement("a");
             browseButton.href = "/search.html?tags=";
@@ -112,4 +112,4 @@ function displayFavorites() {
     }
   });
 }
-displayFavorites();
+displayBookmarks();
