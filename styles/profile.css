@@ -1,3 +1,11 @@
-#editButtonContainer {
-    margin-top: 5em;
+#userNameContainer h1 {
+  display: inline;
+}
+
+#userNameContainerPlaceholder {
+  margin-right: 1ch;
+}
+
+.spacer {
+  width: 1em;
 }

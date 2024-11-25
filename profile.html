@@ -53,11 +53,27 @@
     <div class="navbarTemplate"></div>
 
     <div class="container">
-      <div id="editButtonContainer" class="containerRow fade-in3" hidden="true"></div>
-      <h1 id="userName" hidden="true"></h1>
-      <div class="containerRow placeholder-glow" aria-hidden="true">
-        <h1 id="userNamePlaceholder" class="placeholder col-3"></h1>
-      </div>
+      <h1 id="userNameContainer" class="containerRow" hidden="true">
+        <span id="userName"></span>
+        <span class="spacer"></span>
+        <span id="userPoints"></span>
+      </h1>
+      <h1
+        id="userNameContainerPlaceholder"
+        class="containerRow placeholder-glow fade-in3"
+        aria-hidden="true"
+      >
+        <span class="placeholder col-5"></span>
+        <span class="spacer"></span>
+        <span class="placeholder col-1"></span>
+      </h1>
+
+      <div
+        id="editButtonContainer"
+        class="containerRow fade-in3"
+        hidden="true"
+      ></div>
+
       <h2>Questions</h2>
       <div id="questions" hidden="true"></div>
       <div id="questionsPlaceholders" class="fade-in3" aria-hidden="true">

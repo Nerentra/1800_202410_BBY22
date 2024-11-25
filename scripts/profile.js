@@ -38,6 +38,10 @@ function addQuestionToDOM(questionSnapshot) {
   document.querySelector("#questions").appendChild(anchor);
 }
 
+/**
+ * Returns a Promise that resolves once the auth state changes for the first time.
+ * @returns {Promise} Resolves to a reference to the logged-in-user's document or undefined if not logged in.
+ */
 function authOnce() {
   return new Promise((resolve, _) => {
     let triggered = false;
@@ -54,6 +58,12 @@ function authOnce() {
   });
 }
 
+/**
+ * A function that checks what needs to be displayed on the profile.html page.
+ * @returns {Object} An object with the fields
+ *   userRef A reference to the user's firestore document
+ *   isCurUser A boolean denoting if the profile is showing the logged in user's document
+ */
 async function getProfileUserRef() {
   if (paramsId && paramsId.trim() !== "") {
     return {
@@ -77,8 +87,29 @@ getProfileUserRef().then(async ({ userRef, isCurUser }) => {
   const userSnapshot = await userRef.get();
   const userData = userSnapshot.data();
   document.getElementById("userName").innerText = userData.name;
-  document.getElementById("userName").hidden = false;
-  document.getElementById("userNamePlaceholder").hidden = true;
+  const userPoints = userData.points || 0;
+  const userPointsElem = document.getElementById("userPoints");
+  userPointsElem.innerText = `${userPoints >= 0 ? "+" : "-"}${userPoints}`;
+  if (userPoints) {
+    const strongestColorValue = 100;
+    const strongestColorStrength = 0.8; // Must be between 0 and 1
+    const colorFactor =
+      Math.max(Math.min(Math.abs(userPoints) / strongestColorValue, 1), 0) *
+      strongestColorStrength;
+    let colorComponent = (colorFactor * 255).toString(16);
+    if (colorComponent.length === 1) {
+      colorComponent = "0" + colorComponent;
+    }
+    let displayColor;
+    if (userPoints > 0) {
+      displayColor = `#00${colorComponent}00`;
+    } else {
+      displayColor = `#${colorComponent}0000`;
+    }
+    userPointsElem.style.color = displayColor;
+  }
+  document.getElementById("userNameContainer").hidden = false;
+  document.getElementById("userNameContainerPlaceholder").hidden = true;
 
   if (isCurUser) {
     const editButtonContainer = document.getElementById("editButtonContainer");
