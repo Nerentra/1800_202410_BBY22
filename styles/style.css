@@ -58,6 +58,12 @@ h1 {
   transition: border-radius 500ms, border 100ms;
 }
 
+#navbarLogo {
+  display: block;
+  margin-left: 1em;
+  height: 3em;
+}
+
 #search-form {
   min-width: 17rem;
   max-width: 50rem;
@@ -121,3 +127,8 @@ h1 {
   color: #333;
 }
 
+@media screen and (max-width: 651px) {
+  #navbarLogo {
+    display: none;
+  }
+}

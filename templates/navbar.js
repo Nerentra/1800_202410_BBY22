@@ -197,6 +197,15 @@ templates.navbarPrelogin = {
     >
       <span class="navbar-toggler-icon"></span>
     </button>
+
+    <a href="/">
+      <img
+        src="svgs/logoFull.svg"
+        alt="A pretty purple logo for Askmii"
+        id="navbarLogo"
+      />
+    </a>
+
     <!-- Responsive, centered search bar next to the hamburger icon -->
     <form
       class="d-flex mx-auto justify-content-center"
@@ -270,6 +279,15 @@ templates.navbarPostlogin = {
     >
       <span class="navbar-toggler-icon"></span>
     </button>
+
+    <a href="/main.html">
+      <img
+        src="svgs/logoFull.svg"
+        alt="A pretty purple logo for Askmii"
+        id="navbarLogo"
+      />
+    </a>
+
     <!-- Responsive, centered search bar next to the hamburger icon -->
     <form
       class="d-flex mx-auto justify-content-center"
