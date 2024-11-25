@@ -79,7 +79,7 @@ function initializeBookmarkIcon() {
 
             // Add click event to toggle bookmark status
             bookmarkIcon.addEventListener("click", () =>
-              toggleBookmark(bookmarkIcon, userDocRef),
+              toggleBookmark(bookmarkIcon, userDocRef)
             );
           } else {
             console.log("No user document found.");
@@ -140,26 +140,25 @@ function toggleBookmark(bookmarkIcon, userDocRef) {
 }
 
 /**
- * Adds an answer to the DOM
- * @param {Object} answerData The firestore data for the answer
- * @param {Object} authorData The firestore data for the author
- * @param {String} authorId The id of the answer author
- * @param {boolean} isQuestionAuthor Whether the current user is the author of the question
- * @param {boolean} isAnswerAuthor Whether the current user is the author of the answer
- * @param {String} answerId The id of the answer
- * @param {String} questionId The id of the question
- * @param {String} solution The id of the solution for the question
+ * Adds an answer to the DOM.
+ * @param {Object} currentUser The current user object from firebase auth
+ * @param {Object} questionSnapshot A snapshot of the question
+ * @param {Object} answerSnapshot A snapshot of thefor the answer
+ * @param {Object} authorSnapshot A snapshot of the the author
  */
 function addAnswerToDOM(
-  answerData,
-  authorData,
-  authorId,
-  isQuestionAuthor,
-  isAnswerAuthor,
-  answerId,
-  questionId,
-  solution
+  currentUser,
+  questionSnapshot,
+  answerSnapshot,
+  authorSnapshot
 ) {
+  const answerData = answerSnapshot.data();
+  const answerId = answerSnapshot.id;
+  const authorId = authorSnapshot.id;
+  const questionId = questionSnapshot.id;
+  const isQuestionAuthor = questionSnapshot.data().author.id == currentUser.uid;
+  const solutionId = questionSnapshot.data().solution;
+
   let replies = document.querySelector("#replies");
 
   let card = document.createElement("div");
@@ -169,8 +168,8 @@ function addAnswerToDOM(
   metadataContainer.classList.add("cf");
   metadataContainer.classList.add("answerMetadata");
 
-  let existingSolution = solution && solution.length !== 0;
-  let answerIsSolution = solution === answerId;
+  let existingSolution = solutionId && solutionId.length !== 0;
+  let answerIsSolution = solutionId === answerId;
   if (existingSolution && answerIsSolution) {
     let solutionMarker = document.createElement("div");
     solutionMarker.classList.add("solutionMarker");
@@ -185,7 +184,7 @@ function addAnswerToDOM(
   username.href = "/profile.html?id=" + authorId;
   username.classList.add("answerName");
   username.classList.add("hideLink");
-  username.innerText = authorData.name;
+  username.innerText = authorSnapshot.data().name;
   metadataContainer.appendChild(username);
 
   let postTime = document.createElement("span");
@@ -211,15 +210,18 @@ function addAnswerToDOM(
       unmarkSolutionButton.classList.add("markSolutionButton");
       unmarkSolutionButton.classList.add("redButton");
       unmarkSolutionButton.innerText = "Unmark as solution";
-      unmarkSolutionButton.addEventListener("click", () => {
-        db.collection("questions")
-          .doc(questionId)
+      unmarkSolutionButton.addEventListener("click", async () => {
+        const promise1 = db.collection("questions").doc(questionId).update({
+          solution: "",
+        });
+        db.collection("users")
+          .doc(authorId)
           .update({
-            solution: "",
-          })
-          .then(() => {
-            window.location.reload();
+            points: firebase.firestore.FieldValue.increment(-5),
           });
+        await promise1;
+
+        window.location.reload();
       });
       card.appendChild(unmarkSolutionButton);
     } else {
@@ -227,15 +229,21 @@ function addAnswerToDOM(
       markSolutionButton.classList.add("markSolutionButton");
       markSolutionButton.classList.add("greenButton");
       markSolutionButton.innerText = "Mark as solution";
-      markSolutionButton.addEventListener("click", () => {
-        db.collection("questions")
-          .doc(questionId)
-          .update({
-            solution: answerId,
-          })
-          .then(() => {
-            window.location.reload();
-          });
+      markSolutionButton.addEventListener("click", async () => {
+        const promise1 = db.collection("questions").doc(questionId).update({
+          solution: answerId,
+        });
+        if (!existingSolution) {
+          await db
+            .collection("users")
+            .doc(authorId)
+            .update({
+              points: firebase.firestore.FieldValue.increment(5),
+            });
+        }
+        await promise1;
+
+        window.location.reload();
       });
       card.appendChild(markSolutionButton);
     }
@@ -249,43 +257,37 @@ function addAnswerToDOM(
  * @param {String} questionId The id of the question
  */
 async function displayAnswers(questionId) {
-  let questionDoc = db.collection("questions").doc(questionId).get();
-  let answerRefs = await db
+  let questionSnapshot = db.collection("questions").doc(questionId).get();
+  let answerSnapshots = await db
     .collection("questions")
     .doc(questionId)
     .collection("answers")
     .get();
 
   const answers = [];
-  for await (const [_, answerRef] of answerRefs.docs.entries()) {
-    let answer = await answerRef.data();
-    let author = await answer.author.get();
+  for await (const [_, answerSnapshot] of answerSnapshots.docs.entries()) {
+    let authorSnapshot = await answerSnapshot.data().author.get();
     answers.push({
-      answerData: answer,
-      authorData: author.data(),
-      authorId: author.id,
-      answerId: answerRef.id,
+      answerSnapshot,
+      authorSnapshot,
     });
   }
 
-  answers.sort((a, b) => a.answerData.timestamp - b.answerData.timestamp);
+  answers.sort(
+    (a, b) =>
+      a.answerSnapshot.data().timestamp - b.answerSnapshot.data().timestamp
+  );
 
-  questionDoc = await questionDoc;
+  questionSnapshot = await questionSnapshot;
 
   // There is somewhat of a race condition here with whether the user is authenticated yet
-  let curUser = firebase.auth().currentUser;
-  let isQuestionAuthor = questionDoc.data().author.id == curUser.uid;
+  const currentUser = firebase.auth().currentUser;
   answers.forEach((answer) => {
-    let isAnswerAuthor = answer.authorId == curUser.uid;
     addAnswerToDOM(
-      answer.answerData,
-      answer.authorData,
-      answer.authorId,
-      isQuestionAuthor,
-      isAnswerAuthor,
-      answer.answerId,
-      questionId,
-      questionDoc.data().solution
+      currentUser,
+      questionSnapshot,
+      answer.answerSnapshot,
+      answer.authorSnapshot
     );
   });
   document.getElementById("replies").hidden = false;
@@ -372,33 +374,42 @@ document.addEventListener("DOMContentLoaded", () => {
     showAnswerForm(false);
   });
 
-  document.getElementById("submitButton").addEventListener("click", (event) => {
-    event.preventDefault();
-    const answerContent = document.getElementById("answerContent").value;
-    const user = firebase.auth().currentUser;
+  document
+    .getElementById("submitButton")
+    .addEventListener("click", async (event) => {
+      event.preventDefault();
+      const answerContent = document.getElementById("answerContent").value;
+      const user = firebase.auth().currentUser;
 
-    if (user) {
-      if (answerContent.trim() !== "") {
-        db.collection("questions")
-          .doc(questionId)
-          .collection("answers")
-          .add({
-            content: answerContent,
-            author: db.collection("users").doc(user.uid),
-            timestamp: Date.now(),
-          })
-          .then(() => {
-            window.location.reload();
-          })
-          .catch((error) => {
-            console.error("Error submitting question: ", error);
-            alert("Error submitting question. Please try again.");
-          });
-      } else {
-        alert("Please input something for your answer.");
+      if (user) {
+        if (answerContent.trim() !== "") {
+          db.collection("questions")
+            .doc(questionId)
+            .collection("answers")
+            .add({
+              content: answerContent,
+              author: db.collection("users").doc(user.uid),
+              timestamp: Date.now(),
+            })
+            .then(() => {
+              db.collection("users")
+                .doc(user.uid)
+                .update({
+                  points: firebase.firestore.FieldValue.increment(1),
+                })
+                .then(() => {
+                  window.location.reload();
+                });
+            })
+            .catch((error) => {
+              console.error("Error submitting question: ", error);
+              alert("Error submitting question. Please try again.");
+            });
+        } else {
+          alert("Please input something for your answer.");
+        }
+      } else if (user) {
+        alert("You must be logged in to submit a question.");
       }
-    } else if (user) {
-      alert("You must be logged in to submit a question.");
-    }
-  });
+    });
 });
