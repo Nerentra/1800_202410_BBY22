@@ -61,9 +61,10 @@ function initializeBookmarkIcon() {
       const userDocRef = db.collection("users").doc(user.uid);
 
       const questionHeader = document.getElementById("questionHeader");
-      const bookmarkIcon = document.createElement("img");
+      const bookmarkIcon = document.createElement("input");
       bookmarkIcon.alt = "Bookmark icon";
       bookmarkIcon.id = "bookmarkIcon";
+      bookmarkIcon.type = "image";
       questionHeader.appendChild(bookmarkIcon);
 
       // Get user bookmark and set initial icon state
@@ -73,12 +74,12 @@ function initializeBookmarkIcon() {
           if (userDoc.exists) {
             userBookmarks = userDoc.data().bookmarks || [];
             bookmarkIcon.src = userBookmarks.includes(questionId)
-              ? "../images/bookmark-solid.svg"
+              ? "../images/bookmark-filled2.svg"
               : "../images/bookmark-frame.svg";
 
             // Add click event to toggle bookmark status
             bookmarkIcon.addEventListener("click", () =>
-              toggleBookmark(bookmarkIcon, userDocRef)
+              toggleBookmark(bookmarkIcon, userDocRef),
             );
           } else {
             console.log("No user document found.");
@@ -128,7 +129,7 @@ function toggleBookmark(bookmarkIcon, userDocRef) {
         bookmarks: firebase.firestore.FieldValue.arrayUnion(questionId),
       })
       .then(() => {
-        bookmarkIcon.src = "../images/bookmark-solid.svg"; // Update icon to filled
+        bookmarkIcon.src = "../images/bookmark-filled2.svg"; // Update icon to filled
 
         userBookmarks.push(questionId);
       })
