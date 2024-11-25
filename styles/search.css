@@ -9,7 +9,12 @@
 
 #questions > a,
 #questionsPlaceholders > span {
-  display: block;
+  display: grid;
+  grid-template:
+    "title" auto
+    "description" auto
+    "." 1fr
+    "metadata" auto / 1fr;
   width: 100%;
   border: 4px solid #dedede;
 
@@ -19,11 +24,17 @@
 }
 
 .questionTitle {
+  grid-area: title;
   font-size: 2em;
   text-align: center;
 }
 
+.questionDescription {
+  grid-area: description;
+}
+
 .questionMetadata {
+  grid-area: metadata;
   margin-top: 1em;
   display: grid;
   grid-template-columns: max-content 1fr max-content;
