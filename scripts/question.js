@@ -2,6 +2,17 @@ let params = new URL(window.location.href); // Get URL of search bar
 let questionId = params.searchParams.get("docID"); // Get value for key "id"
 let userBookmarks = []; // Initialize global array to store and update user bookmarks
 
+firebase.auth().onAuthStateChanged((user) => {
+  const giveAnswerContainer = document.getElementById("giveAnswerContainer");
+  if (user) {
+    // I cannot explain why this is needed but I need to move on
+    setTimeout(() => {
+      giveAnswerContainer.hidden = false;
+    }, 0);
+  }
+  giveAnswerContainer.hidden = true;
+});
+
 /**
  * Get data from Firestore and display it on the page
  */
@@ -88,9 +99,6 @@ function initializeBookmarkIcon() {
         .catch((error) => {
           console.error("Error retrieving user bookmarks:", error);
         });
-    } else {
-      console.log("User not logged in. Redirecting...");
-      window.location.assign("/");
     }
   });
 }
@@ -156,7 +164,8 @@ function addAnswerToDOM(
   const answerId = answerSnapshot.id;
   const authorId = authorSnapshot.id;
   const questionId = questionSnapshot.id;
-  const isQuestionAuthor = questionSnapshot.data().author.id == currentUser.uid;
+  const isQuestionAuthor =
+    currentUser && questionSnapshot.data().author.id == currentUser.uid;
   const solutionId = questionSnapshot.data().solution;
 
   let replies = document.querySelector("#replies");
