@@ -246,6 +246,7 @@ hr {
   }
 
   #bookmarks-container>div:first-of-type {
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
