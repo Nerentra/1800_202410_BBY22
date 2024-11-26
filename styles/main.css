@@ -140,14 +140,104 @@ hr {
   font-size: calc(0.9rem + 1.0vw);
 }
 
+@media screen and (max-width: 650px) {
+  .section-1, .section-3 {
+    display: none;
+  }
+
+  .browse-container {
+    margin: 0 0;
+  }
+
+  .browse-container>h1 {
+    margin: 0 0 2rem 0;
+  }
+
+  .section-2>div>h1:first-child {
+    margin: 0 0 2rem 0;
+  }
+}
+
 @media screen and (min-width: 651px) and (max-width: 1080px) {
   #questions>a {
     width: 48%;
+  }
+
+  .main-page {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+
+  .main-page>div {
+    float: left;
+    padding: 40px 20px;
+    margin: 0 20px;
+  }
+
+  .main-page>.section-2 {
+    width: 50%;
+  }
+
+  .main-page .section-1, .section-3 {
+    width: 25%;
+  }
+
+  .card {
+    text-align: left;
+    /* Ensure all text inside the card is left-aligned */
+  }
+
+  .card-body {
+    text-align: left;
+    /* Specifically ensure the card body content is left-aligned */
+  }
+
+  .card-title,
+  .card-text {
+    text-align: left;
+    /* Ensure titles and other text elements are also left-aligned */
   }
 }
 
 @media screen and (min-width: 1081px) {
   #questions>a {
     width: 30%;
+  }
+
+  .main-page {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+
+  .main-page>div {
+    float: left;
+    padding: 40px 20px;
+    margin: 0 20px;
+  }
+
+  .main-page>.section-2 {
+    width: 50%;
+  }
+
+  .main-page .section-1, .section-3 {
+    width: 25%;
+  }
+
+  .card {
+    text-align: left;
+    /* Ensure all text inside the card is left-aligned */
+  }
+
+  .card-body {
+    text-align: left;
+    /* Specifically ensure the card body content is left-aligned */
+  }
+
+  .card-title,
+  .card-text {
+    text-align: left;
+    /* Ensure titles and other text elements are also left-aligned */
   }
 }
