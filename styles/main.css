@@ -104,7 +104,7 @@ hr {
   color: inherit;
 }
 
-#questions {
+#bookmarked-questions {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
@@ -112,7 +112,7 @@ hr {
   row-gap: 1em;
 }
 
-#questions>a {
+#bookmarked-questions>a {
   display: block;
   width: 100%;
   border: 2px solid #28a745;
@@ -159,7 +159,7 @@ hr {
 }
 
 @media screen and (min-width: 651px) and (max-width: 1080px) {
-  #questions>a {
+  #bookmarked-questions>a {
     width: 48%;
   }
 
@@ -201,7 +201,7 @@ hr {
 }
 
 @media screen and (min-width: 1081px) {
-  #questions>a {
+  #bookmarked-questions>a {
     width: 30%;
   }
 

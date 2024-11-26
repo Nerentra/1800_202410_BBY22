@@ -24,13 +24,13 @@ insertNameFromFirestore();
  * @param {string} questionID - The ID of the question document.
  * @param {Object} questionData - The Firestore data of the question.
  * @param {Object} authorData - The Firestore data of the author.
- * @param {string} [containerSelector="#questions"] - The CSS selector of the container to append the question to.
+ * @param {string} [containerSelector="#bookmarked-questions"] - The CSS selector of the container to append the question to.
  */
 function addQuestionToDOM(
   questionID,
   questionData,
   authorData,
-  containerSelector = "#questions"
+  containerSelector = "#bookmarked-questions"
 ) {
   let anchor = document.createElement("a");
   anchor.href = `/question.html?docID=${questionID}`;
@@ -130,7 +130,9 @@ function displayBookmarks() {
             messageDiv.innerText =
               "You have no bookmarks yet. Browse questions to select some!";
             messageDiv.classList.add("noBookmarksMessage");
-            document.querySelector("#questions").appendChild(messageDiv);
+            document
+              .querySelector("#bookmarked-questions")
+              .appendChild(messageDiv);
           }
         })
         .catch((error) => {
