@@ -160,7 +160,7 @@ hr {
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: 0.65fr 0.3fr;
+  grid-template-columns: 0.9fr 0.4fr;
   grid-template-areas: "intro bookmark"
     "browse bookmark";
 }

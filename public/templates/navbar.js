@@ -248,16 +248,16 @@ templates.navbarPrelogin = {
   <div class="offcanvas-body">
     <ul class="nav flex-column">
       <li class="nav-item">
-        <a href="/public/index.html" class="nav-link">Home</a>
+        <a href="/index.html" class="nav-link">Home</a>
       </li>
       <li class="nav-item">
-        <a href="/public/features.html" class="nav-link">Features</a>
+        <a href="#bookmarked-questions/features.html" class="nav-link">Features</a>
       </li>
       <li class="nav-item">
-        <a href="/public/faq.html" class="nav-link">FAQs</a>
+        <a href="#bookmarked-questions/faq.html" class="nav-link">FAQs</a>
       </li>
       <li class="nav-item">
-        <a href="/public/about.html" class="nav-link">About</a>
+        <a href="#bookmarked-questions/about.html" class="nav-link">About</a>
       </li>
     </ul>
   </div>
@@ -329,13 +329,13 @@ templates.navbarPostlogin = {
   <div class="offcanvas-body">
     <ul class="nav flex-column">
       <li class="nav-item">
-        <a href="/public/main.html" class="nav-link">Home</a>
+        <a href="#bookmarked-questions/main.html" class="nav-link">Home</a>
       </li>
       <li class="nav-item">
-        <a href="/public/bookmarks.html" class="nav-link">Bookmarks</a>
+        <a href="#bookmarked-questions/bookmarks.html" class="nav-link">Bookmarks</a>
       </li>
       <li class="nav-item">
-        <a href="/public/profile.html" class="nav-link">Profile</a>
+        <a href="#bookmarked-questions/profile.html" class="nav-link">Profile</a>
       </li>
       <li class="nav-item">
         <a href="#" class="nav-link" onclick="logout()">Logout</a>
