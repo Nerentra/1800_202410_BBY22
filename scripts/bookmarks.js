@@ -38,7 +38,7 @@ function addQuestionToDOM(questionID, authorId, questionData, authorData) {
 }
 
 /**
- * Fetches and displays the user's favorite questions.
+ * Fetches and displays the user's bookmarked questions.
  * If the user has no Bookmarks, displays a message and a button to access all questions.
  */
 function displayBookmarks() {
@@ -92,7 +92,7 @@ function displayBookmarks() {
             let pMessage = document.createElement("p");
             messageDiv.appendChild(pMessage);
             pMessage.innerText =
-              "You have no Bookmarks yet. Browse questions to select some!";
+              "You have no bookmarks yet. Browse questions to select some!";
             messageDiv.classList.add("noBookmarksMessage");
 
             let browseButton = document.createElement("a");
