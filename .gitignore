@@ -5,3 +5,9 @@ node_modules/
 api_bby22.js
 package-lock.json
 package.json
+
+.firestore/
+.firebaserc
+firebase.json
+firestore.indexes.json
+firestore.rules
