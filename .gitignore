@@ -6,7 +6,7 @@ api_bby22.js
 package-lock.json
 package.json
 
-.firestore/
+.firebase/
 .firebaserc
 firebase.json
 firestore.indexes.json
