@@ -53,7 +53,7 @@ function displayQuestion() {
 
         document.getElementById("question").hidden = false;
         document.getElementById("questionPlaceholder").hidden = true;
-        // Display and initialize the favorite icon
+        // Display and initialize the bookmark icon
         initializeBookmarkIcon();
       }
     })

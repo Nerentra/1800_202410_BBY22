@@ -8,7 +8,8 @@ function insertNameFromFirestore() {
       let userData = db.collection("users").doc(user.uid);
       userData.get().then((userDoc) => {
         let userName = userDoc.data().name;
-        document.querySelector("#name-goes-here").innerText = "Hey, " + userName + "!";
+        document.querySelector("#name-goes-here").innerText =
+          "Hey, " + userName + "!";
       });
     } else {
       window.location.assign("/");
@@ -39,7 +40,7 @@ function addQuestionToDOM(
   titleDiv.innerText = questionData.title;
   titleDiv.classList.add("questionTitle");
 
-  // Commented out to remove description from favorites, saving space
+  // Commented out to remove description from bookmarks, saving space
   // let descriptionDiv = document.createElement("div");
   // descriptionDiv.innerText = questionData.description;
   // descriptionDiv.classList.add("questionDescription");
@@ -53,12 +54,12 @@ function addQuestionToDOM(
   let timeSpan = document.createElement("span");
   timeSpan.innerText = formatDuration(Date.now() - questionData.timestamp);
 
-  let seeAllFavorites = document.createElement("p");
-  seeAllFavorites.innerText = "To see all favorites, ";
-  let favoritesRedirect = document.createElement("a");
-  favoritesRedirect.href = "favorites.html";
-  favoritesRedirect.innerText = "click here.";
-  seeAllFavorites.appendChild(favoritesRedirect);
+  let seeAllBookmarks = document.createElement("p");
+  seeAllBookmarks.innerText = "To see all bookmarks, ";
+  let bookmarksRedirect = document.createElement("a");
+  bookmarksRedirect.href = "bookmarks.html";
+  bookmarksRedirect.innerText = "click here.";
+  seeAllBookmarks.appendChild(bookmarksRedirect);
 
   metadataContainer.appendChild(authorSpan);
   metadataContainer.appendChild(document.createElement("span"));
@@ -71,26 +72,26 @@ function addQuestionToDOM(
   document.querySelector(containerSelector).appendChild(anchor);
   document
     .querySelector(containerSelector)
-    .insertAdjacentElement("afterend", seeAllFavorites);
+    .insertAdjacentElement("afterend", seeAllBookmarks);
 }
 
 /**
- * Displays the user's favorite questions on the page.
- * Fetches the user's favorites from Firestore and adds them to the DOM.
- * If the user has no favorites, displays a message indicating so.
+ * Displays the user's bookmark questions on the page.
+ * Fetches the user's bookmarks from Firestore and adds them to the DOM.
+ * If the user has no bookmarks, displays a message indicating so.
  */
-function displayFavorites() {
+function displayBookmarks() {
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
       let userData = db.collection("users").doc(user.uid);
       userData
         .get()
         .then((userDoc) => {
-          let userFavorites = userDoc.data().favorites || [];
-          if (userFavorites.length > 0) {
-            // Show newest favorites first
-            let favoritesToDisplay = userFavorites.slice(-3).reverse();
-            favoritesToDisplay.forEach((questionID) => {
+          let userBookmarks = userDoc.data().bookmarks || [];
+          if (userBookmarks.length > 0) {
+            // Show newest bookmarks first
+            let bookmarksToDisplay = userBookmarks.slice(-3).reverse();
+            bookmarksToDisplay.forEach((questionID) => {
               // Get question data
               db.collection("questions")
                 .doc(questionID)
@@ -127,8 +128,8 @@ function displayFavorites() {
           } else {
             let messageDiv = document.createElement("div");
             messageDiv.innerText =
-              "You have no favorites yet. Browse questions to select some!";
-            messageDiv.classList.add("noFavoritesMessage");
+              "You have no bookmarks yet. Browse questions to select some!";
+            messageDiv.classList.add("noBookmarksMessage");
             document.querySelector("#questions").appendChild(messageDiv);
           }
         })
@@ -140,4 +141,4 @@ function displayFavorites() {
     }
   });
 }
-displayFavorites();
+displayBookmarks();
