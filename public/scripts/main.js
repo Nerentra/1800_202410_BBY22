@@ -126,12 +126,14 @@ function displayBookmarks() {
               .insertAdjacentElement("afterend", seeAllBookmarks);
           } else {
             let messageDiv = document.createElement("div");
-            messageDiv.innerText =
+            let messageP = document.createElement("p");
+            messageP.innerText =
               "You have no bookmarks yet. Browse questions to select some!";
+            messageP.classList.add("noBookmarksMessage");
             messageDiv.classList.add("noBookmarksMessage");
             document
               .querySelector("#bookmarked-questions")
-              .appendChild(messageDiv);
+              .appendChild(messageP);
           }
         })
         .catch((error) => {

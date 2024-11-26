@@ -213,7 +213,7 @@ hr {
 
   #responsive-container {
     display: grid;
-    grid-template-columns: 100vw;
+    grid-template-columns: 100%;
     grid-template-rows: auto auto auto;
     grid-template-areas: "intro"
       "bookmarks"
