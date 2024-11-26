@@ -1,12 +1,17 @@
+body {
+  margin: 0;
+  padding: 0;
+  --bs-bg-opacity: 1;
+  background-color: rgba(var(--bs-light-rgb), var(--bs-bg-opacity));
+  --bs-text-opacity: 1;
+  color: rgba(var(--bs-dark-rgb), var(--bs-text-opacity));
+}
+
 hr {
   color: #28a745;
 }
 
 #content-container {
-  --bs-bg-opacity: 1;
-  background-color: rgba(var(--bs-light-rgb), var(--bs-bg-opacity));
-  --bs-text-opacity: 1;
-  color: rgba(var(--bs-dark-rgb), var(--bs-text-opacity));
   --bs-gutter-x: 1.5rem;
   --bs-gutter-y: 0;
   width: 100%;
@@ -17,12 +22,11 @@ hr {
 }
 
 #content-container>div {
-  --bs-bg-opacity: 1;
-  background-color: rgba(var(--bs-light-rgb), var(--bs-bg-opacity));
   padding: 1rem;
   --bs-gutter-x: 1.5rem;
   --bs-gutter-y: 0;
   width: 100%;
+  box-sizing: border-box;
   padding-right: calc(var(--bs-gutter-x)* .5);
   padding-left: calc(var(--bs-gutter-x)* .5);
   margin-right: auto;
@@ -30,9 +34,9 @@ hr {
   text-align: center;
 }
 
-#content-container div>h1 {
+#content-container>h1 {
   font-size: calc(1.475rem + 2.7vw);
-  font-weight: 300;
+  font-weight: 400;
 }
 
 #content-container>div>p {
@@ -81,30 +85,17 @@ hr {
   font-size: calc(0.6rem + 1.2vw);
 }
 
-#bookmarks-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-
-#bookmarks-container>h2 {
-  margin: 1rem 0;
-  font-size: calc(1.275rem + 1.7vw);
-  font-weight: 300;
-  display: block;
-}
-
-#bookmarks-container>p>a {
-  color: #28a745;
-}
-
 .card-link {
   text-decoration: none;
   color: inherit;
 }
 
+#questions-list div {
+  max-width: 100%;
+}
+
 #bookmarked-questions {
+  margin: 0;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
@@ -114,6 +105,7 @@ hr {
 }
 
 #bookmarked-questions>a {
+  margin: 0 1.3rem;
   display: block;
   width: 100%;
   border: 2px solid #28a745;
@@ -154,11 +146,7 @@ hr {
   margin: 0 20px;
 }
 
-.main-page>.section-2 {
-  width: 50%;
-}
-
-.main-page .section-1, .section-3 {
+.main-page .section-1 {
   width: 25%;
 }
 
@@ -167,6 +155,38 @@ hr {
 }
 
 /* End of inheritance */
+
+#responsive-container {
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 0.65fr 0.3fr;
+  grid-template-areas: "intro bookmark"
+    "browse bookmark";
+}
+
+#content-container {
+  max-width: 90%;
+  padding: 0;
+  grid-area: intro;
+}
+
+#browse-questions {
+  max-width: 90%;
+  padding: 0;
+  grid-area: browse;
+}
+
+#bookmarks-container {
+  width: 100%;
+  padding: 0;
+  grid-area: bookmark;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  flex-direction: row;
+  row-gap: 1em;
+}
 
 @media screen and (max-width: 650px) {
   .main-page {
@@ -177,16 +197,39 @@ hr {
     display: none;
   }
 
-  .browse-container {
-    margin: 0 0;
+  .main-page .section-3 {
+    width: auto;
   }
 
-  .browse-container>h1 {
+  #browse-questions>h2 {
+    margin: 0 0 2rem 0;
+    font-size: calc(1.275rem + 1.7vw);
+    font-weight: 400;
+  }
+
+  .section-2>div>h2:first-child {
     margin: 0 0 2rem 0;
   }
 
-  .section-2>div>h1:first-child {
-    margin: 0 0 2rem 0;
+  #responsive-container {
+    display: grid;
+    grid-template-columns: 100vw;
+    grid-template-rows: auto auto auto;
+    grid-template-areas: "intro"
+      "bookmarks"
+      "browse";
+    justify-content: space-around;
+    flex-direction: row;
+    width: 100%;
+    row-gap: 1em;
+  }
+
+  #content-container {
+    grid-area: intro;
+  }
+
+  #bookmarks-container {
+    grid-area: bookmarks;
   }
 
   #bookmarked-questions {
@@ -194,19 +237,47 @@ hr {
     flex-wrap: wrap;
     justify-content: space-around;
     flex-direction: row;
-    width: 100%;
     row-gap: 1em;
+  }
+
+  #bookmarked-questions>a>div:first-child {
+    font-size: calc(0.750rem + 1.7vw);
+    font-weight: 400;
+  }
+
+  #bookmarks-container>div:first-of-type {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  #bookmarks-container>div>h2 {
+    margin: 1rem 0;
+    font-size: calc(1.275rem + 1.7vw);
+    font-weight: 400;
+    display: block;
+  }
+
+  #bookmarks-container>div>p>a {
+    color: #28a745;
+  }
+
+  #browse-questions {
+    grid-area: browse;
   }
 }
 
 @media screen and (min-width: 651px) and (max-width: 1080px) {
   #bookmarked-questions>a {
-    width: 48%;
+    margin: 0;
+    box-sizing: border-box;
   }
 }
 
 @media screen and (min-width: 1081px) {
   #bookmarked-questions>a {
-    width: 30%;
+    margin: 0;
+    box-sizing: border-box;
   }
 }

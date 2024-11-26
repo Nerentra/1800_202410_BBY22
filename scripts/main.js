@@ -54,13 +54,6 @@ function addQuestionToDOM(
   let timeSpan = document.createElement("span");
   timeSpan.innerText = formatDuration(Date.now() - questionData.timestamp);
 
-  let seeAllBookmarks = document.createElement("p");
-  seeAllBookmarks.innerText = "To see all bookmarks, ";
-  let bookmarksRedirect = document.createElement("a");
-  bookmarksRedirect.href = "bookmarks.html";
-  bookmarksRedirect.innerText = "click here.";
-  seeAllBookmarks.appendChild(bookmarksRedirect);
-
   metadataContainer.appendChild(authorSpan);
   metadataContainer.appendChild(document.createElement("span"));
   metadataContainer.appendChild(timeSpan);
@@ -70,9 +63,6 @@ function addQuestionToDOM(
   anchor.appendChild(metadataContainer);
 
   document.querySelector(containerSelector).appendChild(anchor);
-  document
-    .querySelector(containerSelector)
-    .insertAdjacentElement("afterend", seeAllBookmarks);
 }
 
 /**
@@ -125,6 +115,15 @@ function displayBookmarks() {
                   console.error("Error getting question data:", error);
                 });
             });
+            let seeAllBookmarks = document.createElement("p");
+            seeAllBookmarks.innerText = "To see all bookmarks, ";
+            let bookmarksRedirect = document.createElement("a");
+            bookmarksRedirect.href = "bookmarks.html";
+            bookmarksRedirect.innerText = "click here.";
+            seeAllBookmarks.appendChild(bookmarksRedirect);
+            document
+              .querySelector("#bookmarked-questions")
+              .insertAdjacentElement("afterend", seeAllBookmarks);
           } else {
             let messageDiv = document.createElement("div");
             messageDiv.innerText =

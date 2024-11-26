@@ -61,9 +61,8 @@
           </small>
         </p>
       </div>
-
-      <div class="section-2" id="content-container">
-        <div>
+      <div id="responsive-container">
+        <div class="section-2" id="content-container">
           <h1>&nbsp;<span id="name-goes-here"></span></h1>
           <div class="fade-in">
             <hr />
@@ -92,21 +91,21 @@
         </div>
 
         <!-- Browse section -->
-        <div class="container fade-in2 browse-container">
-          <h1>Browse Questions</h1>
+        <div class="container fade-in2 browse-container" id="browse-questions">
+          <h2>Browse Questions</h2>
           <div id="questions-list" class="row">
             <!-- Questions will be injected here by JavaScript -->
           </div>
+          <button class="main-page-btn" id="load-more" style="display: none">
+            Load More Questions
+          </button>
         </div>
-        <button class="main-page-btn" id="load-more" style="display: none">
-          Load More Questions
-        </button>
-      </div>
 
-      <div class="section-3">
-        <div class="fade-in2" class="">
-          <h2 class="header">Your Bookmarks</h2>
-          <div id="bookmarked-questions" class="text-center"></div>
+        <div class="section-3" id="bookmarks-container">
+          <div class="fade-in2" class="">
+            <h2 class="header">Your Bookmarks</h2>
+            <div id="bookmarked-questions" class="text-center"></div>
+          </div>
         </div>
       </div>
     </div>
