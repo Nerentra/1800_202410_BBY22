@@ -266,28 +266,25 @@ function addAnswerToDOM(
  * @param {String} questionId The id of the question
  */
 async function displayAnswers(questionId) {
-  let questionSnapshot = db.collection("questions").doc(questionId).get();
-  let answerSnapshots = await db
+  const questionSnapshotPromise = db
+    .collection("questions")
+    .doc(questionId)
+    .get();
+  const answersRef = db
     .collection("questions")
     .doc(questionId)
     .collection("answers")
-    .get();
+    .orderBy("timestamp");
+  const answerSnapshots = (await answersRef.get()).docs;
 
-  const answers = [];
-  for await (const [_, answerSnapshot] of answerSnapshots.docs.entries()) {
-    let authorSnapshot = await answerSnapshot.data().author.get();
-    answers.push({
-      answerSnapshot,
-      authorSnapshot,
-    });
-  }
-
-  answers.sort(
-    (a, b) =>
-      a.answerSnapshot.data().timestamp - b.answerSnapshot.data().timestamp
+  const answers = await Promise.all(
+    answerSnapshots.map(async (answerSnapshot) => {
+      const authorSnapshot = await answerSnapshot.data().author.get();
+      return { answerSnapshot, authorSnapshot };
+    })
   );
 
-  questionSnapshot = await questionSnapshot;
+  const questionSnapshot = await questionSnapshotPromise;
 
   // There is somewhat of a race condition here with whether the user is authenticated yet
   const currentUser = firebase.auth().currentUser;

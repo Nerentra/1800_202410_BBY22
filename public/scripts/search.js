@@ -54,6 +54,8 @@ async function getQuestionsFromTags(tags) {
     questionsRef = questionsRef.where("tags." + tag, "==", true);
   });
 
+  questionsRef = questionsRef.orderBy("timestamp", "desc");
+
   return (await questionsRef.get()).docs;
 }
 
