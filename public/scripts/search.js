@@ -1,3 +1,5 @@
+const QUESTIONS_PER_PAGE = 30;
+
 /**
  * Takes in the data for a question and adds it to the DOM.
  * @param {Object} questionSnapshot A firestore snapshot of the question.
@@ -45,9 +47,10 @@ function addQuestionToDOM(questionSnapshot, authorSnapshot) {
 /**
  * Queries firestore for questions that contain all of the tags
  * @param {String[]} tags The tags to use
- * @returns {String[]} The IDs of the questions
+ * @param startSnap The snapshot to start searching after
+ * @returns An array of firestore snapshots of the questions
  */
-async function getQuestionsFromTags(tags) {
+async function getQuestionsFromTags(tags, startSnap) {
   let questionsRef = db.collection("questions");
 
   tags.forEach((tag) => {
@@ -56,15 +59,22 @@ async function getQuestionsFromTags(tags) {
 
   questionsRef = questionsRef.orderBy("timestamp", "desc");
 
+  if (startSnap) {
+    questionsRef = questionsRef.startAfter(startSnap);
+  }
+
+  questionsRef = questionsRef.limit(QUESTIONS_PER_PAGE);
+
   return (await questionsRef.get()).docs;
 }
 
 /**
- * Gets all questions from the database and puts them in the page.
- * @param {String} tags The search tags.
+ * Gets QUESTIONS_PER_PAGE questions from the database and adds them in the page.
+ * @param {String} tags The search tags
+ * @param startSnap The snapshot to start searching after
  */
-async function search(tags) {
-  const questionSnapshots = await getQuestionsFromTags(tags);
+async function search(tags, startSnap) {
+  const questionSnapshots = await getQuestionsFromTags(tags, startSnap);
 
   const questions = await Promise.all(
     questionSnapshots.map(async (questionSnapshot) => {
@@ -77,15 +87,30 @@ async function search(tags) {
     addQuestionToDOM(questionSnapshot, authorSnapshot);
   });
 
-  document.getElementById("questions").hidden = false;
-  document.getElementById("questionsPlaceholders").hidden = true;
+  if (questions.length < QUESTIONS_PER_PAGE) {
+    document.getElementById("loadMoreButton").hidden = true;
+  } else {
+    const lastQuestionSnapshot =
+      questions[questions.length - 1].questionSnapshot;
+    document.getElementById("loadMoreButton").addEventListener(
+      "click",
+      () => {
+        search(tags, lastQuestionSnapshot);
+      },
+      { once: true }
+    );
+  }
 }
 
 const params = new URL(window.location.href).searchParams;
+
 const tagsText = params.get("tags") || "";
 const tags = tagsText.split(" ").filter((tag) => {
   // Filter out all whitespace-only strings
   return tag.trim() != "";
 });
 
-search(tags);
+search(tags).then(() => {
+  document.getElementById("questions").hidden = false;
+  document.getElementById("questionsPlaceholders").hidden = true;
+});
