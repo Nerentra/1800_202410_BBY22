@@ -1,4 +1,7 @@
-h1, h2, h3, h4{
+h1,
+h2,
+h3,
+h4 {
   margin-top: 1em;
   margin-bottom: 1em;
   text-align: center;
@@ -15,7 +18,7 @@ h1 {
   border-radius: 0 0 0.375rem 0.375rem;
 }
 
-#navDropdown>div {
+#navDropdown > div {
   width: 100%;
   overflow: hidden;
   padding: 0.375rem 0.75rem;
@@ -28,13 +31,13 @@ h1 {
   border: #86b7fe solid 2px;
 }
 
-#navDropdown>div:not(:last-child) {
+#navDropdown > div:not(:last-child) {
   border-bottom: #ddd solid 2px;
   border-left: #86b7fe solid 2px;
   border-right: #86b7fe solid 2px;
 }
 
-#navDropdown>div:last-child {
+#navDropdown > div:last-child {
   border-radius: 0 0 0.375rem 0.375rem;
   border-left: #86b7fe solid 2px;
   border-right: #86b7fe solid 2px;

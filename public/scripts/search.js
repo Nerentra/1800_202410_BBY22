@@ -52,7 +52,7 @@ async function getQuestionsFromTags(tags) {
 
   tags.forEach((tag) => {
     questionsRef = questionsRef.where("tags." + tag, "==", true);
-  })
+  });
 
   return (await questionsRef.get()).docs;
 }

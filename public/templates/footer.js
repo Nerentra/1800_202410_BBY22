@@ -1,4 +1,5 @@
-templates.footer = { html: `
+templates.footer = {
+  html: `
 <div class="container">
   <footer class="py-3 my-4">
     <ul class="nav justify-content-center border-bottom pb-3 mb-3">
@@ -15,4 +16,5 @@ templates.footer = { html: `
     <p class="text-center text-body-secondary">&copy; 2024 AskMi</p>
   </footer>
 </div>
-`};
+`,
+};

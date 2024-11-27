@@ -89,7 +89,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       const user = firebase.auth().currentUser;
 
       if (user && questionTitle.trim() && questionDescription.trim()) {
-
         const selectedTagsMap = {};
         selectedTags.forEach((tag) => {
           selectedTagsMap[tag] = true;
