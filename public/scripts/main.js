@@ -145,3 +145,88 @@ function displayBookmarks() {
   });
 }
 displayBookmarks();
+
+/**
+ * Returns a Promise that resolves once the auth state changes for the first time.
+ * @returns {Promise} Resolves to a reference to the logged-in-user's document or undefined if not logged in.
+ */
+function authOnce() {
+  return new Promise((resolve, _) => {
+    let triggered = false;
+    firebase.auth().onAuthStateChanged((user) => {
+      if (!triggered) {
+        triggered = true;
+        if (user) {
+          resolve(db.collection("users").doc(user.uid));
+        } else {
+          resolve(undefined);
+        }
+      }
+    });
+  });
+}
+
+const params = new URL(window.location.href).searchParams;
+const paramsId = params.get("id");
+
+/**
+ * A function that checks what needs to be displayed on the profile.html page.
+ * @returns {Object} An object with the fields
+ *   userRef A reference to the user's firestore document
+ *   isCurUser A boolean denoting if the profile is showing the logged in user's document
+ */
+async function getProfileUserRef() {
+  if (paramsId && paramsId.trim() !== "") {
+    return {
+      userRef: db.collection("users").doc(paramsId),
+      isCurUser: false,
+    };
+  } else {
+    let user = await authOnce();
+    if (user) {
+      return {
+        userRef: user,
+        isCurUser: true,
+      };
+    } else {
+      window.location.replace("/");
+    }
+  }
+}
+
+/**
+ * A function that checks what needs to be displayed on the profile.html page.
+ * @returns {Object} An object with the fields
+ *   userRef A reference to the user's firestore document
+ *   isCurUser A boolean denoting if the profile is showing the logged in user's document
+ */
+getProfileUserRef().then(async ({ userRef, isCurUser }) => {
+  const userSnapshot = await userRef.get();
+  const userData = userSnapshot.data();
+  const userPoints = userData.points || 0;
+  const userPointsElem = document.getElementById("userPoints");
+  userPointsElem.innerText = `${userPoints >= 0 ? "+" : "-"}${userPoints}`;
+  if (userPoints) {
+    const strongestColorValue = 100;
+    const strongestColorStrength = 0.8; // Must be between 0 and 1
+    const colorFactor =
+      Math.max(Math.min(Math.abs(userPoints) / strongestColorValue, 1), 0) *
+      strongestColorStrength;
+    let colorComponent = (colorFactor * 255).toString(16);
+    if (colorComponent.length === 1) {
+      colorComponent = "0" + colorComponent;
+    }
+    let displayColor;
+    if (userPoints > 0) {
+      displayColor = `#00${colorComponent}00`;
+    } else {
+      displayColor = `#${colorComponent}0000`;
+    }
+    if (userPoints == 1 || userPoints == -1) {
+      document.getElementById("pointsWord").innerText = " point!";
+    } else {
+      document.getElementById("pointsWord").innerText = " points!";
+    }
+    userPointsElem.style.color = displayColor;
+  }
+});
