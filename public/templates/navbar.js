@@ -155,7 +155,7 @@ function searchbarLoaded() {
     });
   });
   let isHovering;
-  let dropdown = document.getElementById("navDropdown");
+  const dropdown = document.getElementById("navDropdown");
   dropdown.addEventListener("mouseover", () => {
     isHovering = true;
   });
@@ -167,6 +167,11 @@ function searchbarLoaded() {
       dropdown.innerHTML = "";
     }
   });
+
+  const dropdownResizer = new ResizeObserver(() => {
+    dropdown.style.width = `${searchbar.offsetWidth}px`;
+  });
+  dropdownResizer.observe(searchbar);
 }
 
 templates.navbarPrelogin = {
