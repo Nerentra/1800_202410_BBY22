@@ -96,7 +96,7 @@ function displayBookmarks() {
             messageDiv.classList.add("noBookmarksMessage");
 
             let browseButton = document.createElement("a");
-            browseButton.href = "/search.html?tags=";
+            browseButton.href = "/search.html";
             browseButton.classList.add("main-page-btn");
             browseButton.innerText = "Browse All Questions";
 

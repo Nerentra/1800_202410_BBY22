@@ -1,33 +1,14 @@
-/**
- * Gets the tags from the database.
- * @returns {Document[]} The tags
- */
-function getTags() {
-  try {
-    return db.collection("tags").get();
-  } catch (error) {
-    console.error("Error fetching tags: ", error);
-  }
-}
-
 let selectedTags = [];
-let allTags = [];
 
 document.addEventListener("DOMContentLoaded", async () => {
   const selectedTagsContainer = document.getElementById("selected-tags");
   const tagsDropdown = document.getElementById("tagsDropdown");
 
-  try {
-    const snapshot = await getTags();
-    allTags = snapshot.docs;
-  } catch (error) {
-    console.error("Error fetching tags: ", error);
-  }
-  let tags = await allTags;
+  const tags = lib.tags;
   tags.forEach((tag) => {
     const option = document.createElement("option");
-    option.value = tag.id;
-    option.textContent = tag.id;
+    option.value = tag;
+    option.textContent = tag;
     tagsDropdown.appendChild(option);
   });
 
@@ -60,7 +41,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     option.value = tag;
     option.textContent = tag;
 
-    const originalIndex = allTags.findIndex((doc) => doc.id === tag);
+    const originalIndex = tags.findIndex((doc) => doc.id === tag);
     if (originalIndex >= 0) {
       const referenceNode = tagsDropdown.options[originalIndex + 1];
       tagsDropdown.insertBefore(option, referenceNode);
@@ -108,30 +89,21 @@ document.addEventListener("DOMContentLoaded", async () => {
       const user = firebase.auth().currentUser;
 
       if (user && questionTitle.trim() && questionDescription.trim()) {
+        const selectedTagsMap = {};
+        selectedTags.forEach((tag) => {
+          selectedTagsMap[tag] = true;
+        });
+
         db.collection("questions")
           .add({
             title: questionTitle,
             description: questionDescription,
             author: db.collection("users").doc(user.uid),
             timestamp: Date.now(),
-            tags: selectedTags,
+            tags: selectedTagsMap,
           })
           .then((newQuestion) => {
-            const questionId = newQuestion.id;
-
-            const tagUpdatePromises = selectedTags.map((tag) =>
-              db
-                .collection("tags")
-                .doc(tag)
-                .update({
-                  questions:
-                    firebase.firestore.FieldValue.arrayUnion(questionId),
-                })
-            );
-
-            return Promise.all(tagUpdatePromises).then(() => {
-              window.location.href = `/question.html?docID=${newQuestion.id}`;
-            });
+            window.location.href = `/question.html?docID=${newQuestion.id}`;
           })
           .catch((error) => {
             console.error("Error submitting question: ", error);

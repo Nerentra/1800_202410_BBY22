@@ -1,4 +1,5 @@
-#question, #questionPlaceholder {
+#question,
+#questionPlaceholder {
   display: inline-block;
   border: 4px solid #dedede;
   border-radius: 2em;
@@ -7,13 +8,15 @@
   width: 80%;
 }
 
-#questionHeader, #questionHeaderPlaceholder {
+#questionHeader,
+#questionHeaderPlaceholder {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-#questionHeader > p, #questionHeaderPlaceholder > p {
+#questionHeader > p,
+#questionHeaderPlaceholder > p {
   color: rgba(0, 0, 0, 0.445);
   font-style: italic;
   font-size: 10pt;
@@ -33,11 +36,13 @@
   transform: scale(0.9);
 }
 
-#question h1, #questionPlaceholder h1 {
+#question h1,
+#questionPlaceholder h1 {
   margin: 0.5em 0.3em;
 }
 
-#replies, #repliesPlaceholder {
+#replies,
+#repliesPlaceholder {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -154,7 +159,7 @@
   line-height: 1.25em;
 }
 
-.solutionMarker>img {
+.solutionMarker > img {
   height: 115%;
   vertical-align: top;
 }

@@ -26,7 +26,7 @@ async function populateUserInfo(userRef) {
 document.getElementById("saveButton").addEventListener("click", async () => {
   if (userRef) {
     let userName = document.getElementById("nameInput").value;
-    
+
     userRef.update({
       name: userName,
     });

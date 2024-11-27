@@ -2,7 +2,7 @@ const templates = [];
 const bodyLoadQueue = [];
 
 window.addEventListener("DOMContentLoaded", () => {
-    bodyLoadQueue.forEach(({ className, template }) => {
+  bodyLoadQueue.forEach(({ className, template }) => {
     const elem = document.querySelector("." + className);
     elem.innerHTML = template.html;
 

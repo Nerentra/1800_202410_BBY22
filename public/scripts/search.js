@@ -48,48 +48,15 @@ function addQuestionToDOM(questionSnapshot, authorSnapshot) {
  * @returns {String[]} The IDs of the questions
  */
 async function getQuestionsFromTags(tags) {
-  // If there are no tags then don't filter anything out
-  if (tags.length == 0) {
-    const questionSnapshots = (await db.collection("questions").get()).docs;
-    const questionIDs = questionSnapshots.map((snapshot) => {
-      return snapshot.id;
-    });
+  let questionsRef = db.collection("questions");
 
-    return questionIDs;
-  }
+  tags.forEach((tag) => {
+    questionsRef = questionsRef.where("tags." + tag, "==", true);
+  });
 
-  let validTagCount = 0;
-  const questionCounts = {};
-  await Promise.all(
-    tags.map(async (tag) => {
-      const tagSnapshot = await db.collection("tags").doc(tag).get();
-      if (tagSnapshot.exists) {
-        // Tag exists
-        validTagCount++;
+  questionsRef = questionsRef.orderBy("timestamp", "desc");
 
-        const tagData = tagSnapshot.data();
-        const questionIDs = tagData.questions;
-        questionIDs.forEach((id) => {
-          if (questionCounts[id]) {
-            questionCounts[id]++;
-          } else {
-            questionCounts[id] = 1;
-          }
-        });
-      }
-    })
-  );
-
-  const finalQuestions = [];
-  for (const id in questionCounts) {
-    if (questionCounts[id] >= validTagCount) {
-      // Question is in all tags
-      finalQuestions.push(id);
-    }
-  }
-
-  console.log(finalQuestions);
-  return finalQuestions;
+  return (await questionsRef.get()).docs;
 }
 
 /**
@@ -97,26 +64,19 @@ async function getQuestionsFromTags(tags) {
  * @param {String} tags The search tags.
  */
 async function search(tags) {
-  const questionIDs = await getQuestionsFromTags(tags);
-  const questionsCollection = db.collection("questions");
+  const questionSnapshots = await getQuestionsFromTags(tags);
 
-  const questions = [];
-  await Promise.all(
-    questionIDs.map(async (questionID) => {
-      const questionSnapshot = await questionsCollection.doc(questionID).get();
+  const questions = await Promise.all(
+    questionSnapshots.map(async (questionSnapshot) => {
       const authorSnapshot = await questionSnapshot.data().author.get();
-      questions.push({ questionSnapshot, authorSnapshot });
+      return { questionSnapshot, authorSnapshot };
     })
-  );
-
-  questions.sort(
-    (a, b) =>
-      b.questionSnapshot.data().timestamp - a.questionSnapshot.data().timestamp
   );
 
   questions.forEach(({ questionSnapshot, authorSnapshot }) => {
     addQuestionToDOM(questionSnapshot, authorSnapshot);
   });
+
   document.getElementById("questions").hidden = false;
   document.getElementById("questionsPlaceholders").hidden = true;
 }

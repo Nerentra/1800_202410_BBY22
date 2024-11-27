@@ -15,36 +15,36 @@ hr {
   --bs-gutter-x: 1.5rem;
   --bs-gutter-y: 0;
   width: 100%;
-  padding-right: calc(var(--bs-gutter-x)* .5);
-  padding-left: calc(var(--bs-gutter-x)* .5);
+  padding-right: calc(var(--bs-gutter-x) * 0.5);
+  padding-left: calc(var(--bs-gutter-x) * 0.5);
   margin-right: auto;
   margin-left: auto;
 }
 
-#content-container>div {
+#content-container > div {
   padding: 1rem;
   --bs-gutter-x: 1.5rem;
   --bs-gutter-y: 0;
   width: 100%;
   box-sizing: border-box;
-  padding-right: calc(var(--bs-gutter-x)* .5);
-  padding-left: calc(var(--bs-gutter-x)* .5);
+  padding-right: calc(var(--bs-gutter-x) * 0.5);
+  padding-left: calc(var(--bs-gutter-x) * 0.5);
   margin-right: auto;
   margin-left: auto;
   text-align: center;
 }
 
-#content-container>h1 {
+#content-container > h1 {
   font-size: calc(1.475rem + 2.7vw);
   font-weight: 400;
 }
 
-#content-container>div>p {
+#content-container > div > p {
   font-size: calc(0.55rem + 1.5vw);
   font-weight: 100;
 }
 
-#content-container>div>p:nth-of-type(2) {
+#content-container > div > p:nth-of-type(2) {
   margin-bottom: 0.5em;
 }
 
@@ -79,7 +79,7 @@ hr {
   gap: 0.2rem;
 }
 
-.button-container>a {
+.button-container > a {
   margin: 0.3em auto;
   padding: 2% 5%;
   font-size: calc(0.6rem + 1.2vw);
@@ -104,7 +104,7 @@ hr {
   row-gap: 1em;
 }
 
-#bookmarked-questions>a {
+#bookmarked-questions > a {
   margin: 0 1.3rem;
   display: block;
   width: 100%;
@@ -130,7 +130,7 @@ hr {
 }
 
 .noBookmarksMessage {
-  font-size: calc(0.9rem + 1.0vw);
+  font-size: calc(0.9rem + 1vw);
 }
 
 /* Inherited from mainWithBrowse.css. */
@@ -140,13 +140,16 @@ hr {
   justify-content: space-around;
 }
 
-.main-page>div {
+.main-page > div {
   float: left;
   padding: 40px 20px;
   margin: 0 20px;
 }
 
-.card, .card-body, .card-title, .card-text {
+.card,
+.card-body,
+.card-title,
+.card-text {
   text-align: left;
 }
 
@@ -157,7 +160,8 @@ hr {
   padding: 0;
   display: grid;
   grid-template-columns: 130px auto 200px 15px;
-  grid-template-areas: "leftnav intro bookmark ."
+  grid-template-areas:
+    "leftnav intro bookmark ."
     "leftnav browse bookmark .";
 }
 
@@ -177,7 +181,7 @@ hr {
   grid-area: browse;
 }
 
-#browse-questions>h2 {
+#browse-questions > h2 {
   margin: 0 0 2rem 0;
   font-size: calc(1.275rem + 1.7vw);
   font-weight: 400;
@@ -194,14 +198,14 @@ hr {
   row-gap: 1em;
 }
 
-#bookmarks-container>div>h2 {
+#bookmarks-container > div > h2 {
   margin: 1rem 0;
   font-size: calc(1.275rem + 1.7vw);
   font-weight: 400;
   display: block;
 }
 
-#bookmarks-container>div>p>a {
+#bookmarks-container > div > p > a {
   color: #28a745;
   text-decoration: none;
 }
@@ -223,7 +227,8 @@ hr {
     display: grid;
     grid-template-columns: 100%;
     grid-template-rows: auto auto auto;
-    grid-template-areas: "intro"
+    grid-template-areas:
+      "intro"
       "bookmarks"
       "browse";
     justify-content: space-around;
@@ -248,12 +253,12 @@ hr {
     row-gap: 1em;
   }
 
-  #bookmarked-questions>a>div:first-child {
-    font-size: calc(0.750rem + 1.7vw);
+  #bookmarked-questions > a > div:first-child {
+    font-size: calc(0.75rem + 1.7vw);
     font-weight: 400;
   }
 
-  #bookmarks-container>div:first-of-type {
+  #bookmarks-container > div:first-of-type {
     width: 100%;
     display: flex;
     justify-content: center;
@@ -267,7 +272,7 @@ hr {
 }
 
 @media screen and (min-width: 651px) and (max-width: 1080px) {
-  #bookmarked-questions>a {
+  #bookmarked-questions > a {
     margin: 0;
     box-sizing: border-box;
   }
@@ -277,7 +282,8 @@ hr {
     padding: 0;
     display: grid;
     grid-template-columns: 150px auto;
-    grid-template-areas: "leftnav intro"
+    grid-template-areas:
+      "leftnav intro"
       "leftnav bookmark"
       "leftnav browse";
   }
@@ -298,7 +304,7 @@ hr {
 }
 
 @media screen and (min-width: 1081px) {
-  #bookmarked-questions>a {
+  #bookmarked-questions > a {
     margin: 0;
     box-sizing: border-box;
   }
@@ -308,7 +314,8 @@ hr {
     padding: 0;
     display: grid;
     grid-template-columns: 200px auto 280px 30px;
-    grid-template-areas: "leftnav intro bookmark ."
+    grid-template-areas:
+      "leftnav intro bookmark ."
       "leftnav browse bookmark .";
   }
 
