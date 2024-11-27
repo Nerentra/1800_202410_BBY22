@@ -12,7 +12,7 @@ h1 {
 }
 
 #navDropdown {
-  width: 20em;
+  z-index: 1000;
   position: fixed;
   background-color: rgb(248, 249, 250);
   border-radius: 0 0 0.375rem 0.375rem;
