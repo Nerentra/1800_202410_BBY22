@@ -189,7 +189,7 @@ hr {
 
 #bookmarks-container {
   width: 100%;
-  padding: 0;
+  padding-top: 7rem;
   grid-area: bookmark;
   display: flex;
   flex-wrap: wrap;
