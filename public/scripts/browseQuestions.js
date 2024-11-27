@@ -56,14 +56,14 @@ async function loadQuestions(initialLoad = true) {
                 questionCard.querySelector("#questionAuthor").innerText = "Posted by: " + authorName;
 
                 // Add tags to the question card
-                if (Array.isArray(questionData.tags) && questionData.tags.length > 0) {
+                if (questionData.tags) {
                     let tagsContainer = questionCard.querySelector("#questionTags");
-                    questionData.tags.forEach((tag) => {
+                    for(const tag in questionData.tags) {
                         let tagElement = document.createElement("span");
                         tagElement.classList.add("tag");
                         tagElement.innerText = tag;
                         tagsContainer.appendChild(tagElement);
-                    });
+                    }
                 }
 
                 return questionCard;

@@ -131,21 +131,7 @@ function searchbarLoaded() {
   let searchbar = document.getElementById("navSearchbar");
   searchbar.value = new URL(window.location.href).searchParams.get("tags");
 
-  let tags;
-  db.collection("tags")
-    .get()
-    .then((result) => {
-      tags = [];
-      result.docs.forEach((tag) => {
-        tags.push(tag.id);
-      });
-    })
-    .catch((error) => {
-      console.error(
-        "Error loading tags. Search recommendations will not work.",
-        error
-      );
-    });
+  let tags = lib.tags;
 
   let searchButton = document.getElementById("searchButton");
   searchbar.addEventListener("focus", () => {
