@@ -21,7 +21,7 @@ hr {
   margin-left: auto;
 }
 
-#content-container > div {
+#content-container>div {
   padding: 1rem;
   --bs-gutter-x: 1.5rem;
   --bs-gutter-y: 0;
@@ -34,17 +34,17 @@ hr {
   text-align: center;
 }
 
-#content-container > h1 {
+#content-container>h1 {
   font-size: calc(1.475rem + 2.7vw);
   font-weight: 400;
 }
 
-#content-container > div > p {
+#content-container>div>p {
   font-size: calc(0.55rem + 1.5vw);
   font-weight: 100;
 }
 
-#content-container > div > p:nth-of-type(2) {
+#content-container>div>p:nth-of-type(2) {
   margin-bottom: 0.5em;
 }
 
@@ -79,7 +79,7 @@ hr {
   gap: 0.2rem;
 }
 
-.button-container > a {
+.button-container>a {
   margin: 0.3em auto;
   padding: 2% 5%;
   font-size: calc(0.6rem + 1.2vw);
@@ -104,7 +104,7 @@ hr {
   row-gap: 1em;
 }
 
-#bookmarked-questions > a {
+#bookmarked-questions>a {
   margin: 0 1.3rem;
   display: block;
   width: 100%;
@@ -140,7 +140,7 @@ hr {
   justify-content: space-around;
 }
 
-.main-page > div {
+.main-page>div {
   float: left;
   padding: 40px 20px;
   margin: 0 20px;
@@ -181,7 +181,7 @@ hr {
   grid-area: browse;
 }
 
-#browse-questions > h2 {
+#browse-questions>h2 {
   margin: 0 0 2rem 0;
   font-size: calc(1.275rem + 1.7vw);
   font-weight: 400;
@@ -189,7 +189,7 @@ hr {
 
 #bookmarks-container {
   width: 100%;
-  padding-top: 7rem;
+  /* padding-top: 7rem; */
   grid-area: bookmark;
   display: flex;
   flex-wrap: wrap;
@@ -198,16 +198,30 @@ hr {
   row-gap: 1em;
 }
 
-#bookmarks-container > div > h2 {
+#bookmarks-container>div>h2 {
   margin: 1rem 0;
   font-size: calc(1.275rem + 1.7vw);
   font-weight: 400;
   display: block;
 }
 
-#bookmarks-container > div > p > a {
+#bookmarks-container>div>p>a {
   color: #28a745;
   text-decoration: none;
+}
+
+#points-display {
+  margin: 30% 0 0 0;
+  font-size: calc(0.475rem + 1.2vw);
+  font-weight: 300;
+  /* border: 1px solid gray;
+  border-radius: 13px; */
+  text-align: left;
+}
+
+.main-page .section-1 {
+  margin: 50% 0 auto 10%;
+  width: 100%;
 }
 
 @media screen and (max-width: 650px) {
@@ -253,12 +267,12 @@ hr {
     row-gap: 1em;
   }
 
-  #bookmarked-questions > a > div:first-child {
+  #bookmarked-questions>a>div:first-child {
     font-size: calc(0.75rem + 1.7vw);
     font-weight: 400;
   }
 
-  #bookmarks-container > div:first-of-type {
+  #bookmarks-container>div:first-of-type {
     width: 100%;
     display: flex;
     justify-content: center;
@@ -272,7 +286,7 @@ hr {
 }
 
 @media screen and (min-width: 651px) and (max-width: 1080px) {
-  #bookmarked-questions > a {
+  #bookmarked-questions>a {
     margin: 0;
     box-sizing: border-box;
   }
@@ -295,16 +309,10 @@ hr {
     flex-direction: row;
     row-gap: 1em;
   }
-
-  .main-page .section-1 {
-    margin: 6rem 0 auto 10%;
-    padding: 0 0.5rem 0 0;
-    width: 100%;
-  }
 }
 
 @media screen and (min-width: 1081px) {
-  #bookmarked-questions > a {
+  #bookmarked-questions>a {
     margin: 0;
     box-sizing: border-box;
   }
@@ -319,9 +327,8 @@ hr {
       "leftnav browse bookmark .";
   }
 
-  .main-page .section-1 {
-    margin: 6rem 0 auto 10%;
-    padding: 0 0.5rem 0 0;
-    width: 100%;
+  #bookmarks-container {
+    padding-top: 40%;
   }
+
 }

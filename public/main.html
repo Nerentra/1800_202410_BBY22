@@ -39,6 +39,8 @@
     <link rel="stylesheet" href="./styles/animations.css" />
 
     <script src="./scripts/api_bby22.js"></script>
+    <script src="./scripts/formatDuration.js"></script>
+
     <script src="./scripts/lib.js"></script>
 
     <script src="./scripts/initTemplates.js"></script>
@@ -54,11 +56,14 @@
     <!-- Content -->
     <div class="main-page">
       <div id="responsive-container">
-        <div class="section-1">
-          <p>
-            we're going to put something here. maybe subjects(tags) for easy
-            access or reccomended questions.
-          </p>
+        <div class="section-1 sidebarTemplate">
+          <div id="container">
+            <h3 id="points-display">
+              You have
+              <span id="userPoints"></span>
+              <span id="pointsWord"></span>
+            </h3>
+          </div>
         </div>
         <div class="section-2" id="content-container">
           <h1>&nbsp;<span id="name-goes-here"></span></h1>
@@ -140,6 +145,5 @@
 
     <script src="./scripts/main.js"></script>
     <script src="./scripts/browseQuestions.js"></script>
-    <script src="./scripts/formatDuration.js"></script>
   </body>
 </html>
