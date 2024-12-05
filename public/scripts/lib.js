@@ -23,5 +23,6 @@ const lib = {
     "COMP1712",
     "COMP1800",
     "Final",
+    "Development",
   ],
 };
