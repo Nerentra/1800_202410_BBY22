@@ -8,7 +8,7 @@
 
 #features > div {
   width: 100%;
-  border: 4px solid #dedede;
+  border: 3px solid var(--faint-color);
   text-align: left;
   padding: 2em;
 }
@@ -19,6 +19,7 @@
 }
 
 .featureDetails {
+  font-size: 1.5em;
   margin-top: 1em;
 }
 

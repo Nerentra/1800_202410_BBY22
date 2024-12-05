@@ -7,11 +7,18 @@
 
 #faq > div {
   width: 100%;
-  border: 4px solid #dedede;
+  border: 3px solid var(--faint-color);
 
   text-align: left;
   padding: 0.8em;
   font-size: 1.7em;
+}
+
+#faq > div > h2 {
+  text-align: center;
+  margin: 0 0 0.2em 0;
+  padding: 0.1em;
+  font-size: 1.3em;
 }
 
 @media screen and (max-width: 600px) {
