@@ -14,10 +14,10 @@
     "title" auto
     "description" auto
     "." 1fr
-    "metadata" auto
-    "tags" auto / 1fr;
+    "tags" auto
+    "metadata" auto / 1fr;
   width: 100%;
-  border: 3px solid var(--main-color);
+  border: 3px solid var(--faint-color);
 
   border-radius: 2em;
   text-align: left;

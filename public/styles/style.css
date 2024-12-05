@@ -1,5 +1,6 @@
 :root {
   --main-color: #ad21d0;
+  --faint-color: #b664cb;
 }
 
 h1,
@@ -118,7 +119,7 @@ h1 {
 .search-btn:hover {
   background-color: #ffffff;
   color: var(--main-color);
-  border: 2px solid var(--main-color);
+  border: 2px solid var(--faint-color);
   text-decoration: none;
 }
 
@@ -162,7 +163,7 @@ h1 {
 }
 
 .card {
-  border: 2px solid var(--main-color);
+  border: 2px solid var(--faint-color);
 }
 
 .button {
