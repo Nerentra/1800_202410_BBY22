@@ -1,10 +1,10 @@
-/**
- * Function to load questions from Firestore and display them
- */
-let lastVisibleQuestion = null; // Tracks the last visible question for pagination
+let lastVisibleQuestion = undefined; // Tracks the last visible question for pagination
 const QUESTIONS_PER_PAGE = 20;
 
-async function loadQuestions(initialLoad = true) {
+/**
+ * Loads questions from Firestore and displays them, in pages
+ */
+async function loadQuestions() {
   let questionsContainer = document.getElementById("questions-list");
   let questionTemplate = document.getElementById(
     "questionCardTemplate"
@@ -16,7 +16,7 @@ async function loadQuestions(initialLoad = true) {
       .orderBy("timestamp", "desc")
       .limit(QUESTIONS_PER_PAGE);
 
-    if (!initialLoad && lastVisibleQuestion) {
+    if (lastVisibleQuestion !== undefined) {
       query = query.startAfter(lastVisibleQuestion);
     }
 
@@ -100,4 +100,4 @@ document.addEventListener("DOMContentLoaded", () => loadQuestions());
 // Add event listener for "Load More" button
 document
   .getElementById("load-more")
-  .addEventListener("click", () => loadQuestions(false));
+  .addEventListener("click", () => loadQuestions());
