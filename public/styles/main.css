@@ -139,10 +139,10 @@ hr {
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: 130px auto 200px 15px;
+  grid-template-columns: auto 200px 15px;
   grid-template-areas:
-    "leftnav intro bookmark ."
-    "leftnav browse bookmark .";
+    "intro bookmark ."
+    "browse bookmark .";
 }
 
 .section-1 {
@@ -191,11 +191,8 @@ hr {
 }
 
 #points-display {
-  margin: 30% 0 0 0;
-  font-size: calc(0.475rem + 1.2vw);
+  font-size: calc((0.475rem + 1.2vw) * 1.5);
   font-weight: 300;
-  /* border: 1px solid gray;
-  border-radius: 13px; */
   text-align: left;
 }
 
@@ -275,11 +272,11 @@ hr {
     margin: 0;
     padding: 0;
     display: grid;
-    grid-template-columns: 150px auto;
+    grid-template-columns: auto;
     grid-template-areas:
-      "leftnav intro"
-      "leftnav bookmark"
-      "leftnav browse";
+      "intro"
+      "bookmark"
+      "browse";
   }
 
   #bookmarked-questions {
@@ -301,10 +298,10 @@ hr {
     margin: 0;
     padding: 0;
     display: grid;
-    grid-template-columns: 200px auto 280px 30px;
+    grid-template-columns: auto 280px 30px;
     grid-template-areas:
-      "leftnav intro bookmark ."
-      "leftnav browse bookmark .";
+      "intro bookmark ."
+      "browse bookmark .";
   }
 
   #bookmarks-container {
