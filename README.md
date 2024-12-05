@@ -1,13 +1,11 @@
-# Project Title
+# AskMii
 
-## 1. Project Description
+## 1. What is AskMii?
 
 AskMii is a question and answer site built by BCIT students for BCIT students.
 It is designed to help you get answers to questions about courses and coursework without having to sift through message logs or ask a question that was answered just hours ago.
 
-## 2. Names of Contributors
-
-List team members and/or short bio's here...
+## 2. Contributors
 
 - My name is Giorgio Donatelli! Hi!
 - Hi, my name is Davi! I'm excited to learn how to work in a tech team.
@@ -19,7 +17,7 @@ List team members and/or short bio's here...
 - Bootstrap 5.0 (Frontend library)
 - Firebase 8.0 (BAAS - Backend as a Service)
 
-## 4. Usage
+## 4. How to use
 
 - Visit [our website](https://comp1800-bby22.web.app/)
 - Browse questions
