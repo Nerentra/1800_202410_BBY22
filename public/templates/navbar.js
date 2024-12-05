@@ -139,18 +139,17 @@ function searchbarLoaded() {
       updateDropdown(cursorIndex, tags);
     });
   });
-  let isHovering;
   const dropdown = document.getElementById("navDropdown");
-  dropdown.addEventListener("mouseover", () => {
-    isHovering = true;
-  });
-  dropdown.addEventListener("mouseleave", () => {
-    isHovering = false;
-  });
   searchbar.addEventListener("blur", () => {
-    if (!isHovering) {
-      dropdown.innerHTML = "";
-    }
+    const cache = searchbar.value;
+    // Wrapped in 0ms timeout in order to yield to other events
+    setTimeout(() => {
+      // If the value changed, then the user clicked the dropdown.
+      //If they didn't, remove the dropdown.
+      if (cache === searchbar.value) {
+        dropdown.innerHTML = "";
+      }
+    }, 0);
   });
 
   const dropdownResizer = new ResizeObserver(() => {
