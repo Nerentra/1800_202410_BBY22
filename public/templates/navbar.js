@@ -82,7 +82,7 @@ function addRecommendationsToPage(recommendations, wordIndices, tags) {
   recommendations.forEach((recommendation) => {
     let div = document.createElement("div");
     div.innerText = recommendation;
-    div.addEventListener("mouseup", (event) => {
+    div.addEventListener("mousedown", (event) => {
       event.preventDefault();
       let searchbar = document.getElementById("navSearchbar");
       let newWord;
@@ -136,32 +136,18 @@ function searchbarLoaded() {
   searchbar.value = new URL(window.location.href).searchParams.get("tags");
 
   const tags = lib.tags;
-  let prevCursorIndex = undefined;
-  let prevSearchbarValue = undefined;
 
-  ["focus", "keydown", "click"].forEach((eventName) => {
+  ["focus", "keydown", "mousedown"].forEach((eventName) => {
     searchbar.addEventListener(eventName, (event) => {
       // Wrapped in 0ms timeout in order to wait for selectionStart to be set by browser.
       setTimeout(() => {
         const cursorIndex = event.target.selectionStart;
-        // If statement only allows updating dropdown if there is a reason it should change
-        if (
-          (prevCursorIndex !== undefined && prevCursorIndex !== cursorIndex) || // If cursor has moved
-          (prevSearchbarValue !== undefined &&
-            prevSearchbarValue !== searchbar.value) || // Or searchbar content has changed
-          (prevCursorIndex === undefined && prevSearchbarValue === undefined) // Or searchbar has no previous state
-        ) {
-          updateDropdown(cursorIndex, tags);
-        }
-        prevCursorIndex = cursorIndex;
-        prevSearchbarValue = searchbar.value;
+        updateDropdown(cursorIndex, tags);
       }, 0);
     });
   });
   const dropdown = document.getElementById("navDropdown");
   searchbar.addEventListener("blur", () => {
-    prevCursorIndex = undefined;
-    prevSearchbarValue = undefined;
     const cache = searchbar.value;
     // Wrapped in 0ms timeout in order to yield to other events
     setTimeout(() => {
