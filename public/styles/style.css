@@ -1,6 +1,7 @@
 :root {
   --main-color: #ad21d0;
   --faint-color: #b664cb;
+  --main-color-dark: #711189;
 }
 
 h1,
@@ -77,6 +78,14 @@ h1 {
   max-width: 50rem;
   width: 60%;
   margin: 0 1em;
+}
+
+.nav-link {
+  color: var(--main-color-dark);
+}
+
+.nav-link:hover {
+  color: var(--faint-color);
 }
 
 .hideLink {
