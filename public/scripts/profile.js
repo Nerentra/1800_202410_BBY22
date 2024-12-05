@@ -31,9 +31,24 @@ function addQuestionToDOM(questionSnapshot) {
   metadataContainer.appendChild(document.createElement("span"));
   metadataContainer.appendChild(timeSpan);
 
+  const tagsContainer = document.createElement("div");
+  tagsContainer.classList.add("questionTags");
+
+  if (questionData.tags) {
+    const tags = Object.keys(questionData.tags);
+    tags.sort();
+    tags.forEach((tag) => {
+      const tagElement = document.createElement("span");
+      tagElement.classList.add("tag");
+      tagElement.innerText = tag;
+      tagsContainer.appendChild(tagElement);
+    });
+  }
+
   anchor.appendChild(titleDiv);
   anchor.appendChild(descriptionDiv);
   anchor.appendChild(metadataContainer);
+  anchor.appendChild(tagsContainer);
 
   document.querySelector("#questions").appendChild(anchor);
 }

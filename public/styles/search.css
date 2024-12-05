@@ -14,7 +14,8 @@
     "title" auto
     "description" auto
     "." 1fr
-    "metadata" auto / 1fr;
+    "metadata" auto
+    "tags" auto / 1fr;
   width: 100%;
   border: 3px solid var(--main-color);
 
@@ -39,6 +40,11 @@
   display: grid;
   grid-template-columns: max-content 1fr max-content;
   color: #616161;
+}
+
+.questionTags {
+  grid-area: tags;
+  margin-top: 1em;
 }
 
 @media screen and (min-width: 651px) and (max-width: 1080px) {
