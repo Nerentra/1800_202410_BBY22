@@ -317,6 +317,11 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   giveAnswerContainerResizeObserver.observe(answerButtonContainer);
 
+  /**
+   * Switches between the form for replying and the "reply" button.
+   * @param formOpen Set to true to open the form, false to close the form and
+   *   bring back the button
+   */
   function showAnswerForm(formOpen) {
     isFormOpen = formOpen;
 

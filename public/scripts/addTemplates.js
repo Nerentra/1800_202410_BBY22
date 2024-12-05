@@ -1,3 +1,5 @@
+// addTemplate is loaded from initTemplates.js
+
 addTemplate("navbarTemplate", "navbarPrelogin");
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {

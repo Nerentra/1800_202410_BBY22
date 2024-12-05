@@ -9,6 +9,10 @@ firebase.auth().onAuthStateChanged((user) => {
   }
 });
 
+/**
+ * Fills in the inputs with the user's existing data
+ * @param userRef Ref to user document
+ */
 async function populateUserInfo(userRef) {
   // Clear form first
   document.getElementById("nameInput").value = "";
