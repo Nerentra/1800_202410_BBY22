@@ -184,7 +184,7 @@ function addAnswerToDOM(
     solutionMarker.classList.add("solutionMarker");
     solutionMarker.title = "Solution";
     let svg = document.createElement("img");
-    svg.src = "/svgs/checkmark.svg";
+    svg.src = "/images/checkmark.svg";
     solutionMarker.appendChild(svg);
     metadataContainer.appendChild(solutionMarker);
   }
