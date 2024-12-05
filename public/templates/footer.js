@@ -13,7 +13,7 @@ templates.footer = {
         <a href="/about.html" class="nav-link px-2 text-body-secondary">About</a>
       </li>
     </ul>
-    <p class="text-center text-body-secondary">&copy; 2024 AskMi</p>
+    <p class="text-center text-body-secondary">&copy; 2024 AskMii</p>
   </footer>
 </div>
 `,

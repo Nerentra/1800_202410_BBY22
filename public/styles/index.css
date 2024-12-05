@@ -8,7 +8,7 @@
 }
 
 #index-img {
-  width: 100%;
+  width: auto;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -28,10 +28,19 @@
   transform: translateX(-50%);
 }
 
-h1 {
-  padding: 0;
-  margin: 0;
-  text-align: justify;
+#infoContainer {
+  margin-top: 5em;
+  padding: 0 200px;
+}
+
+p {
+  font-size: 1.3em;
+}
+
+.lead {
+  margin-top: 0.5em;
+  justify-content: center;
+  font-weight: 400;
 }
 
 @media screen and (min-width: 651px) and (max-width: 1080px) {

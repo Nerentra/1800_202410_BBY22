@@ -183,7 +183,7 @@ templates.navbarPrelogin = {
     <a href="/">
       <img
         src="svgs/logoFull.svg"
-        alt="A pretty purple logo for Askmii"
+        alt="A pretty purple logo for AskMii"
         id="navbarLogo"
       />
     </a>
@@ -265,7 +265,7 @@ templates.navbarPostlogin = {
     <a href="/main.html">
       <img
         src="svgs/logoFull.svg"
-        alt="A pretty purple logo for Askmii"
+        alt="A pretty purple logo for AskMii"
         id="navbarLogo"
       />
     </a>
