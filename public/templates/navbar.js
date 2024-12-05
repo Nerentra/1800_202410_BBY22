@@ -221,7 +221,7 @@ templates.navbarPrelogin = {
         />
         <div id="navDropdown"></div>
       </div>
-      <button id="searchButton" class="btn btn-outline-success" type="submit">Search</button>
+      <button id="searchButton" class="search-btn" type="submit">Search</button>
     </form>
     
   </div>
@@ -303,7 +303,7 @@ templates.navbarPostlogin = {
         />
         <div id="navDropdown"></div>
       </div>
-      <button id="searchButton" class="btn btn-outline-success" type="submit">Search</button>
+      <button id="searchButton" class="search-btn" type="submit">Search</button>
     </form>
   </div>
 </nav>

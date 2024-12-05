@@ -1,3 +1,7 @@
+:root {
+  --main-color: #ad21d0;
+}
+
 h1,
 h2,
 h3,
@@ -28,20 +32,20 @@ h1 {
 #navSearchbar:focus {
   border-radius: 0.375rem 0.375rem 0 0;
   box-shadow: none;
-  border: #86b7fe solid 2px;
+  border: var(--main-color) solid 2px;
 }
 
 #navDropdown > div:not(:last-child) {
   border-bottom: #ddd solid 2px;
-  border-left: #86b7fe solid 2px;
-  border-right: #86b7fe solid 2px;
+  border-left: var(--main-color) solid 2px;
+  border-right: var(--main-color) solid 2px;
 }
 
 #navDropdown > div:last-child {
   border-radius: 0 0 0.375rem 0.375rem;
-  border-left: #86b7fe solid 2px;
-  border-right: #86b7fe solid 2px;
-  border-bottom: #86b7fe solid 2px;
+  border-left: var(--main-color) solid 2px;
+  border-right: var(--main-color) solid 2px;
+  border-bottom: var(--main-color) solid 2px;
 }
 
 #navBarTemplate {
@@ -92,6 +96,73 @@ h1 {
   border-radius: 0.5em;
   transition: background-color 0.15s ease-in-out;
   border: none;
+}
+
+.custom-btn,
+.custom-btn-nomargin,
+.search-btn {
+  display: inline-block;
+  margin: 1em auto;
+  padding: 0.6em 1.5em;
+  font-size: 1.2em;
+  background-color: var(--main-color);
+  color: #ffffff;
+  border-radius: 0.5em;
+  text-decoration: none;
+  transition: background-color 0.3s, color 0.3s;
+  border: 2px solid #00000000;
+}
+
+.custom-btn:hover,
+.custom-btn-nomargin:hover,
+.search-btn:hover {
+  background-color: #ffffff;
+  color: var(--main-color);
+  border: 2px solid var(--main-color);
+  text-decoration: none;
+}
+
+.search-btn {
+  font-size: 1em;
+  margin: 0;
+  padding: 0 0.8em;
+}
+
+.custom-btn-nomargin {
+  font-size: 1.2em;
+  margin: 0;
+  padding: 0.2em 1em;
+}
+
+.btn-gray {
+  background-color: #555;
+}
+
+.btn-gray:hover {
+  color: #555;
+  border: 2px solid #555;
+}
+
+.btn-red {
+  background-color: #d22;
+}
+
+.btn-red:hover {
+  color: #d22;
+  border: 2px solid #d22;
+}
+
+.btn-green {
+  background-color: #1f955e;
+}
+
+.btn-green:hover {
+  color: #198754;
+  border: 2px solid #198754;
+}
+
+.card {
+  border: 2px solid var(--main-color);
 }
 
 .button {

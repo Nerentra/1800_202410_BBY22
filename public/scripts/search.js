@@ -78,7 +78,7 @@ async function getQuestionsFromTags(tags) {
 
   const questions = (await questionsRef.get()).docs;
 
-  questions.sort((a, b) => b.data().timestamp - a.data().timestamp)
+  questions.sort((a, b) => b.data().timestamp - a.data().timestamp);
 
   return questions;
 }
@@ -118,7 +118,7 @@ async function search(tags, startSnap) {
     } else {
       const lastQuestionSnapshot =
         questions[questions.length - 1].questionSnapshot;
-        loadMore.addEventListener(
+      loadMore.addEventListener(
         "click",
         () => {
           search(tags, lastQuestionSnapshot);

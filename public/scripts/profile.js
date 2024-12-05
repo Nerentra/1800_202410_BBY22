@@ -121,7 +121,7 @@ getProfileUserRef().then(async ({ userRef, isCurUser }) => {
 
     const editButton = document.createElement("button");
     editButton.innerText = "Edit Profile";
-    editButton.classList.add("button");
+    editButton.classList.add("custom-btn");
 
     editAnchor.appendChild(editButton);
 

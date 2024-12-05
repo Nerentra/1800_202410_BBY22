@@ -8,7 +8,7 @@ body {
 }
 
 hr {
-  color: #28a745;
+  color: var(--main-color);
 }
 
 #content-container {
@@ -21,7 +21,7 @@ hr {
   margin-left: auto;
 }
 
-#content-container>div {
+#content-container > div {
   padding: 1rem;
   --bs-gutter-x: 1.5rem;
   --bs-gutter-y: 0;
@@ -34,38 +34,18 @@ hr {
   text-align: center;
 }
 
-#content-container>h1 {
+#content-container > h1 {
   font-size: calc(1.475rem + 2.7vw);
   font-weight: 400;
 }
 
-#content-container>div>p {
+#content-container > div > p {
   font-size: calc(0.55rem + 1.5vw);
   font-weight: 100;
 }
 
-#content-container>div>p:nth-of-type(2) {
+#content-container > div > p:nth-of-type(2) {
   margin-bottom: 0.5em;
-}
-
-.main-page-btn {
-  display: inline-block;
-  margin: 1em auto;
-  padding: 1em 2em;
-  font-size: 1.2em;
-  background-color: #28a745;
-  color: #ffffff;
-  border-radius: 0.5em;
-  text-decoration: none;
-  transition: background-color 0.3s, color 0.3s;
-  border: 2px solid #28a74500;
-}
-
-.main-page-btn:hover {
-  background-color: #ffffff;
-  color: #28a745;
-  border: 2px solid #28a745;
-  text-decoration: none;
 }
 
 .button-container {
@@ -79,9 +59,9 @@ hr {
   gap: 0.2rem;
 }
 
-.button-container>a {
+.button-container > a {
   margin: 0.3em auto;
-  padding: 2% 5%;
+  padding: 0.7em 1.7em;
   font-size: calc(0.6rem + 1.2vw);
 }
 
@@ -104,11 +84,11 @@ hr {
   row-gap: 1em;
 }
 
-#bookmarked-questions>a {
+#bookmarked-questions > a {
   margin: 0 1.3rem;
   display: block;
   width: 100%;
-  border: 2px solid #28a745;
+  border: 2px solid var(--main-color);
   border-radius: 1em;
   text-align: left;
   padding: 0.5em;
@@ -140,7 +120,7 @@ hr {
   justify-content: space-around;
 }
 
-.main-page>div {
+.main-page > div {
   float: left;
   padding: 40px 20px;
   margin: 0 20px;
@@ -181,7 +161,7 @@ hr {
   grid-area: browse;
 }
 
-#browse-questions>h2 {
+#browse-questions > h2 {
   margin: 0 0 2rem 0;
   font-size: calc(1.275rem + 1.7vw);
   font-weight: 400;
@@ -198,15 +178,15 @@ hr {
   row-gap: 1em;
 }
 
-#bookmarks-container>div>h2 {
+#bookmarks-container > div > h2 {
   margin: 1rem 0;
   font-size: calc(1.275rem + 1.7vw);
   font-weight: 400;
   display: block;
 }
 
-#bookmarks-container>div>p>a {
-  color: #28a745;
+#bookmarks-container > div > p > a {
+  color: var(--main-color);
   text-decoration: none;
 }
 
@@ -267,12 +247,12 @@ hr {
     row-gap: 1em;
   }
 
-  #bookmarked-questions>a>div:first-child {
+  #bookmarked-questions > a > div:first-child {
     font-size: calc(0.75rem + 1.7vw);
     font-weight: 400;
   }
 
-  #bookmarks-container>div:first-of-type {
+  #bookmarks-container > div:first-of-type {
     width: 100%;
     display: flex;
     justify-content: center;
@@ -286,7 +266,7 @@ hr {
 }
 
 @media screen and (min-width: 651px) and (max-width: 1080px) {
-  #bookmarked-questions>a {
+  #bookmarked-questions > a {
     margin: 0;
     box-sizing: border-box;
   }
@@ -312,7 +292,7 @@ hr {
 }
 
 @media screen and (min-width: 1081px) {
-  #bookmarked-questions>a {
+  #bookmarked-questions > a {
     margin: 0;
     box-sizing: border-box;
   }
@@ -330,5 +310,4 @@ hr {
   #bookmarks-container {
     padding-top: 40%;
   }
-
 }
