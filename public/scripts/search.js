@@ -91,7 +91,7 @@ async function getQuestionsFromTags(tags) {
  */
 async function search(tags, startSnap) {
   const loadMore = document.getElementById("loadMoreButton");
-  const loadMoreEnabled = tags.length > 0;
+  const loadMoreEnabled = tags.length === 0;
 
   let questionSnapshots;
   if (loadMoreEnabled) {
