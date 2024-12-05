@@ -206,7 +206,7 @@ getProfileUserRef().then(async ({ userRef, isCurUser }) => {
   const userPoints = userData.points || 0;
   const userPointsElem = document.getElementById("userPoints");
   userPointsElem.innerText = `${userPoints >= 0 ? "+" : "-"}${userPoints}`;
-  if (userPoints) {
+  if (userPoints !== undefined) {
     const strongestColorValue = 100;
     const strongestColorStrength = 0.8; // Must be between 0 and 1
     const colorFactor =
