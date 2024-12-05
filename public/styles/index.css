@@ -30,7 +30,7 @@
 
 #infoContainer {
   margin-top: 5em;
-  padding: 0 200px;
+  max-width: 75%;
 }
 
 p {
