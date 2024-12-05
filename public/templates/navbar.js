@@ -76,7 +76,7 @@ function replaceTextAtIndices(text, indices, newWord) {
  * @param {[String]} tags All tags that can be autofilled
  */
 function addRecommendationsToPage(recommendations, wordIndices, tags) {
-  let dropdown = document.getElementById("navDropdown");
+  const dropdown = document.getElementById("navDropdown");
   dropdown.innerHTML = "";
 
   recommendations.forEach((recommendation) => {
@@ -115,11 +115,15 @@ function updateDropdown(cursorIndex, tags) {
     return;
   }
 
-  let text = document.getElementById("navSearchbar").value;
-  let wordIndices = getIndicesOfWord(text, cursorIndex);
-  let word = text.substring(wordIndices[0], wordIndices[1]);
+  const text = document.getElementById("navSearchbar").value;
+  const wordIndices = getIndicesOfWord(text, cursorIndex);
+  const word = text.substring(wordIndices[0], wordIndices[1]);
 
-  let recommendations = getRecommendationsForWord(word, tags, text.split(" "));
+  const recommendations = getRecommendationsForWord(
+    word,
+    tags,
+    text.split(" ")
+  );
   addRecommendationsToPage(recommendations, wordIndices, tags);
 }
 
@@ -128,24 +132,41 @@ function updateDropdown(cursorIndex, tags) {
  * Initializes the interactivity for the autofill dropdown.
  */
 function searchbarLoaded() {
-  let searchbar = document.getElementById("navSearchbar");
+  const searchbar = document.getElementById("navSearchbar");
   searchbar.value = new URL(window.location.href).searchParams.get("tags");
 
-  let tags = lib.tags;
+  const tags = lib.tags;
+  let prevCursorIndex = undefined;
+  let prevSearchbarValue = undefined;
 
-  ["input", "focus"].forEach((eventName) => {
+  ["focus", "keydown", "click"].forEach((eventName) => {
     searchbar.addEventListener(eventName, (event) => {
-      let cursorIndex = event.target.selectionStart;
-      updateDropdown(cursorIndex, tags);
+      // Wrapped in 0ms timeout in order to wait for selectionStart to be set by browser.
+      setTimeout(() => {
+        const cursorIndex = event.target.selectionStart;
+        // If statement only allows updating dropdown if there is a reason it should change
+        if (
+          (prevCursorIndex !== undefined && prevCursorIndex !== cursorIndex) || // If cursor has moved
+          (prevSearchbarValue !== undefined &&
+            prevSearchbarValue !== searchbar.value) || // Or searchbar content has changed
+          (prevCursorIndex === undefined && prevSearchbarValue === undefined) // Or searchbar has no previous state
+        ) {
+          updateDropdown(cursorIndex, tags);
+        }
+        prevCursorIndex = cursorIndex;
+        prevSearchbarValue = searchbar.value;
+      }, 0);
     });
   });
   const dropdown = document.getElementById("navDropdown");
   searchbar.addEventListener("blur", () => {
+    prevCursorIndex = undefined;
+    prevSearchbarValue = undefined;
     const cache = searchbar.value;
     // Wrapped in 0ms timeout in order to yield to other events
     setTimeout(() => {
       // If the value changed, then the user clicked the dropdown.
-      //If they didn't, remove the dropdown.
+      // If they didn't, remove the dropdown.
       if (cache === searchbar.value) {
         dropdown.innerHTML = "";
       }
