@@ -45,17 +45,13 @@ function addQuestionToDOM(questionSnapshot, authorSnapshot) {
 }
 
 /**
- * Queries firestore for questions that contain all of the tags
- * @param {String[]} tags The tags to use
+ * Queries firestore for a count number of snapshots after startSnap
+ * @param count The amount of snapshots to get
  * @param startSnap The snapshot to start searching after
  * @returns An array of firestore snapshots of the questions
  */
-async function getQuestionsFromTags(tags, startSnap) {
+async function getQuestions(startSnap) {
   let questionsRef = db.collection("questions");
-
-  tags.forEach((tag) => {
-    questionsRef = questionsRef.where("tags." + tag, "==", true);
-  });
 
   questionsRef = questionsRef.orderBy("timestamp", "desc");
 
@@ -69,12 +65,41 @@ async function getQuestionsFromTags(tags, startSnap) {
 }
 
 /**
- * Gets QUESTIONS_PER_PAGE questions from the database and adds them in the page.
+ * Queries firestore for all questions that contain all of the tags
+ * @param {String[]} tags The tags to use
+ * @returns An array of firestore snapshots of the questions
+ */
+async function getQuestionsFromTags(tags) {
+  let questionsRef = db.collection("questions");
+
+  tags.forEach((tag) => {
+    questionsRef = questionsRef.where("tags." + tag, "==", true);
+  });
+
+  const questions = (await questionsRef.get()).docs;
+
+  questions.sort((a, b) => b.data().timestamp - a.data().timestamp)
+
+  return questions;
+}
+
+/**
+ * If tags is empty, gets QUESTIONS_PER_PAGE questions from the database and adds them in the page.
+ * If tags is not empty, gets all questions that contain all of the tags and adds them in the page.
  * @param {String} tags The search tags
  * @param startSnap The snapshot to start searching after
  */
 async function search(tags, startSnap) {
-  const questionSnapshots = await getQuestionsFromTags(tags, startSnap);
+  const loadMore = document.getElementById("loadMoreButton");
+  const loadMoreEnabled = tags.length > 0;
+
+  let questionSnapshots;
+  if (loadMoreEnabled) {
+    loadMore.parentElement.hidden = false;
+    questionSnapshots = await getQuestions(startSnap);
+  } else {
+    questionSnapshots = await getQuestionsFromTags(tags);
+  }
 
   const questions = await Promise.all(
     questionSnapshots.map(async (questionSnapshot) => {
@@ -87,18 +112,20 @@ async function search(tags, startSnap) {
     addQuestionToDOM(questionSnapshot, authorSnapshot);
   });
 
-  if (questions.length < QUESTIONS_PER_PAGE) {
-    document.getElementById("loadMoreButton").hidden = true;
-  } else {
-    const lastQuestionSnapshot =
-      questions[questions.length - 1].questionSnapshot;
-    document.getElementById("loadMoreButton").addEventListener(
-      "click",
-      () => {
-        search(tags, lastQuestionSnapshot);
-      },
-      { once: true }
-    );
+  if (loadMoreEnabled) {
+    if (questions.length < QUESTIONS_PER_PAGE) {
+      loadMore.parentElement.hidden = true;
+    } else {
+      const lastQuestionSnapshot =
+        questions[questions.length - 1].questionSnapshot;
+        loadMore.addEventListener(
+        "click",
+        () => {
+          search(tags, lastQuestionSnapshot);
+        },
+        { once: true }
+      );
+    }
   }
 }
 
